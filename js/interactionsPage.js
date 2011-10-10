@@ -5,7 +5,7 @@
 		
 //http://www.sitepoint.com/forums/showthread.php?t=575320
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
-var outputWindow = document.getElementById("output")?document.getElementById("output"):document.getElementById("content").innerHTML+=("<div id='output'><p>Messages</p></div>") ;
+var outputWindow = document.getElementById("output")?document.getElementById("output"):document.getElementById("content").innerHTML+=("<div id='output' style='visibility:hidden'><p>&nbsp;</p></div>") ;
  
 //this is included in each page that contains interactions
 if ((parent.data.IntArray)&&(parent.APIOK())){
