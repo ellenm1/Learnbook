@@ -1,0 +1,23 @@
+imagePath_001=http://mlearning.med.umich.edu/quiz/cbtlib/modules/prototypes/demos/slideshow/elnov_slide1.jpg
+&link_001=http://google.com
+&category_001=Educational Leadership
+&headline_001=Giving Students Ownership of Learning
+&copy_001=This month's issue shows how schools can prepare students by giving them responsibility for their own learning.
+
+&imagePath_002=http://mlearning.med.umich.edu/quiz/cbtlib/modules/prototypes/demos/slideshow/orlando.jpg
+&link_002=http://umich.edu
+&category_002=2009 Annual Conference and Exhibit Show
+&headline_002=Learning Beyond Boundaries
+&copy_002=Explore the big ideas in education and stretch your professional development. March 13-16, Orlando, Fla.
+
+&imagePath_003=http://mlearning.med.umich.edu/quiz/cbtlib/modules/prototypes/demos/slideshow/wholechildactiontool_flash.jpg
+&link_003=http://google.com
+&category_003=ASCD Action Tool
+&headline_003=Educating The Whole Child
+&copy_003=This special tool will help you lead and implement a school- or districtwide initiative for the Whole Child. 
+
+&imagePath_004=http://mlearning.med.umich.edu/quiz/cbtlib/modules/prototypes/demos/slideshow/istanbul2.jpg
+&link_004=http://google.com
+&category_004=2008 ASCD Middle East International Conference
+&headline_004=The Whole Child: Embracing a Global Vision
+&copy_004=Join colleagues from around the world as explore what it means to ensure every student is healthy, safe, engaged, supported, and challenged. November 8-9, Istanbul, Turkey

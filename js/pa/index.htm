@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>PageArray Generator for HTML Template</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript" src="chapterarray.js"></script>
+
+    <script language="javascript" type="text/javascript" src="form.js"></script>
+</head>
+<!--<body onload="clearForm();">-->
+<body  onload="$('#container').addForms()">
+ <form name="titleform">
+  <table style='border-top:1px solid #999;width:800px'>
+ <tr>
+ <td><b>Document title:</b>&nbsp; <input type="text" name="doctitle" id="doctitle" value=""  size="40" maxlength="60"></td><td><b>Header Title:</b>&nbsp; <input type="text" name="hdtitle" id="hdtitle" value=""  size="40" maxlength="60"></tr>
+ </table>
+ </form>
+ 
+ 
+     <div id="container"></div>
+       <button id="addQuiz">add Another Page</button>
+     <div id="interactionsFormContainer"></div>
+  <div id="interactionsButtons"  style="display:none">
+         <button id="addInteraction">add AnotherInteraction</button>
+  </div>
+  
+    <div id="buttons" class="ab" style="width:100%">
+         <input name="lastitm" type="hidden" value="0" />
+         <input name="submit" type="submit" value="submit" onclick="createArray();"/>
+    </div><!--buttons-->
+  
+    <div id="output">
+        <textarea name="arr" id="arr" cols="150" rows="50" style="margin-top:30px"></textarea>
+        <input name="resetOutput" type="reset" value="reset" onclick="document.getElementById('arr').value='';" />
+    </div><!--output-->
+
+<div id="debug">
+
+</div>
+    <script language="javascript" type="text/javascript" src="writearray.js"></script>
+</body>
+</html>
+
+<!--<p>if qualtrics, must add qmax </p>
+<p>filename for this page (URL)</p>
+<p>chapter</p>
+<p>level</p>-->
+ 

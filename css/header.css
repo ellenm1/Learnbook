@@ -1,0 +1,81 @@
+/*v 1.1 8-4-2006*/
+
+#header, #footer {
+width:908px;
+margin:auto;
+height:44px;
+  }
+
+#footer {clear:both;}
+
+
+#headerLeftSide, #footerLeftSide {
+background-image:url(../images/header/Hdr_leftCorner.jpg);
+background-repeat:no-repeat;
+width:19px;
+height:44px;
+float:left; }
+
+#footerLeftSide {
+background-image:url(../images/footer/footer_LeftEdge.jpg);
+background-repeat:no-repeat;
+height:52px;  }
+
+#headerLogo {
+background:url(../images/header/Hdr_middle.jpg) repeat-x top;
+width:152px;
+height:44px;
+float:left;
+padding-top:0px;
+margin-bottom:-6px; /*this is to keep right column from being pushed down 6 pixels*/
+}
+
+#headerMiddle, #footerMiddle {
+background-image:url(../images/header/Hdr_middle.jpg);
+background-repeat:repeat-x;
+width:476px;
+height:44px;
+float:left;  }
+
+#footerMiddle {
+background-image:url(../images/footer/footer_Middle.jpg);
+width:780px;
+height:52px; }
+ 
+#headerPrev, #footerPrev, #headerPDF, #headerPrint, #headerSearch, #headerSpacer {
+height:44px;
+width:46px;
+float:left;
+margin-bottom:-12px; /*this is to keep right column from being pushed down 6 pixels*/
+display:block;
+}
+#headerSpacer{  
+width:15px;}
+#headerNext, #footerNext{
+height:44px;
+width:60px;
+float:left;
+ }
+img#nextBtn{width:60px;}
+#footerPrev, #footerNext { height:52px;}
+#headerNext, #headerPrev  {
+margin-bottom:-12px; /*this is to keep right column from being pushed down 6 pixels*/
+}
+
+#footerPrev { width:46px;}
+
+#title{
+	width:450px; /*this must have a pixel or percent width for the MS shadow filter to display*/
+	color: #ffffff;
+	text-shadow: 0px 1px 2px #031323; /*for safari,firefox*/
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, direction=135, strength=1); /*IE*/
+	line-height:105%;
+	left:16px;
+	position:relative;
+	margin-top:9px;
+	font:bold 14px Helvetica, "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;  }
+
+#title.twoLineTitle {
+margin-top:3px;
+font: bold 20px Helvetica, "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;	
+line-height:20px;  }

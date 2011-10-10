@@ -1,0 +1,70 @@
+/*use this style sheet to override any of the styles with your own versions of them, and to add any module-specific styles you want to use*/
+
+
+
+ /*these styles provide the color change for the gray theme*/
+/*#header, #footer {}
+#footer {}*/
+#headerLeftSide, #footerLeftSide {background-image:url(../images/gray/Hdr_leftCorner.jpg); }
+#footerLeftSide { background-image:url(../images/gray/footer_LeftEdge.jpg); }
+#headerLogo { background:url(../images/gray/Hdr_middle.jpg) repeat-x top;}
+#headerMiddle, #footerMiddle { background-image:url(../images/gray/Hdr_middle.jpg); }
+#footerMiddle { background-image:url(../images/gray/footer_Middle.jpg); }
+#title{ color: #ffffff;}
+a:hover { color: #FF0000;}
+a:visited {color: #9966CC;}
+a:hover a:visited { color: #FF0000;}
+body { background: #666666 url(../images/gray/graytile.jpg) repeat; }
+#whiteArea {  background:url(../images/gray/whiteArea2shadows.jpg) repeat-y;   }
+#rightColumn { background:url(../images/gray/WhiteBGTopShadow.gif) repeat-x top; }
+#slide ul li {  color:#006;  }
+#slide ul li ul li{  color:#000;  }
+h1 { color:#666; }
+h2 { color: #000000;}
+h5 { background: #b6d7f6; }
+.chapterTitle { color:#666666;  }
+#pageTitle { color:#000000; }
+#pageNumberHolder { color:#999999;  }
+#endmatter {color:#666; }
+#NavBar a, #mlearningControls a {
+   color:#FFFFFF; 
+   border-bottom:1px solid #000;
+   border-top:1px solid  #CCC;
+}
+#NavBar a:hover.navlevel1, #NavBar a:hover.navlevel2, #NavBar a:hover.navlevel3, #NavBar a:hover.navlevel4, #otherLinks a:hover, #contentExpert a:hover { background-color:#333;color:#FFF;}
+#NavBar  a.navlevel2,#NavBar  a.navlevel2.parentClosed  {
+   background-color:#333333;
+   color:#CCCCCC; 
+   border-top:1px solid #CCC; 
+}
+#NavBar a.navlevel3 {
+   background-color:#113868;
+   color:#FFF;
+   border-top:1px solid #113868;
+   border-bottom:1px solid #000;
+   border-left:1px solid #0D2E58;
+}
+#NavBar a.current, a.navlevel1.current, a.navlevel2.current, a.chapter3.current, a.chapter4.current {
+   background-color:#000;
+   color:#FFF;
+   border-bottom:1px solid #000;
+}
+#NavBar a.current:hover{ background-color:#333;}
+#otherLinks a,  #controlsLabel { border-top:1px solid #3686D7; border-bottom:1px solid #142F4A;}
+#otherLinks a, #controlsLabel, #navbarBottom a.contentExpert { background:none; color:#FFFFFF; }
+#controlsLabel {
+background:#000;
+color:#FFF;
+border-top:2px solid #666666;
+}
+#otherLinks a:hover { background-color:#000;}
+#mlearningControls a:link#nextLesson {background-color:#838ECB;border-top:1px solid #CCD7FF;}
+#mlearningControls a:hover#nextLesson  { background-color:#7967B1; } 
+#mlearningControls a:link#endLesson, #mlearningControls a:link#stopLesson {background-color:#CE858A;border-top:1px solid #FFC8C8;}
+#mlearningControls a:hover#endLesson, #mlearningControls a:hover#stopLesson  {background-color:#C44B52;}
+#apiIndicator {background:url(../images/gray/unscored.jpg) left no-repeat;}
+#navbarBottom a.contentExpert, a.contentExpert {color:#FFF;}
+#modeExplanationContainer {background:#FFFFCC;border:1px solid #003366;}
+a#expander{background:#A8A8A8;color:#FFF;}
+.navContact {color:#FFF;}
+ /********end theme changing styles******/

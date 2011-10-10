@@ -1,0 +1,78 @@
+<!--/*v 1.7 4-13-2010*/-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Untitled Document</title>
+<!--<script language="JavaScript" type="text/javascript" src="../js/MM_scripts.js"></script>-->
+ <script language="JavaScript">var znThisPage;  </script>
+<script language="JavaScript" type="text/javascript" src="../js-local/pageArray.js"></script>
+<script language="JavaScript" type="text/javascript" src="../js/dummyPage.js"></script>
+<!--<script language="javascript">  
+ 
+ function determineParents(){ //determines what is a parent and what branch item is in
+	 var branch;
+	 for(var i=0; i< PageArray.length; i++) { 
+	  if (!branch){ branch=0;}		
+         var p = PageArray[i];
+		 var j = (i+1);
+		 var k = (i-1);
+		 p.branch=branch; 
+		 var nextItem = PageArray[j];
+		 var prevItem = PageArray[k];
+		 var level =   p.level;
+	     var chapter =  p.chapter;
+		 var isParent = p.isParent;
+	     if (nextItem){  //is this a parent item? if there is a next item...
+		       if (nextItem.chapter==chapter && nextItem.level>level){  p.branch=i;branch=i;  p.isParent='parent'; }	 //if next item in same chapter but greater level, this is a parent. set value of branch to i	
+	           else {p.isParent='notParent'; 
+			          if (prevItem&&level<prevItem.level){p.branch=i;branch=i;} //branches don't revert to the parent branch when level increases so this is needed
+			   }//else
+		     }//if(nextItem)...
+         else{p.isParent='notParent'; break;}
+     } //for(var...
+ } //function
+</script>-->
+<SCRIPT language="JavaScript" type="text/javascript" src="../js/toggleOpen.js" ></SCRIPT>
+
+<SCRIPT language="JavaScript" src="../js/arrayVersion.js" type="text/javascript"></SCRIPT> 
+<script language="javascript" type="text/javascript" src="../js/quizFunctions.js"></script>
+
+
+</head>
+
+<!--<body  onload="MM_preloadImages('../images/modeIndicator/mode_03.jpg', 
+'../images/images/header/LearningModuleLogosmaller.png',
+'../images/header/Hdr_leftCorner.jpg',
+'../images/footer/footer_LeftEdge.jpg',
+'../images/header/Hdr_middle.jpg',
+'../images/footer/footer_Middle.jpg',
+'../images/header/over/Next_btn.jpg',
+'../images/header/up/Next_btn.jpg', 
+'../images/header/over/Prev_btn.jpg',
+'../images/header/up/Prev_btn.jpg',
+'../images/footer/over/footer_Next_btn.jpg',
+'../images/footer/up/footer_Next_btn.jpg',
+'../images/footer/over/footer_Prev_btn.jpg',
+'../images/footer/up/footer_Next_btn.jpg',
+'../images/help.jpg')"> -->
+<body>
+
+ 
+<div id="output"></div>
+<script language="javascript" type="text/javascript" src="../js/interactions.js"></script>    
+<script language="javascript">
+	 
+determineParents();
+if (parent.APIOK()){ 
+     setupQuizzes();
+     if(typeof window.IntArray!="undefined"){
+        loadInteractions();	 
+	    setTimeout(saveInteractions,50000); 
+	    }
+	   } 
+writeDocTitle();
+</script>
+<script language="javascript" type="text/javascript" src="../js-local/userDataFrameScripts.js"></script>
+</body>
+</html>

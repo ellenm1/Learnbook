@@ -1,0 +1,52 @@
+Functions List
+____________________________
+pageNavigation.js:
+
+insertList() - inserts a new array into the current array
+addOnePagetoEnd() - adds one page to end of current array
+replaceAllPages() - replaces current array with new array
+getCurrentPage() - figures out which array member represents current page, sets data.znThisPage to i+1 
+and returns the "i" of the array member
+printNavBar - writes the title header, writes the whole table of contents in the navbar, adds correct css depending on level and other variables, paints the gradient in Windows, writes the page number and progress bar, writes the page title, and bookmarks the page. 
+wipeNavBar - erases the current navbar
+xxxxNavigateObject - is this used anywhere?
+NextPage() - opens the next page  unless you are on last page
+PreviousPage()=opens the previous page unless you are on first page
+writeNewPageNo() creaes the progress bar and 1 of N pages text
+wipePageNo() wipes the current progress bar and 1 of N pages text
+writePageTitle() writes chapter and page titles based on pageArray.js
+writeHeaderTitle() writes header title (title to right of logo)
+____________________________
+ fixPNG.js:
+ 
+fixPNG(myImage) correctly handles PNG transparency for one image in Win IE 5.5 and 6, (may not be needed in 7)
+correctPNG() correctly handles PNG transparency for entire page in Win IE 5.5 and 6
+____________________________
+SCORMGeneric.js
+
+setFrameLocation() - this sets the source of myStage to the location of the first item in the PageArray
+SCOBookmark() - 
+SCOSetStatusIncomplete()
+SCOReportSessionTime()
+SetCookie(cookieName,cookieValue,nDays)
+ReadCookie(cookieName)
+ completeIfLastPage()
+AlertUserOfAPIError(strText)
+ FindAPI(win)
+ APIOK()
+ SCOInitialize()
+ SCOFinish()
+ function SCOGetValue(nam)
+function SCOCommit(parm)
+function SCOGetLastError(parm)
+function SCOGetErrorString(n)
+function SCOGetDiagnostic(p)
+SCOSetValue(nam,val)
+privReportRawScore(nRaw)
+MillisecondsToCMIDuration(n)
+____________________________
+
+
+
+
+

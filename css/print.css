@@ -1,0 +1,23 @@
+/*v 1.1 10-22-2007*/
+body {
+width:100%;
+background:none;
+}
+
+#whiteArea {
+  background-color:#FFF;
+  background-image:none;
+}
+#header, #footer{display:none;}
+#rightColumn{
+   width:650px;
+    background:none;
+   }
+
+
+#NavBar, #NavBar a, #contentExpert, #leftColumn  {
+
+   display:none;
+}
+
+
