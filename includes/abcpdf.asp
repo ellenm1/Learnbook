@@ -30,7 +30,7 @@ Set theDoc = Server.CreateObject("ABCpdf6.Doc")
    'theDoc.HtmlOptions.BrowserWidth = 2250
   ' theDoc.Rect.Inset -550, -60
      theDoc.HtmlOptions.BrowserWidth = 1300
-     theDoc.HtmlOptions.Timeout = 50000
+     theDoc.HtmlOptions.Timeout = 300000
      On Error Resume Next
       
 	 ' theDoc.HtmlOptions.BrowserWidth = 0

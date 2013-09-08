@@ -1,0 +1,637 @@
+/*v 1.11 12-22-2010 emeiselm*/
+
+
+a:hover { color: #FF0000;}
+a:visited {color: #9966CC;}
+a:hover a:visited { color: #FF0000;}
+body {
+    background: #666666 url(../images/header/greytile.jpg) repeat;
+	text-align:center;
+	padding: 12px 0 0 12px; }
+	
+
+
+
+#whiteArea {
+   width:908px;
+  /* width:937px;*/
+   margin:auto;
+   background:url(../images/whiteArea2shadows.jpg) repeat-y;
+   font: normal 13px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+   line-height:120%;
+   letter-spacing:.01em;
+   text-align:left; 
+   
+   overflow:hidden;
+   }
+
+/*this column holds the navbar*/
+#leftColumn {
+	padding:0px;
+	width:149px;
+	min-height:300px;
+	 
+  
+	float:left;
+	text-align: left;  
+	 }
+
+/*this column holds the title bar and all content*/
+#rightColumn {
+/*width:765px;*/
+    	/*voice-family: "\"}\""; 
+ 	voice-family:inherit;*/
+    width:743px;
+
+	/*width:686px;*/
+	float:left;
+	display:block;
+	background:url(../images/WhiteBGTopShadow.gif) repeat-x top;
+	/*padding-top: 12px;
+	padding-right: 12px;
+	padding-bottom: 12px;*/
+	padding-left: 10px;
+	 
+}
+
+/*content area styles*/
+#content, #content p, #content td {
+  /*padding-left:6px;*/
+  font: normal 13px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+  line-height:120%;
+  letter-spacing:.01em;
+  text-align:left; }
+
+#content ul li {
+   list-style:square;
+   margin-bottom:6px;
+   padding-left:-3px; }
+
+#slide ul li {
+   font: normal 15px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif; color:#006;
+   list-style:square;
+   margin-bottom:6px;
+   padding-left:-3px; }
+
+#slide ul li ul li{
+   font: normal 13px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif; color:#000;
+	list-style:disc;
+   margin-bottom:6px;
+   padding-left:-3px; }
+
+.cols3 {
+width:30%;
+height:auto;
+margin-right:12px;
+float:left;
+}
+.cols2{
+width:48%;
+height:auto;
+margin-right:6px;
+float:left;
+padding:0px 12px 0px 0px; }
+
+.left, .right {
+padding:0px 12px 0px 0px;
+}
+.clearFloats {
+border-top:1px solid #CCC;
+width:100%;
+clear:both;
+}
+
+h1 {
+	font: bold 16px "Lucida Grande", LucidaGrande, Lucida, Arial, Helvetica, sans-serif;
+    color:#0066CC;
+    display:block;
+	width:100%;
+	padding-top:3px;
+/*	text-transform:uppercase;*/
+}
+
+h2 {  font: bold 24px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+    color: #000000;margin-top:0px;}
+h3 { font: bold 18px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+     line-height:120%;margin-top:0px;}
+h4 { font: bold 13px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+     line-height:120%;margin-top:0px;}
+h5 {font: italic 11px "Lucida Grande", LucidaGrande, Lucida, Arial, Helvetica, sans-serif; background: #b6d7f6; }
+p {font: normal 13px "Lucida Grande", LucidaGrande, Lucida, Arial, Helvetica, sans-serif;}
+a img { border:none;}
+
+.red { color:#CC0033; font-weight:bold; }
+#subTitleBar {
+    position:relative;
+    width:auto;
+    padding:0px 0px 6px 0px;
+    left:0px;
+    top:0px;
+	margin-bottom:12px;
+	/*background-color:yellow;*/ }
+
+.chapterTitle {
+   margin-bottom:6px;
+   padding-left:6px;
+   font: bold 16px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+   color:#666666;  }
+
+#pageTitle {
+	font: normal 16px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+	text-align: left;
+	color:#000000;
+	width:auto;
+	padding:12px 6px 6px 6px;
+}
+
+#pageNumberHolder {  /*this is the style for the table cell that holds the "page 2 of 11" text*/
+   font: bold 9px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+   color:#999999;
+   text-align:center;
+   height:18px;
+   width:75px;
+   display:block;
+   position:absolute;
+   text-transform:uppercase;
+   right:8px;
+   top:3px; }
+
+#progressBarCell {border:1px solid black;}
+#printIcon {
+visibility:hidden;
+position:absolute;
+right:80px;/*without left:auto and top:auto, it ignores the right:0px and bottom:12px setting*/
+top:-6px;}
+
+#endmatter {
+font:normal 8px Verdana, Arial, Helvetica, sans-serif;
+color:#666; }
+
+#contentLeftCol { float: left;}
+
+/*************************************/
+/*the base navigation styles. Modified for Mac and small screens in styles800x600 and stylesMac.css*/
+#NavBar {
+   position:relative;
+   width: 149px;     
+   top:0px;
+   height:auto; }
+
+#NavBar a, #mlearningControls a {
+   position:relative;
+   color:#FFFFFF;
+   display:block;
+   text-decoration:none;
+    padding:6px 12px 6px 7px; 
+    border-bottom:1px solid #006699;
+	border-top:1px solid  #71A9E2;
+}
+
+#NavBar a.navlevel1, #NavBar a.navlevel2, #NavBar a.navlevel3, #NavBar a.navlevel4 {
+    font: normal 12px "Lucida Grande", LucidaGrande, Lucida, Arial, sans-serif;
+	list-style-type: none;
+}
+
+
+#NavBar a:hover.navlevel1, #NavBar a:hover.navlevel2, #NavBar a:hover.navlevel3, #NavBar a:hover.navlevel4, #otherLinks a:hover, #contentExpert a:hover {
+   background-color:#003366;
+   color:#FFF;
+
+}
+
+#NavBar  a.navlevel2,#NavBar  a.navlevel2.parentClosed  {
+   background-color:#345C98;
+   color:#CCCCCC; 
+   /*text-indent:-9px;
+    padding-left:16px;	*/
+	text-indent:-1px;
+    padding-left:24px;
+	/*border-bottom:1px solid #3C6BB4;*/
+	border-top:1px solid #0D2E58;
+ 
+}
+#NavBar a.navlevel3 {
+background-color:#113868;
+color:#FFF;
+ border-top:1px solid #113868;
+ border-bottom:1px solid #000;
+border-left:1px solid #0D2E58;
+	/*text-indent:-3px;*/
+    padding-left:36px;
+}
+
+#NavBar a.open {
+   display:block;
+   visibility:visible;
+}
+
+#NavBar a.closed, .closed {
+   display:none;
+   visibility:hidden;
+}
+
+
+
+#NavBar a.parentOpen{
+background-image:url(../images/arrows/arrow_dn_wt.jpg);
+background-position:right center;
+background-repeat:no-repeat;
+
+/*border-bottom:1px solid #0D2E58;*/
+}
+#NavBar a.parentClosed  {
+background:url(../images/arrows/arrow_rt_blk1.gif) right center no-repeat;
+
+}
+
+
+#NavBar a.current, a.navlevel1.current, a.navlevel2.current, a.chapter3.current, a.chapter4.current {
+   background-color:#000;
+   color:#FFF;
+   display:block;
+   border-bottom:1px solid #000;;
+}
+
+
+#NavBar a.current:hover{
+    background-color:#003366;
+   
+}
+
+#NavBar a:link#helpButton, #NavBar a:visited#helpButton {
+  height:18px;
+  padding-top:9px;
+/*background:url(../images/helpSymbol.gif) center no-repeat;*/
+text-align:center;
+text-transform:uppercase;
+}
+
+#NavBar a:hover#helpButton{
+/*background:url(../images/helpSymbolOver.gif) center no-repeat;*/
+   background-color:#0080FF;}
+
+ 
+#otherLinks {
+   width: 140px;
+ 
+}
+
+#otherLinks a,  #controlsLabel {
+      border-top:1px solid #3686D7;
+   border-bottom:1px solid #142F4A;
+}
+#otherLinks a, #controlsLabel, #navbarBottom a.contentExpert {
+ width: 140px; 
+/*border-right:1px solid #142F4a;
+ border-left:1px solid #3686D7;*/
+   font: bold 10px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+   letter-spacing:.02em;
+   background:none;
+   color:#FFFFFF;
+   display:block;
+   text-decoration:none;
+   padding:4px 3px 4px 5px; 
+ 
+ 
+}
+#controlsLabel {
+background:#000;
+color:#FFF;
+text-align:center;
+font:normal small-caps 9px Verdana, Arial, Helvetica, sans-serif;
+letter-spacing:.2em;
+padding:1px 3px 2px 6px;
+border-top:2px solid #666666;
+
+}
+#otherLinks a:hover {
+    background-color:#000;
+}
+
+#navbarBottom {
+    position:relative;
+	width:100%;
+	display:block;
+    height:150px;
+}
+#navbarBottom a.feedbackBtn  {
+   position:relative;
+   color:#FFFFFF;
+   display:block;
+   text-decoration:none;
+    padding:6px 12px 6px 7px; 
+    border-bottom:1px solid #006699;
+	border-top:1px solid  #71A9E2;
+	font:normal 10px Arial, Helvetica, sans-serif;
+color:#C7DAEB;
+}
+#navbarBottom a.feedbackBtn:hover{
+background-color:#003366;
+color:#FFF;
+
+}
+
+#mlearningControls a, #mlearningControls a:link {
+width:140px;
+ padding:4px 3px 4px 5px;
+	   
+
+}
+/*"go to quiz" link in navbar*/
+ #mlearningControls a:link#nextLesson {
+background-color:#838ECB;
+border-top:1px solid #CCD7FF;
+}
+
+ #mlearningControls a:hover#nextLesson  {
+ background-color:#7967B1;
+
+
+
+ }
+ 
+#mlearningControls a:link#endLesson, #mlearningControls a:link#stopLesson {
+background-color:#CE858A;
+border-top:1px solid #FFC8C8;
+}
+
+#mlearningControls a:hover#endLesson, #mlearningControls a:hover#stopLesson  {
+background-color:#C44B52;
+}
+#otherLinks {
+}
+#apiIndicator {
+padding:0px;
+position:relative;
+display:block;
+/*margin-left:-9px;
+margin-right:0px;*/
+width:140px;
+height:219px;/*changed for new unscored graphic*/
+text-align:center;
+background:url(../images/unscored.jpg) left no-repeat;
+}
+#navbarBottom a.contentExpert, a.contentExpert {
+    font: bold 10px "Lucida Grande", LucidaGrande, Lucida, Helvetica, Arial, sans-serif;
+	color:#FFF;
+	background:none;
+	display:block;
+	margin-right:0px;
+	width: 100%;
+}
+
+
+#printIcon {
+right:106px; 
+top:6px;
+} 
+
+#modeExplanationContainer {
+    position:absolute;
+	background:#93BDE9;
+	background:#FFFFCC;
+	width:190px;
+	height:140px;
+	filter:alpha(opacity=80);   /* Internet Explorer       */
+	opacity: 0.8;
+	border:1px solid #003366;
+	padding: 3px;
+	padding-top:10px;
+	z-index: 10;
+	left: 50px;
+	top: 20px;
+}
+
+a#expander{
+background:#68A3E0;
+color:#FFF;
+height:13px;
+padding-top:0px;
+padding-bottom:2px;
+font-size:9px;
+text-transform:uppercase;
+font-family:Geneva, Arial, Helvetica, sans-serif;
+text-align:center;
+}
+
+a#helpButton{
+color:#000;
+background:#FFC449;
+background:#8FBAE7;
+}
+
+
+.navContact {
+display:block;
+font:normal 10px Arial, Helvetica, sans-serif;
+color:#C7DAEB;
+line-height:110%;
+margin:24px 6px 6px 6px;}
+
+/* **********************************Styles for embedded quiz functions******************************** */
+#quizMessages{ 
+text-align:left;
+line-height:130%;
+display:none; 
+color:#000;
+font:14px Verdana, Arial, Helvetica, sans-serif; 
+}
+
+
+#quizMessages li{ list-style:none; }
+#quizMessages h1 {
+font:bold 28px Arial, Helvetica, sans-serif;
+color:#FF0000;
+}
+
+#msgcloser{ 
+background:#FF6600;
+font:bold 11px Arial, Helvetica, sans-serif;
+display:block;
+ 
+color:#FFFFFF;
+text-align:center; }
+#msgcloser a, #quizMessages a:link, #quizMessages a, #quizMessages a:visited {
+border:none;
+color:#000;
+font:bold 12px;}
+
+#quizProgress{ 
+display:none;
+color:#003333;
+font:bold 14px Verdana, Arial, Helvetica, sans-serif;
+background:#FFFFFF url(../images/progressbar_microsoft.gif) no-repeat center;
+/*border-right:6px solid #333333;
+border-bottom:6px solid #333333;*/
+text-align:center;
+padding:24px;
+ }
+a#printScoreBtn:link{ 
+   display:block;
+
+
+ }
+ a#printScoreBtn:hover{   }
+ a#finalizeScoreBtn:link  { 
+  display:block;
+  
+  }
+ a#finalizeScoreBtn:hover { background:#006633;color:#FFF; }
+.iStatusMsg{
+  padding-top:12px;
+  text-transform:uppercase;
+ }
+ /*added to handle risk Mgmt style non-scoring quizzes*/
+a.tryagainLink, a:visited.tryagainLink{
+   padding:3px;
+   font-weight:bold;
+   text-decoration:underline;}
+/*usually this line will not show up*/
+/*#noScoreMsgBlock {display:none; }*/
+.countscore1{color:#FF0000;}
+/*however if there is a non-counting quiz (pretest, survey), it will show up.*/
+.countscore0{ display:block;color:#3366CC;margin-bottom:12px; }
+
+#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, #quizMessages a.closeNowLink, a.button:link, a.button:visited{ 
+	display:block;
+	text-align:center;
+	font-weight:normal;
+	width:150px;
+	padding:6px;
+	color:#FFF;
+	text-transform:uppercase;
+	margin:6px 6px 0px 6px;
+	text-decoration:none;
+	background:#1277D4;
+	border-right:3px double #000066;
+	border-bottom:3px double #000066;
+	border-top:3px double #0099CC;
+	border-left:3px double #0099CC;
+  }
+  
+  #quizMessages{position:relative;}
+  #quizMessages a.gothereLink, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited {
+    background:#009933;
+    border-right:3px double #003333;
+    border-bottom:3px double #003333;
+    border-top:3px double #00CC33;
+
+    border-left:3px double #00CC33;
+ } 
+ #quizMessages a.closeNowLink {
+	 background:#EE3124;
+	 border-right:3px double #C13D15;
+     border-bottom:3px double #C13D15;
+     border-top:3px double #EA663F;
+     border-left:3px double #EA663F;
+	 margin-left:auto;
+	 margin-right:auto;
+ }
+ #quizMessages a.tryagainLink:hover, a.button:hover{
+   background:#0046FF;}
+ #quizMessages a.gothereLink:hover{background:#00FF33;}
+ #quizMessages a.closeNowLink:hover{background:#F00;}
+ table#unfinQzTbl { /*width:45%;*/ }
+
+ #quizMessages  td.unfinQzLft { 
+   border-bottom:1px solid #CCCCCC; 
+   padding-right:3px;
+   padding-left:0px;
+   width:200px;
+ }
+#quizMessages td.unfinQzRt {border-bottom:1px solid #CCCCCC;width:150px; }
+
+/*for messages associated with tracking individual interactions */
+ .interactionFdbck{color:#FF0000;display:block;margin-top:3px;padding:2px;font-weight:bold;}
+ 
+  /*Banner Style for ESN */
+#banner{
+    display:block;
+	width:728px;
+	height: 193px;
+	background-image:url(../media/header3.jpg);
+	background-repeat:no-repeat;
+	background-position:left;
+
+	/*margin-left:12px;*/
+	margin-bottom: 6px;
+}
+
+#bnrTitle{
+   position:relative;
+   left:390px;
+   top:20px;
+   width:290px;
+   font:bold 18px Geneva, Arial, Helvetica, sans-serif;
+   color:#FFFFFF;
+}
+/*toggle on or off style for toggle() function in toggleOpen.js*/
+.toggle{ visibility:hidden;display:none; }
+
+.StatusPageFdbk, #content TD.StatusPageFdbk {
+     background-color:#FFFF99;
+     text-align:center;
+     display:block;
+     border:1px solid #DEA118;
+     width:240px important!;
+     padding:3px;
+     }
+ #unFinOptions {
+	 position:absolute;
+     text-align:center;
+     display:block;
+     background-color:#FFFF99;
+     border:1px solid #DEA118;
+     left:400px;
+     top:0px;
+     width:240px important!;
+	 width:240px;
+     padding:6px;
+     text-align:center;
+	}  
+	
+	#finOptions  {  	
+	  position:absolute;
+	  left:400px;
+	  top:0px;
+	  width:240px;
+      padding:6px;
+      text-align:center;
+	  }
+.CertInstructions{/*padding-left:18px;*/}
+
+.moduleStatusMsg{ 
+    font-size:20px;
+    color:#FF0000;
+    text-transform:capitalize 
+    }
+
+.loadingMsg{
+     width:300px;
+     height:30px;
+     position:absolute;
+     left:150px;
+     top:0px;
+     text-align:center;
+     background-color:#FFFCCC;
+     opacity:0.8;
+     border:1px solid #CCC;
+     padding:24px;
+     display:block;
+     }
+	 
+/* **********************************************************************************************************************************
+********************************************************************************************************************************** */
+/*Additions 1/21/20118*/
+
+/* This is for consistent margin/padding in the right column of page01.htm */
+#content #reqPad p, #content #reqPad ul, #content #reqPad ol, #content #reqPad span, #content #reqPad
+{
+padding-top: 2px;
+margin-top: 2px;
+padding-bottom: 2px;
+margin-bottom: 2px;
+}
+
+/* consistent margin/padding for list items past level one */
+ul li ul, ul li ul li ul, ol li ol, ol li ol li ol{padding-top: 4px; margin-top: 4px;}

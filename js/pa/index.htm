@@ -14,10 +14,27 @@
  <form name="titleform">
   <table style='border-top:1px solid #999;width:800px'>
  <tr>
- <td><b>Document title:</b>&nbsp; <input type="text" name="doctitle" id="doctitle" value=""  size="40" maxlength="60"></td><td><b>Header Title:</b>&nbsp; <input type="text" name="hdtitle" id="hdtitle" value=""  size="40" maxlength="60"></tr>
+ <td><b>Document title:</b>&nbsp; <input type="text" name="doctitle" id="doctitle" value=""  size="40" maxlength="60"></td>
+ <td><b>Header Title:</b>&nbsp; <input type="text" name="hdtitle" id="hdtitle" value=""  size="40" maxlength="60"></td>
+ </tr>
  </table>
  </form>
- 
+ <form name="moduletypeform" style="margin:12px 0 12px 0">
+  <label>
+  Select a button set:
+  <select name="moduletype">
+  <option value="1">1:Finish Later|Mark Complete|</option>
+  <option value="2" selected='selected'>2:Finish Later|</option>
+  <option value="3">3:Finish Later|Next Section|</option>
+  <option value="4">4:Finish Later|Go to Quiz|</option>
+  <option value="5">5:Finish Later|</option>
+  <option value="6">6:|Mark Section Complete|</option>
+  <option value="7">7:|Mark Complete</option>
+  <option value="8">8:|Finish Later|Next Section|Mark Complete|</option>
+  <option value="9">9:|Next Section|</option>
+  </select>
+   </label>
+ </form><!--end moduletypeform-->
  
      <div id="container"></div>
        <button id="addQuiz">add Another Page</button>

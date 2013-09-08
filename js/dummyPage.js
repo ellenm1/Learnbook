@@ -1,3 +1,16 @@
+var testing = parent.testing; 
+var PageArray0=new Array();
+
+function storeOriginalPageArray(){	
+		//if(testing){console.log('PBB PageArray0 was null'+ PageArray)}
+		PageArray0=PageArray;
+		//if(testing){console.log('Pqq PageArray0='+PageArray0)}
+}
+
+if(PageArray0.length==0){
+	storeOriginalPageArray();
+}
+
 function determineParents(){ //determines what is a parent and what branch item is in
 	 var branch;
 	 for(var i=0; i< PageArray.length; i++) { 
@@ -21,4 +34,4 @@ function determineParents(){ //determines what is a parent and what branch item 
      } //for(var...
  }  
  
- function writeDocTitle(){  parent.document.title=docTitle; } 
+function writeDocTitle(){  parent.document.title=docTitle; } 

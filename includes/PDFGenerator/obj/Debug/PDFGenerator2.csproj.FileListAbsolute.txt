@@ -1,0 +1,8 @@
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\bin\PDFGenerator2.dll
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\bin\PDFGenerator2.pdb
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\bin\ABCpdf.dll
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\bin\ABCUpload6.DLL
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\bin\ABCpdf.xml
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\obj\Debug\ResolveAssemblyReference.cache
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\obj\Debug\PDFGenerator2.dll
+C:\projects\VC#\PDFGenerator2\PDFGenerator2\obj\Debug\PDFGenerator2.pdb

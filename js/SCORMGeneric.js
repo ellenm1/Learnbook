@@ -1,4 +1,4 @@
-/*v 1.10 2-8-2007 emeiselm*/
+/*v 1.13 2-22-2013 emeiselm*/
 
 //based on:
 // SCORM 1.2 SCO Logic management script sample
@@ -11,15 +11,12 @@
 //
 // Change these preset values to suit your taste and requirements.
 //Comment these lines out for debugging:
-
-
-
+ 
 var g_bShowApiErrors = true;
 var g_strAPINotFound = "Management system interface not found.";
 var g_strAPITooDeep = "Cannot find API - too deeply nested.";
 var g_strAPIInitFailed = "Found API but LMSInitialize failed.";
 var g_strAPISetError = "Trying to set value but API not available.";
-
 var g_nSCO_ScoreMin = 0; 			// must be a number
 var g_nSCO_ScoreMax = 100; 		// must be a number > nSCO_Score_Min
 var g_SCO_MasteryScore = 99.9; // value by default; may be set to null
@@ -30,37 +27,38 @@ var g_nFindAPITries = 0;
 var g_objAPI = null;
 var g_bInitDone = false;
 var g_bFinishDone = false;
+var g_bIsSuspended = false;
 var	g_bSCOBrowse = false;
 var g_dtmInitialized = new Date(); // will be adjusted after initialize
+var g_gbGoingToNextSco = false;//used to prevent "suspend or complete?" alert for unscored scos that I added to SCOUnload function used in index.htm - emeiselm
 
 //the completeIfLastPage function is used to check if every page was looked at
 //before marking it complete.
 //some clients request this, but it should not be used in every module.
-function completeIfLastPage() {
-	//alert('self.data.PageArray.length' +self.data.znThisPage + ' ' +self.data.PageArray.length);
-	 if (!APIOK()){ return false;  } 
-	  else if (g_bFinishDone == false) {
-                 if (self.data.znThisPage == self.data.PageArray.length){     
-                 SCOFinish(); 
-				 //alert('lastpage')
-				 } else  { 
-				 //alert('notlastpage')
-				 }
-				  }
-         else if ((SCOGetValue('cmi.core.lesson_mode') == 'Completed') || (SCOGetValue('cmi.core.lesson_mode') == 'Passed') )  {
-			SCOFinish(); 
-		     }
-           }
+function completeIfLastPage(){
+	if (!APIOK()){ return false;  } 
+	else if (g_bFinishDone == false) {
+    	if (self.data.znThisPage == self.data.PageArray.length){     
+        	SCOFinish(); 
+			//alert('lastpage')
+		}else{ 
+			//alert('notlastpage')
+		}
+	}
+    else if ((SCOGetValue('cmi.core.lesson_mode') == 'Completed') || (SCOGetValue('cmi.core.lesson_mode') == 'Passed') )  {
+		SCOFinish(); 
+		}
+}
         
 function AlertUserOfAPIError(strText) {		 
-		 if ( (g_bShowApiErrors)) { //if these scripts have been loaded (prevents js errors if an old index page is being used)
-			SetCookie('referenceMode',false,1);
-				if (ReadCookie('referenceMode')==false){
-			        alert('You will not receive credit because you arrived here without enrolling. If you want credit, return to MLearning and enroll in this course. "');
-				    SetCookie('referenceMode',true,1);
-				}
-		 window.status="It appears you did not launch this from MLearning. No score will not be recorded";
-		}//if showApiErrors
+	if ( (g_bShowApiErrors)) { //if these scripts have been loaded (prevents js errors if an old index page is being used)
+		SetCookie('referenceMode',false,1);
+		if (ReadCookie('referenceMode')==false){
+			alert('You will not receive credit because you arrived here without enrolling. If you want credit, return to MLearning and enroll in this course. "');
+			SetCookie('referenceMode',true,1);
+		}
+		window.status="It appears you did not launch this from MLearning. No score will be recorded";
+	}//if showApiErrors
 }//function
 
 //search for the scorm adapter
@@ -114,21 +112,32 @@ function SCOInitialize() { //initializes communication and sets sco status to "i
 	return (err + "") // Force type to string
 }
 
-  function SCOSaveData(){// this function will be called when this SCO is unloaded
-  if(APIOK()){
-  SCOCommit();
-  if(frames.data.quizCount==0){ SCOSetStatusCompleted() }
-  else if (frames.data.quizCount>0){ SCOSetValue("cmi.core.exit", "" ); }//needed to finalize quiz score?
- }
+// this function will be called when this SCO is unloaded
+function SCOSaveData(){
+  	if(APIOK()){
+  	SCOCommit();
+  	if((window.data.quizCount==0)&&(!g_bIsSuspended)){ 
+ 	//   if(testing){ console.log('GAB i am about to set status to completed')  }
+  	SCOSetStatusCompleted() }
+  	else if (window.data.quizCount>0){ SCOSetValue("cmi.core.exit", "" ); }//needed to finalize quiz score?
+ 	}
 }
 
+function SCOSuspend(){// this function will be called when this SCO is unloaded
+	if (APIOK() && (g_bFinishDone == false) ){
+		SCOCommit();
+		SCOSetValue("cmi.core.exit", "suspend" );
+		g_bIsSuspended = true;
+		SCOFinish();
+	}
+}
 
-function SCOFinish() {
-	if ((APIOK()) && (g_bFinishDone == false)) {
+function SCOFinish(){
+	if ((APIOK()) && (g_bFinishDone == false)){
 		if (typeof(SCOSaveData) != "undefined"){
 			SCOReportSessionTime();
 			// The SCOSaveData function can be defined in another script of the SCO
-			 SCOSaveData();
+			SCOSaveData();
 		}
 		g_bFinishDone = (g_objAPI.LMSFinish("") == "true");
 	}
@@ -211,9 +220,13 @@ function SCOReportSessionTime() {
 	var n = dtm.getTime() - g_dtmInitialized.getTime();
 	return SCOSetValue("cmi.core.session_time",MillisecondsToCMIDuration(n))
 }
-function SCOSetStatusIncomplete(){
-SCOSetValue("cmi.core.lesson_status","incomplete");
+
+function SCOSetStatusIncomplete(){ //added a ratchet UP rule to this
+	if((SCOGetValue("cmi.core.lesson_status")!="completed")||(SCOGetValue("cmi.core.lesson_status")!="passed")){
+   		SCOSetValue("cmi.core.lesson_status","incomplete");
 		SCOCommit(); 
+	}
+	
 }
 // Since only the designer of a SCO knows what completed means, another
 // script of the SCO may call this function to set completed status. 
@@ -221,36 +234,114 @@ SCOSetValue("cmi.core.lesson_status","incomplete");
 // avoids clobbering a "passed" or "failed" status since they imply "completed".
 function SCOSetStatusCompleted(){
 	var stat = SCOGetValue("cmi.core.lesson_status");
-	  if (SCOGetValue('cmi.core.lesson_mode') != "browse"){
-		  if ((stat!="completed") && (stat != "passed") && (stat != "failed")){
+	if ((SCOGetValue('cmi.core.lesson_mode') != "browse")&&(!g_bIsSuspended)){
+		if ((stat!="completed") && (stat != "passed") && (stat != "failed")){
 			return SCOSetValue("cmi.core.lesson_status","completed");
-               // alert('module completed (SCOSetStatusCompleted)')
 		}
-	} else { }
-		
+	} 
+	else { }		
 }
 
+//should be used only at launch to set status and score
+function SCOSetStatus(){
+	if(APIOK()){ //if under scorm control  
+		//is this a scored module?
+		if(  (typeof iMasteryScore!="undefined")&&(!isNaN(iMasteryScore) )&&(iMasteryScore>0) ){                                                   
+    		isScoredModule = true; 
+    		if(testing){ console.log('B33 isScoreModule = '+isScoredModule);}
+    		if(  (typeof lmsScore!="undefined")&&(!isNaN(lmsScore) )&&(lmsScore>0) ){   
+    			moduleScore = lmsScore;
+    		}
+    		else{moduleScore=0;}
+    		// this is probably a scored module, but sometimes a mastery score is set on a module with no quizzes. double check this after running setup quizzes.   
+    	}              
+    	//check if they already have a completed or passed status in lms
+    	
+    	if(lmsStatus=="completed"){
+   			var conf = confirm("You have already completed this module. Are you sure you want to continue? Your score may change.\n Click NO or CANCEL to close window and save your existing status");
+    		if(conf == true){
+				SCOSetValue("cmi.core.lesson_status","incomplete"); //this won't work I don't think, with current rustici settings.
+   			}//end if(conf == true)
+   			else{  //they want to close module
+   				if(testing){console.log('PPR lmsStatus='+lmsStatus+' and user asked to close the window')  }
+					SCOSetValue("cmi.core.lesson_status","completed");
+					SCOSetValue("cmi.core.exit","");
+					//SCOSaveData();
+					//if(window.data.cookieVrsn){parent.SetCookie('cVrsn',"",-1);}
+					SCOReportSessionTime();
+					g_bFinishDone = (g_objAPI.LMSFinish("") == "true");		
+   			}	//end else
+   		}//end if(lmsStatus=="completed")		
+   			
+    	if(lmsStatus=="passed"){ 
+    			//ask user do they want to continue or close module.				
+    			var conf = confirm("You have already completed this module with a score of "+lmsScore+ "% in MLearning. Are you sure you want to continue? You will lose your completed status and score. \n Click NO to close window and save your existing status and score.");
+    			if(conf == true){
+						//use the score from the LMS.
+						SCOSetValue("cmi.core.lesson_status","incomplete");
+						moduleScore = lmsScore;
+   					}//end if(conf == true)
+   				else{  //they want to close module
+   					if(testing){console.log('PPX lmsStatus='+lmsStatus+' and user asked to close the window')  }
+					closingActions();
+   				}	//end else
+   		}//end if(lmsStatus=="passed")
+   		
+   		else{ //there was no previous completion in the lms
+   			//if scored module, make sure it doesn't mark itself complete unexpectedly
+    			if( isScoredModule){ // this is a scored module
+           			if(lmsStatus != "passed"){
+			  			SCOSetValue("cmi.core.score.raw", moduleScore); 
+			   			SCOSetValue("cmi.core.lesson_status", "incomplete");
+			   			SCOCommit;                         
+					}//end if(lmsStatus != "passed")  
+				else { //not a scored module, so its ok if they close module and it simply completes.
+					SCOSetValue("cmi.core.lesson_status", "incomplete");
+			   		SCOCommit;                         
+				}                                                
+        	}//end if( isScoredModule)  		   		
+   		}//end else  		   	
+    }//end if(APIOK())
+}//end function SCOSetStatus    
+
+
+function SCOUnload(){// this function will be called when this SCO is unloaded						
+	if ( APIOK() && (!g_bFinishDone)&&(!g_bIsSuspended) ){
+		if(isScoredModule){
+			if(testing){ console.log('ACE g_bFinishDone= '+g_bFinishDone+', g_bIsSuspended= '+g_bIsSuspended);    }
+			SCOCommit();
+			SCOSetValue("cmi.core.lesson_status", "incomplete");
+			//SCOSetValue("cmi.core.success_status", "Unknown");//this is a mistake: it only belongs in scorm2004
+			SCOSetValue("cmi.core.exit", "suspend" );
+			g_bIsSuspended = true;
+			SCOFinish();
+		}//end if(isScoredModule
+		else if((!g_bFinishDone)&&(!g_bIsSuspended)&&(!g_gbGoingToNextSco)){   //unscored only
+		if(testing){ console.log('ABE g_bFinishDone= '+g_bFinishDone+', g_bIsSuspended= '+g_bIsSuspended+', g_gbGoingToNextSco='+g_gbGoingToNextSco);    }
+		var r=confirm("If you want to mark this module complete, please click \"OK\" Otherwise, click \"Cancel\" and I will save your progress for later");
+        if (r==true) {SCOSetValue("cmi.core.lesson_status", "completed"); SCOSetValue("cmi.core.exit", "" ); SCOFinish();  }
+        else {  SCOSetValue("cmi.core.lesson_status", "incomplete");SCOSetValue("cmi.core.exit", "suspend" ); g_bIsSuspended = true; SCOFinish(); }
+		}
+	}//end if(APIOK
+}//end function SCOUnload
+                                                                                                            
 function SCOBookmark(){ //rewrote this function to be in the frameset
-    qArrayItem = frames.data.PageArray[frames.data.znThisPage-1];
-	//alert(qArrayItem.quiz+' | '+qArrayItem.index);
-   if (!APIOK()){//new 8-12-07 (moved SCOBookmark to index, not page itself)
-	  // alert('api not ok')
+    pArrayItem = window.data.PageArray[window.data.znThisPage-1];
+   	if (!APIOK()){//new 8-12-07 (moved SCOBookmark to index, not page itself)
 		return false;
-	           }
-			   //this is not the first page or the last, and is NOT a quiz.
-	 if ( (frames.data.znThisPage > 1)  &&  (frames.data.znThisPage < frames.data.PageArray.length) && (! qArrayItem.quiz)){
-		 //bookmark this location in mlearning
-		              SCOSetValue('cmi.core.lesson_location', frames.myStage.thispage); 
-		            // alert('bookmarked');
-		              SCOCommit();	
-                         }
-						 //if this is the last page
-   else if (frames.data.znThisPage == frames.data.PageArray.length){  
+	}
+	//this is not the first page or the last, and is NOT a quiz.
+	if ( (window.data.znThisPage > 1)  &&  (window.data.znThisPage < window.data.PageArray.length) && (! pArrayItem.quiz)){
+		//bookmark this location in mlearning
+		SCOSetValue('cmi.core.lesson_location', frames.myStage.thispage); 
+		SCOCommit();	
+    }
+	//if this is the last page
+   else if (window.data.znThisPage == window.data.PageArray.length){  
    //set the status to completed or passed.
-                       SCOSetStatusCompleted();
-                     // alert('You have completed this module.');
+                      // SCOSetStatusCompleted();
                           }
-   else if (qArrayItem.quiz){ 
+   else if (pArrayItem.quiz){ 
   // alert('I am not bookmarking'); 
    } //  do not bookmark.
 						 

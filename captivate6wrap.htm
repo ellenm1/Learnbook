@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<!--version 1.0 11-17-10-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Captivate</title>
+<link href="css/allBrowsers.css" rel="stylesheet" type="text/css" />
+<link href="css/header.css" rel="stylesheet" type="text/css" />
+<!--#include file="includes/headContent.htm"--> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>
+var iSwf = qsParm['swf'];
+var iWidth = qsParm['w'];
+var iHeight = qsParm['h'];
+//var iHeight = '100%';
+//var iWidth = '100%';
+function toggleNavbar()
+{
+   if(document.getElementById('leftColumn').className == 'leftColumnClosed')
+   { 
+	   document.getElementById('whiteArea').style.background = 'url(images/whiteArea2shadowsWide.jpg) repeat-y';   
+	   document.getElementById('leftColumn').style.display = 'block'; 
+	   document.getElementById('leftColumn').style.position = 'absolute';
+	   document.getElementById('leftColumn').style.left = '0px';
+	   document.getElementById('leftColumn').style.backgroundColor = '#1E77D3';
+	   document.getElementById('leftColumn').className = 'leftColumnOpen';
+	   document.getElementById('leftColumn').zIndex = '999';/*for IE 7*/
+    }//end if(document.getElementById('leftColumn')
+   else 
+   { 
+    document.getElementById('rightColumn').style.width = '1028px';
+    document.getElementById('leftColumn').className = 'leftColumnClosed';
+    document.getElementById('leftColumn').style.display = 'none';                    
+   }//end else
+}//end function toggleNavbar()
+
+
+</script>
+<script src="js/captivate_standard.js" type="text/javascript"></script>
+ 
+ 
+<style type="text/css"> 
+/*html, body { height:100%;position:relative;margin:0; padding:0; }*/
+body { text-align:center; margin:0; padding:0; overflow:hidden;}
+
+ 
+</style>
+<style>
+/*this will make the navbar disappear and allow more room for the captivate.*/
+div#rightColumn{
+	padding: 0px 0px 12px 0px;
+	background:none #000 ;
+
+    width:1028px;
+    }  
+#whiteArea { 
+    width:1044px;
+    background:url(images/whiteArea2shadowsWide.jpg) repeat-y; 
+    position:relative;/*needed to specify explicitly here for IE to recognize it */
+} 
+#leftColumn { display:none;overflow:hidden;}
+#subTitleBar {visibility:hidden;}
+#leftColumn.leftColumnOpen {display:block;}
+#leftColumn.leftColumnClosed{display:none;}
+
+#header, #footer{ 
+	margin:0px;
+	width:1042px;
+}
+#headerMiddle{width:606px; }
+#footerMiddle{ width:910px;  }
+#gripHandle{margin-left:-16px;}
+#content, #content td {padding:0px;}
+#output {color:#FFF;}
+#output hr{color:#FFF;}
+a.yesBtn:link, a.noBtn:link, a.noBtn:visited, a.yesBtn:visited{
+	display:block;
+	height:40px;
+	width:150px;
+	padding:22px 6px 6px 6px;
+	background-color:#0AA008;
+	color:#fff;
+	font-size:12px;color:#FFF;
+	margin:12px;
+}
+a.noBtn, a.noBtn:link,  a.noBtn:visited{background-color:#EE3124;padding:12px 6px 6px 6px;}
+a.yesBtn:hover{background-color:#12F321;}
+a.noBtn:hover{background-color:#FF0000;}
+#output {display:none;}
+</style>
+
+ </head>
+ 
+<body onload="RightClick.init(); style='background-color:red';">
+       <!--#include file="includes/header.htm" -->
+       <div id="leftColumn"><!--#include file="includes-local/navbar.htm" -->&nbsp;</div>
+	   <div id="rightColumn" style="background-color:#000">
+       <div style="position:absolute;"><a href="javascript:toggleNavbar();" title="Toggle navigation menu on and off"><img src="images/grip.png" id="gripHandle" /></a></div>
+	   <div id="content">
+
+		   <!--*********************put content below this line!!!!************-->
+		
+        <table cellSpacing=0 cellPadding=0 border="1"  align="center" id="contentTable">
+             <tbody>
+	            <tr valign="top"><td>
+	               
+		        <div id="CaptivateContent"></div>
+<script type="text/javascript">
+	 var so = new SWFObject(iSwf, "Captivate", iWidth, iHeight, "10", "#CCCCCC");
+			so.addParam("quality", "high");
+			so.addParam("name", "Captivate");
+			so.addParam("id", "Captivate");
+			so.addParam("wmode","window");
+			so.addParam("bgcolor","#FFF");
+			so.addParam("menu", "false");
+			so.addParam("scale", "showall");
+			so.addParam("allowscriptaccess","always")
+			so.setAttribute("redirectUrl", "http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash");			
+</script>
+     
+	 
+      <div id="messageDiv" style="display:none;padding:24px;width:659px;margin:auto;font:18px Arial, Helvetica, sans-serif;"></div>
+	  <div id="finishedDiv" style="display:none;padding:24px;width:659px;margin:auto;font:18px Arial, Helvetica, sans-serif;">
+      This quizlet has been completed.
+      <br />
+      <a href="javascript:nextPage();">Continue to next page of module</a>
+       <script>//writeTakeAgain()</script>
+      <!--<a href="javascript:takeItAnyway();">Let me try again! (click here!)</a>-->
+      </div>
+      <p><!--<a href="#" onclick="test();return false">Click here </a>--></p>
+      <div id="output"></div>
+	  </td></tr>
+        
+      </tbody>
+    </table>
+		  <!--*********put content above this line!!!!!*****-->
+		</div><!--end content-->
+	  </div><!--end rightColumn-->
+	 	
+	 <div id="footer"><!--#include file="includes/footer.htm" --></div>
+  </div>
+
+<form name="emailForm" action = "" method="POST" enctype="text/plain">
+<input name="Results" type="hidden">
+</form>
+
+</body>
+</html>
+<script language="JavaScript">document.getElementById('leftColumn').className = 'leftColumnClosed';</script>
+<script language="JavaScript" src="js/endScripts.js"    type="text/javascript"></script>
+<script language="JavaScript" src="js/captivate6Page.js" type="text/javascript"></script>
+<script language="JavaScript">checkIfTaken(); </script>	
+
+<script language="javascript">
+function changeHeight(){
+// var ht = $(document.body).height();
+// console.log('ht= '+ht);
+		//	$('#content').height(ht-100);
+			
+			 
+			$('#Captivate').height(iHeight);
+			$('#Captivate').css("border","1px solid #red");
+			console.log('$(\'#contentTable\').height()='+$('#content').height());
+			console.log('$(\'#CaptivateContent\').height()='+$('#CaptivateContent').height());
+			console.log('$(\'#Captivate\').height()='+$('#Captivate').height());
+}
+changeHeight();
+</script>
+
+   
+	
+	 
+ 
+
+

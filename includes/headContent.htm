@@ -1,40 +1,83 @@
-<!--/*v 1.6 09.28.11 emeiselm*/-->
-<TITLE>UMHS Mandatories: Corporate Compliance</TITLE>
-<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!--/*v 1.8 02.24.13 emeiselm*/-->
+<TITLE>*-*</TITLE>
+<meta charset="utf-8" />
+<!--<script type="text/javascript" src="js/swfobject.js"></script>-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/swfobject.js"></script>
 <script type="text/javascript" src="js/swfobject/swfobject.js"></script>
-<script language="javascript" src="js/MM_scripts.js" type="text/javascript"></script>
-<script language="JavaScript" src="js/cookie.js" type="text/javascript"></script>
-<script language="JavaScript" src="js/querystring.js" type="text/javascript"></script>
-<!--<script language="JavaScript" src="js/moduleVersion.js" type="text/javascript"></script>-->
-<script language="javascript" src="js/framewrap.js" type="text/javascript"></script>
-<script language="JavaScript" src="js/toggleOpen.js" type="text/javascript"></script>
-<script>
-qs();//parse query string for params
-wrapMe();//check if I am top, and if so wrap in frameset
-</script>
+<script language="javascript" src="js/MM_scripts.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/cookie.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/querystring.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/moduleVersion.min.js" type="text/javascript"></script>
+<script language="javascript" src="js/framewrap.min.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/toggleOpen.min.js" type="text/javascript"></script>
 <script language="JavaScript" src="js/pageNavigation.js" type="text/javascript"></script>
-<script language="JavaScript" src="js/help.js"  type="text/javascript" ></script>
+<script language="JavaScript" src="js/help.min.js"  type="text/javascript" ></script>
 <script language="javascript" src="js-local/userScripts.js" type="text/javascript"></script>
+<link rel="stylesheet" href="css/reveal.css"> 
+<script src="js/jquery.reveal.js" type="text/javascript"></script>
+
+<!--[if IE]>
+	<style>
+		#header{width:910px;} 
+		#rightColumn { 
+		background:none;
+		overflow: hidden;
+		}    
+	</style>
+<![endif]-->
 
 <!--[if lt IE 8]>
-<script language="JavaScript" src="js/fixPNG.js" type="text/javascript"></script>
-<style>
-/*this is to keep right col. float from dropping in IE*/
-#rightColumn {
-   width:738px;
-   overflow: hidden;
-   padding-top:30px; 
-   position: relative;
+	<script language="JavaScript" src="js/fixPNG.js" type="text/javascript"></script>
+	<style>
+	/*this is to keep right col. float from dropping in IE*/
+	#rightColumn {
+  		width:738px;
+ 		overflow: hidden;   
+  		position: relative;
    }
-#header{width:910px;}  
-#pageNumberHolder {
-   right:22px;
-   top: -27px;
-   }
-</style>
+
+	#pageNumberHolder {
+   		right:22px;
+   	}
+	#headerImage{margin-top:0px;}
+	</style>
+<![endif]-->
+<!--[if lt IE 9]>
+	<script language="JavaScript" src="js/fixPNG.js" type="text/javascript"></script>
+	<style>
+	 .reveal-modal .closeText {  font-size:14px;vertical-align:0px; }
+	 .reveal-modal .close-reveal-modal{  line-height:1.0 }
+	 .reveal-modal { background: #eee  }
+	 </style>
 <![endif]-->
 
 <link href="css/print.css" rel="stylesheet" type="text/css" media="print" />
 <link href="css-local/userStyles.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="js/jqueryui/theme/ui.all.css">
+ <script type="text/javascript">
+$(document).ready(function() {
+     $('#headerSearch').click(function(e) {
+     	$('#searchDiv').load('includes/search/googleResults.htm');
+        e.preventDefault();
+	  	$('#myModal').reveal();
+     });//end $('#headerSearch')
+});//end $(document).ready(
  
+//function ret(){
+function checkSubmit(e){
+	//alert('in checkSubmit');
+	//http://www.mindfiresolutions.com/Using-jQuery-AJAX-Calls-to-send-parameters-securely-1235.php
+	//http://stackoverflow.com/questions/29943/how-to-submit-a-form-when-the-return-key-is-pressed
+	//http://stackoverflow.com/a/29966
+	//var param = {q:('#q').val(),access: 'p', client: 'mlearning', proxystylesheet:'mlearning',sort:'date%253AD%253AL%253Ad1',oe:'UTF-8',ie:'UTF-8',filter:'0',proxyreload:'1',q:'criteria'}; 
+	//$("#searchResults").load("http://10.30.15.145/search?client=mlearning&proxystylesheet=mlearning&sort=date%253AD%253AL%253Ad1&oe=UTF-8&ie=UTF-8&filter=0&proxyreload=1&q=criteria");
+	var q = encodeURIComponent( $("#q").val() );
+	$("#searchResults").load("includes/search/proxy3.asp?q="+q);
+		//document.forms[0].submit();	
+		//show styled xml results in #searchResults div (at bottom of header.htm)
+	//$("#searchResults").load("search/proxy3.asp?q="+q);
+	
+}
+ </script>
