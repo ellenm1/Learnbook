@@ -1,0 +1,6 @@
+{
+  "name": "Learnbook",
+  "tagline": "SCORM compatible learning module template",
+  "body": "# Learnbook\r\nThis is a SCORM 1.2 compatible learning module template that is loaded with features.\r\nIt creates navigation, does branching, ad hoc page-sets created by the user, allows you to embed questionmark or captivate quizzes\r\nSimple javascript interactions\r\nScores the user based on what percent they achieved of total possible maximum points from all quizzes. \r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
