@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="no" ?>
+<!-- created with MLearning's custom SCORMManifestMaker, on Thursday, July 10, 2014 8:30:59 AM -->
+<manifest identifier="MAN-4520535-8242114" version="1.0" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd" >
+<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>1.2</schemaversion>
+</metadata>
+<organizations default="TEST-20021">
+	<organization identifier="TEST-20021" structure="hierarchical">
+		<title><![CDATA[Module for testing adhoc version creation from a pool of pages]]></title>
+		<item identifier="item01" identifierref="RES-7132393"  isvisible="true">
+			<title><![CDATA[Learning Module & Quizzes]]></title>
+			<adlcp:masteryscore>80</adlcp:masteryscore>
+		</item>
+	</organization>
+</organizations>
+<resources>
+<resource identifier="RES-7132393" type="text/html" adlcp:scormtype="sco" href="https://mlearningcontent2.med.umich.edu/content/ct/test/Kris_workingVersionCreator_Mar15/index.htm">
+			<file href="/content/ct/test/Kris_workingVersionCreator_Mar15/index.htm" />
+			<file href="page01.htm" />
+		</resource>
+	</resources>
+</manifest>

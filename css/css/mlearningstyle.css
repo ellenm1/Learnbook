@@ -449,9 +449,9 @@ color:#FF0000;
 background:#FF6600;
 font:bold 11px Arial, Helvetica, sans-serif;
 display:block;
- 
 color:#FFFFFF;
 text-align:center; }
+
 #msgcloser a, #quizMessages a:link, #quizMessages a, #quizMessages a:visited {
 border:none;
 color:#000;
@@ -495,7 +495,9 @@ a.tryagainLink, a:visited.tryagainLink{
 /*however if there is a non-counting quiz (pretest, survey), it will show up.*/
 .countscore0{ display:block;color:#3366CC;margin-bottom:12px; }
 
-#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, #quizMessages a.closeNowLink, a.button:link, a.button:visited{ 
+#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, 
+#quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, 
+#quizMessages a.closeNowLink, #quizMessages a.failedLink, #quizMessages a.failedLink:link, #quizMessages a.failedLink:visited,  a.button:link, a.button:visited{ 
 	display:block;
 	text-align:center;
 	font-weight:normal;
@@ -529,6 +531,14 @@ a.tryagainLink, a:visited.tryagainLink{
 	 margin-left:auto;
 	 margin-right:auto;
  }
+ #quizMessages a.failedLink{
+ 	background-color:red;
+    border-top:3px ridged #BF2D00;
+    border-left:3px ridge #BF2D00;
+    border-bottom:3px ridge #FF2D00;
+    border-right:3px ridge #FF2D00;
+ }
+ 
  #quizMessages a.tryagainLink:hover, a.button:hover{
    background:#0046FF;}
  #quizMessages a.gothereLink:hover{background:#00FF33;}
@@ -574,21 +584,6 @@ a.tryagainLink, a:visited.tryagainLink{
 	 	color:#FFF;
 	 	width:100%;
 }
-
-#banner.mcit{
-                text-align: left;
-                display: inline-block;
-                height: 125px;
-                line-height: 125%;
-                position: relative;
-                color: #FFF;
-                width: 100%;
-                background-color: #3659B5;
-                background-image: url(../../images/img/mcit-header.png);
-                background-repeat: no-repeat;
-                background-position: 20px;
-}
-
 
 #banner.michart #bannerTitle {
 	/*width:20%; */

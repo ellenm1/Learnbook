@@ -13,12 +13,6 @@
 	getFileName();
  
 	if(filename!="index.htm"){ 
-			//if (navigator.userAgent.indexOf("Googlebot")==-1){
-		if (navigator.userAgent.indexOf("gsa-crawler")==-1){//this is not the gsa, so execute the deeplink function
-				window.location = url.substring(0, url.lastIndexOf('/'))+'/index.htm?dl='+filename;
-				}
-		else{
-			//do nothing because gsa can't handle the ajax.
-			}
+		window.location = url.substring(0, url.lastIndexOf('/'))+'/index.htm?dl='+filename;
 		}
  

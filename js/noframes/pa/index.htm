@@ -12,13 +12,13 @@
 <!--<body onload="clearForm();">-->
 <body  onload="$('#container').addForms()">
  <form name="titleform">
-  <table style='border-top:1px solid #999;width:1200px'>
+  <table style='border-top:1px solid #999;width:800px'>
  <tr>
- <td style="text-align: right;"><b>Document title:</b>&nbsp; <input type="text" name="doctitle" id="doctitle" value=""  size="40" maxlength="60"></td>
+ <td><b>Document title:</b>&nbsp; <input type="text" name="doctitle" id="doctitle" value=""  size="40" maxlength="60"></td>
  <td><b>Header Title:</b>&nbsp; <input type="text" name="hdtitle" id="hdtitle" value=""  size="40" maxlength="60"></td>
  </tr>
   <tr>
- <td style="text-align: right;"><b>Content Expert Name <span style="color:red">*</span></b>&nbsp; <input type="text" name="contentExpName" id="contentExpName" value=""  size="40" maxlength="60"></td>
+ <td><b>Content Expert Name <span style="color:red">*</span></b>&nbsp; <input type="text" name="contentExpName" id="contentExpName" value=""  size="40" maxlength="60"></td>
  <td><b>Content Expert Email address<span style="color:red">*</span>:</b>&nbsp; <input type="text" name="contentExpEmail" id="contentExpEmail" value=""  size="40" maxlength="60"></td>
  </tr>
  </table>
@@ -54,11 +54,11 @@
   
     <div id="output">
     <div class="label">Page Array and interactions array will show up here. IMPORTANT!!! SCROLL DOWN if you are creating INTERACTIONS!!!</div>
-        <textarea name="arr" id="arr" cols="150" rows="40" ></textarea> 
+        <textarea name="arr" id="arr" cols="100" rows="40" ></textarea> 
         <div><input name="resetOutput" type="reset" value="reset" onclick="document.getElementById('arr').value='';" /></div>
     </div><!--output-->
  <div id="output2" style="display:none"> <div class="label">HTML for Interactions Links</div>
-        <textarea name="interactionsLinks" id="interactionsLinks" cols="150" rows="25" ></textarea> 
+        <textarea name="interactionsLinks" id="interactionsLinks" cols="100" rows="25" ></textarea> 
         <div> <input name="resetOutput2" type="reset" value="reset" onclick="document.getElementById('interactionsLinks').value='';" /></div>
     </div><!--output2-->
 <div id="debug">

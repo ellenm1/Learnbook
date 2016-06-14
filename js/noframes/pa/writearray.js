@@ -37,15 +37,15 @@ function createArray(){
 		 var type = qforms[f].quiztype.value;
 		     if (testing){  console.log('type= '+type);}
 		 var countscore = qforms[f].countscore.value;
-		
-		     if(testing){ console.log('countscore= '+countscore); }
+		 	if(testing){ console.log('countscore= '+countscore); }
+		 var passingscore = qforms[f].passingscore.value;	
+		     if(testing){ console.log('passingscore= '+passingscore); }
 		 var quiz;
 		 var surveyid = qforms[f].surveyid.value;
 		 var pathtoswf=qforms[f].pathtoswf.value;//change this!!
 		 if(testing){ console.log('pathtoswf= '+pathtoswf); }
 		 var path6toswf=qforms[f].path6toswf.value;//change this!!
 		 if(testing){ console.log('path6toswf= '+path6toswf); }
-		 var pathtoHTML5wrap = qforms[f].pathtoHTML5wrap.value;
 		 var width = qforms[f].cwidth.value;
 		 var height=qforms[f].cheight.value;
 		 var width6 = qforms[f].c6width.value;
@@ -75,10 +75,6 @@ function createArray(){
 		          case("C6"):
 		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
 				  url="captivate6Wrap.htm?swf="+path6toswf+"&w="+width6+"&h="+height6;			 
-				  break;
-				  case("H"):
-		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-				  url=pathtoHTML5wrap+"/capHTML5wrap.htm";			 
 				  break;
 				  case ("I"):
 				  // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
@@ -116,9 +112,6 @@ function createArray(){
 			        case("C6"):
 			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
 			                break;
-			        case("H"):
-			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
-			                break;
 			        case("U"):
 			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rm+"', countscore:'"+countscore+"'"; 
 			                break;
@@ -128,6 +121,9 @@ function createArray(){
 			               break;
 			       }//end switch
 			   }//end if(isQuiz==1)
+			if((countscore=="3")&&(typeof passingscore!=="undefined")){
+								o+=", passingscore:'"+passingscore+"'";
+					}//end  if
 			if( lastitm==0){ 
 			                    o+="},\n" 
 			       }//end  if

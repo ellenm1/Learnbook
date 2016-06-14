@@ -2,26 +2,25 @@
 //this is included in dummypage after the quizFunctions. It gets run on module load
 //http://www.sitepoint.com/forums/showthread.php?t=575320
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
-var testing = true; //turn to true to show debugging information for this script
+//var testing = false; //turn to true to show debugging information for this script
 //Check if there are any interactions, and if the lms is present. If not, bail out.
 
-  
+
+
+ 
+ 
 //read suspend data 
-function loadInteractions(wipeInteractions)
+function loadInteractions()
 { 
    if ( (trackingmode == "scorm")&&APIOK() ){ 		//if using scorm, and we can find the api, look for an interactions array...
-   
-   	var interactionsLoaded = false;
-	
-    //there is only one interactions array. if there are extra interctions in the array left over from earlier versions, it should not hurt anything, I think.
-   //so it is ok to load the old array and simply edit it and put it back. Items that have not changed that are not being used will just sit there.
+   var interactionsLoaded = false;
    
    if (typeof IntArray!="undefined"){ 	//if there is an interactions array...
 		if(testing){console.log('JKFF IntArray exists')}
-		 
+		
 		if(ns.localStorage.isSet('interactionsArray') ){ ints = ns.localStorage.get('interactionsArray');}	//if there is an interactions array section in local storage, use it
 		
-		else {	//if no interactions in localStorage yet, create the interactionsArray section in localStorage. put "IntArray" from pageArray.js into local storage 																						
+		else {	//if no interactions in local storage, put the data from the js-file based IntArray into local storage																							
 			if(testing){console.log('JKEL IntArray exists, and ns.localStorage.isSet(interactionsArray) is false')}
 			ns.localStorage.set('interactionsArray',IntArray);
 			ints=ns.localStorage.get('interactionsArray');
@@ -29,35 +28,26 @@ function loadInteractions(wipeInteractions)
 			interactionsLoaded = true
 		}	//end else
 	}//end 	if ((typeof IntArray!="undefined")&&(APIOK() 
- 		
-		//if(typeOf wipeInteractions !="undefined" && wipeInteractions==true){
-			//do not load ints_ string from suspendData
-		
-		//}
-		
-		  
-		 
+
+   
+   
+		// var intLoaded = false;
 		var suspendData =SCOGetValue("cmi.suspend_data")?SCOGetValue("cmi.suspend_data"):"";
-		
-		var startInts =  suspendData.indexOf('Ints_');
-    	var endInts   =  suspendData.indexOf('_Ints'); 
-    	var suspendInteractionsString = (startInts!=-1)?suspendData.substring(startInts,endInts):"";
-    	
-    	 
-		//var interactionsDataFromLMS = end!="0"?suspendData.substring(start+5,end):"";//Ints_ is 5 characters. String starts from after the underscore. If there were no Ints_ in the data yet, the string will be empty.
+		var spStr = suspendData;
 		var itmData;
 		
+		if (testing){console.log('in interactions.js loadInteractions: suspendData= '+suspendData+'suspendData.length='+suspendData.length)}
+		if (testing){console.log('ints= '+ints)}//"is" appears to be a reserved word  - not sure where, so am using ints instead of is
+		//var suspItms = spStr.split(","); //splits suspend data into an array of "item:ascore:atries" groups.
 		
-		if (testing){console.log('in interactions.js loadInteractions: suspendInteractionsString= '+suspendInteractionsString+'suspendInteractionsString.length='+suspendInteractionsString.length)}
-		if (testing){console.log('ints= '+ints)}//"is" appears to be a reserved word  - not sure where, so am using ints instead of is which would be more consistent with ps and ms
+		
 		if (testing){console.log('<hr>in function loadInteractions in interactions.js<hr>');}
 		
-		
-		if(suspendInteractionsString.length>0){	//if there IS suspend data need to load it and use it
-			var suspItms = suspendInteractionsString.split(","); //splits suspend data into an array of "item:ascore:atries" groups.
+		if(suspendData.length!=0){	//if there IS suspend data...
+			var suspItms = spStr.split(","); //splits suspend data into an array of "item:ascore:atries" groups.
 		   
 		  
-			//then plug suspend data values into local version of interactionsarray "ints"
+			//then plug suspend data values into local storage interactionsarray
 			//suspItms[0] will always be empty, so skip it.
 			if (testing){console.log('AAE.00')}
 			for (var m=1; m<suspItms.length; m++){
@@ -98,7 +88,7 @@ function loadInteractions(wipeInteractions)
 			//write the "is" data back to localStorage
 			ns.localStorage.set('interactionsArray',ints);	//write it all back to interactionsArray in local storage
 		}//end if (suspendData != "")		 
-		else{   //there was no suspend data, so just load correct messages:
+		else{   //no suspend data, so just load correct messages:
 			if (testing){console.log('ABA.00')}
 			
 			//select a message for the itm
@@ -138,15 +128,7 @@ function loadInteractions(wipeInteractions)
 						
 			}//end for(var g
 			
-			var newstr = "Ints_"+ints+"Ints";
-			//if start==-1 there were no Ints in suspendData previously so need to add Ints_.._Ints bookends.
-			//var newSuspendData = (startInts ==-1)?suspendData+newstr:(suspendData.replace(/(Ints_)(.+?)(?=_Ints)/, "$1 "+ints))//Dont want to do this yet.
-			
-			 
-			//SCOSetValue("cmi.suspend_data", newSuspendData);//Dont want to do this yet.
-			//SCOCommit;//Dont want to do this yet.
-			//now store revised version of "ints" in localStorage "interactionsArray" 
-			ns.localStorage.set('interactionsArray',ints);	//write "ints" all back to interactionsArray in local storage
+			ns.localStorage.set('interactionsArray',ints);	//write it all back to interactionsArray in local storage
 	 
 		
 			
@@ -162,8 +144,7 @@ function loadInteractions(wipeInteractions)
  
  
 function saveInteractions(){ 	//construct a data string from the current list of interactions
-	var suspendData = SCOGetValue('cmi.suspend_data');
-	if (testing){console.log('in function saveInteractions'); }
+	if (testing){console.log('<br>in function saveInteractions<br>'); }
    
   	var theDataString = '';
   	//move through interaction array (it isn't really an array so can't use length) and build a new suspendData string to push to LMS
@@ -171,31 +152,19 @@ function saveInteractions(){ 	//construct a data string from the current list of
 		var itm = ints[k];
 		theDataString += (','+itm.id+':'+itm.ascore+':'+itm.tries);
 		
-		if (testing){console.log("\n in function saveInteractions: itm["+k+"].id:"+itm.id+"\n msg: "+itm.msg+"<br> amax:"+itm.amax+"\n tries: "+itm.tries+"\n ascore"+itm.ascore+"\nquiz: "+itm.quiz+"\n"); }	
-		if (testing){console.log("\n in function saveInteractions: theDataString= "+theDataString+"\n");}
-	}
-		
-	//(fixed 5-28-16) bug - needs to be fixed, this will wipe out other data if we are storing that  - need to fix! 
-	var newSuspendStr;
-	
-	if(suspendData.indexOf('Ints_')==-1){
-		//means there were no interactions in suspendData. just append prefixed String to suspendData.
-			 newSuspendStr = suspendData+'Ints_'+theDataString+'_Ints'; 
-		}
-	else{ //there was Ints data already in suspendData, so just replace it.
-		newSuspendStr = suspendData.replace(/(Ints_)(.+?)(?=_Ints)/, "$1 "+theDataString)
-		}  
-	
-	SCOSetValue("cmi.suspend_data",newSuspendStr);//writes to API cache only
+		if (testing){console.log("<br>in function saveInteractions: itm["+k+"].id:"+itm.id+"<br> msg: "+itm.msg+"<br> amax:"+itm.amax+"<br> tries: "+itm.tries+"<br>ascore"+itm.ascore+"<br>quiz: "+itm.quiz+"<br>"); }	
+		if (testing){console.log("<hr>in function saveInteractions: theDataString= "+theDataString+"<br>");}
+	}		
+	//bug - needs to be fixed, this will wipe out other data if we are storing that  - need to fix!
+	SCOSetValue("cmi.suspend_data",theDataString);//writes to API cache only
 	SCOCommit();//writes to the db
-	var updatedSuspendData=SCOGetValue("cmi.suspend_data");
-	if(testing){console.log('FIGH newSuspendData='+updatedSuspendData)}
+	suspendData=SCOGetValue("cmi.suspend_data");	
  }    
    
 
  	
 
-function clearSuspendData(){ //just a utility function to clear all if needed
+function clearSuspendData(){
 	SCOSetValue("cmi.suspend_data",'');
 	SCOSaveData();
 }//end clearSuspendData(){

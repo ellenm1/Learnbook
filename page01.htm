@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>  
+	<title>Provider-Performed Microscopy for Clinicians at UMHS Inpatient and Outpatient Centers: Competency and Critical Behaviors</title>  
 	<link id="base-style" href="css/css/stylesimple.css" rel="stylesheet">
 	<link id="mlearning-style" href="css/css/mlearningstyle.css" rel="stylesheet">
  	<link id="custom-style" href="css-local/userStyles.css" rel="stylesheet">
@@ -15,21 +15,99 @@
     
   
 	 <div id="content">
-	 <div id="banner">
-     <div id="bnrTitle">MLearning SCORM-compatible HTML template</div></div>
+	
      <!--*********************put content below this line!!!!************-->
-         <table width="728" border="0" id="contenTable">
+     <style>
+     	#checkboxtable td {
+    	 width:50%;
+    	 height:75px;
+    	 padding:6px;
+     	}
+     	
+     	.checkbox.inline {width:50%}
+    	 </style>
+    	 
+    	<!--<fieldset>
+    		<div class="control-group">
+				<label class="control-label">Checkboxes</label>
+					<div class="controls">
+					  <label class="checkbox inline">
+						<div class="checker" id="uniform-inlineCheckbox1"><span>
+						<input type="checkbox" value="fern" id="inlineCheckbox1"></span></div> Do you perform Fern Testing?
+					  </label>
+					  <label class="checkbox inline">
+						<div class="checker" id="uniform-inlineCheckbox2"><span>
+						<input type="checkbox" value="sperm" id="inlineCheckbox2"></span></div>  Do you perform Sperm Analysis? 
+					  </label> 
+					</div>
+					<div class="controls">
+					  <label class="checkbox inline">
+						<div class="checker" id="uniform-inlineCheckbox1"><span>
+						<input type="checkbox" value="scabies" id="inlineCheckbox1"></span></div>Do you perform KOH Prep (Skin) / Scabies?
+					  </label>
+					  <label class="checkbox inline">
+						<div class="checker" id="uniform-inlineCheckbox2"><span>
+						<input type="checkbox" value="wetprep" id="inlineCheckbox2"></span></div>Do you perform Wet Prep / KOH Prep (Vaginal Discharge)?
+					  </label> 
+					</div>	
+					<div class="controls">
+					  <label class="checkbox inline">
+						<div class="checker" id="uniform-inlineCheckbox1"><span>
+						<input type="checkbox" value="urine" id="inlineCheckbox1"></span></div>Do you perform Urine Sediment Analysis?
+					  </label>
+					  <label class="checkbox inline">
+						<div class="checker" id="uniform-inlineCheckbox2"><span>
+						<input type="checkbox" value="pinworm" id="inlineCheckbox2"></span></div>Do you perform Pinworm Testing?
+					  </label> 
+					</div>				
+			</div>
+		</fieldset>-->					  
+	 						  
+      <table width="728" border="0" id="contenTable">
 	         <tr>
 	           <td width="478" valign="top">
-               			<h1>Competency</h1>
-	             		<p>Competency statement goes here</p>
-	             		<h1>Critical Behaviors</h1>
-	             		<ul>
-	               	
-                            <li><a href="index.htm" onclick="ns.localStorage.removeAll();">Clear namespace of local storage</a></li>
-                            <li><a href="index.htm" onclick="localStorage.removeAll();">Clear local storage</a></li>
-                            <li><a href="media/bestcareatlowercost.pdf" target="_blank">click to open a local pdf in a new window</a></li>
-                        </ul></td>
+               			 
+        <table id="checkboxtable">
+          <tr>
+            <td ><label>
+              <input type="checkbox" class="checkbox" name="fn" value="fn" cid="CheckboxGroup1_0" />
+              I need to take TB precautions (ICEX-20112)</label></td>
+          
+            <td><label>
+              <input type="checkbox" class="checkbox" name="sp" value="sp"  id="CheckboxGroup1_1" />
+              <br>
+             I need to take Transmission based precautions  (ICEX-20113)           </label></td>
+          </tr>
+          <tr>
+            <td><label>
+              <input type="checkbox" class="checkbox" name="sc" value="sc" id="CheckboxGroup1_2" />
+            I need to take central line insertion (ICEX-20114) </label></td>
+           
+            <td><label>
+              <input type="checkbox" class="checkbox" name="wp" value="wp" id="CheckboxGroup1_4" />I need to take Central venous catheters  (ICEX-52628)?</label></td>
+          </tr>
+          <tr>
+            <td>
+            </td>
+          </tr>
+          
+          </table>
+          
+          <button name="Submit" type="submit" value="Submit" id="submitbtn" class="btn btn-large btn-success" style="width:200px;height:50px;">Submit</button>
+           <button name="Reset" type="reset" value="Reset!" id="resetbtn" class="btn btn-large btn-danger" style="width:200px;height:50px;">Reset</button>
+         
+        
+          
+          
+         <span data-script="js-local/page01.js"></span> 
+          
+          
+          
+          
+          
+                        	             		<h1 style="color: red;">&nbsp;</h1>
+                        	             		
+                    <p>&nbsp;</p></td>
 	           <td width="248px" valign="top" bgcolor="#FFFFFF">
                <div align="right">
                <table width="92%" border="0" cellpadding="0" cellspacing="0" id="courseproperties">
@@ -39,45 +117,39 @@
 	             <tr>
 	               <td width="50%" valign="middle" bgcolor="#C0D6F3"  class="clockContainer" >
                   <div id="leftside" >
-                  <div class="clockTextLarge">36</div>
+                  <div class="clockTextLarge" style="font-size:40px">5-25</div>
                    <div class="clockTextSmall">minutes</div>
                    </div>
-                  <div id="rightside" style="float:left;">
-                    <div class="clockTextQuiz" style="margin-top:12px;">Module: 20 minutes</div>
-                   <div class="clockTextQuiz">Quiz: 16 minutes</div>
+                  <div id="rightside" style="float:right; width: 110px;">
+                    <div class="clockTextQuiz" style="line-height: 1;">Depends on how many sections staff needs to complete.</div>
+                   <div class="clockTextQuiz"></div>
                    </div>
                    <div class="clearboth" style="clear:both;width:100%;"></div></td>
                  </tr>
-	             <tr>
-	               <td valign="top" class="reqPad whatsnew header">What's new?</td></tr>
-	               <td valign="top" class="reqPad whatsnew"> 
-                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                   <ul>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                      <li>Donec at lacus ac nulla lobortis dignissim.</li>
-                      <li>Praesent pellentesque placerat purus, in rutrum nibh sollicitudin ac.<br />
-                        <br />
-                      </li>
-                   </ul></td>
-                 </tr>
+	           
 	             <tr>
 	               <td class="reqPad whatsnew header" style="font-size:85%">Who is the audience for this lesson?</td>
                  </tr>
 	             <tr>
-	               <td valign="top" class="reqPad"><p>All UMHS Employees</p></td>
+	               <td valign="top" class="reqPad"><p>All non-clinicians who work in patient care areas</p></td>
                  </tr>
 	             <tr>
 	             <td class="reqPad whatsnew header" style="font-size:90%">What are the requirements?</td>
                  </tr>
 	             <tr>
-	               <td valign="top" class="reqPad"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non felis vitae mi ornare consequat.</p></td>
+	               <td valign="top" class="reqPad"><table cellspacing="0" cellpadding="0" hspace="0" vspace="0" align="left">
+	                 <tr>
+	                   <td valign="top" align="left">	             		<ul>  <li>Complete the sections that apply to you with a minimum overall score of 80%</li>
+	                   </ul></td>
+                     </tr>
+                   </table><p>&nbsp;</p></td>
                  </tr>
                  <tr>
-<!-- if you wish to remove additional resources, delete starting here -->                 
+            
 	               <td class="reqPad whatsnew header" style="font-size:90%">Additional Resources</td>
                  </tr>
 	             <tr>
-	               <td valign="top" class="reqPad"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non felis vitae mi ornare consequat.</p></td>
+	               <td valign="top" class="reqPad"><p>&nbsp;</p></td>
                  </tr>
 	             <tr>
 <!-- if you wish to remove additional resources, delete ending here -->
@@ -90,7 +162,8 @@
             </tr>
 	         <tr>
 	           <td valign="top"><div id="endmatter">Copyright &copy; 2015 Regents of the University of Michigan<br />
-	             All rights reserved. Comments or suggestions to <a href="mailto:mlearninginfo@umich.edu">the MLearning team</a><br />Last modified: Sept. 2, 2015 (emeiselm)</div></td>
+	             All rights reserved. Comments or suggestions to <a href="mailto:mlearninginfo@umich.edu">the MLearning team</a><br />
+	             Last modified: February 18, 2016 (sksenn)</div></td>
 	           <td valign="top"></td>
             </tr>
        </table>

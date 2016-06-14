@@ -36,7 +36,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
           $.fn.addForms = function(){
          // alert('addForms');
 			              var myform = "<form id='form"+$countForms+"' name='form"+$countForms+"' method='post' action='' >"+
-                                       "   <table style='border-top:1px solid #999;width:1200px'><tr valign='top' class='ab'><td><div id='btntitle' class='item' ><b>Button Title</b><br/>"+
+                                       "   <table style='border-top:1px solid #999;width:800px'><tr valign='top' class='ab'><td><div id='btntitle' class='item' ><b>Button Title</b><br/>"+
                                        "   <input type='text' name='buttontitle' id='buttontitle' onclick='/*alert(this.parentNode.parentNode.id)*/'/>"+
                                        "   </div><!--btntitle--></td>"+
                                        "   <td><div id='titles'>"+
@@ -47,7 +47,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   Page Title:<br/><input type='text' name='pagetitle' id='pagetitle'  size='10'/>"+
                                        "   </div><!--pgtitle-->"+
                                        "   </div><!--titles--></td>"+
-                                       "   <td width='550' style='text-align:left;'><div id='quizblock'> "+ 
+                                       "   <td width='350'><div id='quizblock'> "+ 
                                        "   <label><input type='radio' name='isQuiz' value='0' id='isQuiz_0_"+$countForms+"' checked onclick='toggle(\"nonquizsettings"+$countForms+"\",\"togglequizsettings"+$countForms+"\")'/>"+
                                        "   This is <b><u>not</u></b> a Quiz</label><br />"+
                                        "    <label>"+
@@ -63,18 +63,18 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   <option value='Q'  id='qmarksel'>Questionmark</option>"+
                                        "   <option value='C'  id='captsel'>Captivate</option>"+
                                        "   <option value='C6' id='capt6sel'>Captivate 6 or greater</option>"+
-                                        "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
                                        "   </select>"+
                                        
-                                       "   <div id='countscoreblock'>"+
+                                       "   <div id='countscoreblock' >"+
                                        "   I want this quiz to:<br/>"+
-                                       "   <select name='countscore' id='countscore'>"+
+                                       "   <select name='countscore' id='countscore' onchange='this.value==3?toggle(\"passingscoreOptions"+$countForms+"\"):toggle(\"\");'>"+
                                        "   <option>Choose a scoring option...</option>"+
                                        "   <option value='0'  id='countscore0'>0: No display, doesn't count.</option>"+
                                        "   <option value='1'  id='countscore1' selected>1: Displays & counts.</option>"+
                                        "   <option value='2'  id='countscore2'>2: Displays but doesn\'t count.</option>"+
+                                       "   <option value='3'  id='countscore3'>3: Displays, counts, MUST be passed.</option>"+
                                        "   </select>"+
                                        "   <div id='key'>"+
                                        "   <ul style='font-size:10px;padding-left:6px;'>"+
@@ -84,10 +84,17 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   (Quiz is required to complete module: use for most quizzes)</li>"+
                                        "   <li><b>countscore 2</b> Shows a quiz score on score and status page but DOES NOT count toward total module score. "+
                                        "   (Quiz is NOT required to complete module: use for pre-tests)</li>"+
+                                       "   <li><b>countscore 3</b> Shows a quiz score on score and status page, counts toward total module score and MUST be passed to finish module. "+
+                                       "   (Quiz is required to be passed to complete module: use for critical quizzes)</li>"+
                                        "   </ul>"+
                                        "   </div><!--end key-->"+
                                        "   </div><!--end countscoreblock-->"+
-  
+  									   
+  									   "   <div id='passingscoreOptions"+$countForms+"' class='togglepassingscore"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+  									   "   <label for='passingscore'>What is the passing % score for this quiz?</label><input name='passingscore' type='text' value=''/>"+
+                                       "   </div><!--end passingscoreOptions-->"+
+  									   
+                                       
                                        "   <div id='Qoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   <label for='assessmentID'>What is the assessment ID (session ID)?</label><input name='assessmentID' type='text' value=''/>"+
                                        "   </div><!--end qoptions-->"+
@@ -112,12 +119,6 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='c6quizid' id='c6quizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--end C6options-->"+
                                        
-                                       "   <div id='Hoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
-                                       "   Relative path to captivateHTML5wrap.htm?(<i>captivate/myCaptivateQuiz</i>)<br/>"+
-                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/capHTML5wrap.htm</div>"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
-                                       "   Quiz ID (readonly) <input type='text' size='12'  name='Hquizid' id='Hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
-                                       "   </div><!--endHoptions-->"+
                                        
                                        
                                        
@@ -292,11 +293,6 @@ function quiztypefn(formnumber,type){
                             
                             if (type=="C6"){
                                quizidentifier=['c6quizid'+formnumber];
-                                document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
-                            }
-                            
-                             if (type=="H"){
-                               quizidentifier=['Hquizid'+formnumber];
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
 				            

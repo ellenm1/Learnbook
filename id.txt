@@ -4,10 +4,6 @@ Module Go Live Date:
 
 JIRA Card#:
 
-Project/Activity owner: 
-
-SME/content expert: 
-
 MLearning Activity Code:
 
 QuestionMark

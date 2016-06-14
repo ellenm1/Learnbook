@@ -27,7 +27,7 @@ function gFindAPI(){ //just the part of SCOInitialize that finds the api in any 
 $(document).ready(function() {
 	//initTracking(); 	  
 	//printNavBar();
-	
+ testing = true;
 	//$("#itm"+znThisPage).css("background-color","orange");	 	
 	$("#sidebar-left li a").click(function() {   
 	//	document.location.href = "index.htm?itm="+this.id;
@@ -88,12 +88,19 @@ function prevPage(pageIndex){
 }		
 //*****************Quizzing functions specific to perception quizzes. Functions that pertain to all quizzes are in quizFunctions.js *************//		
 
-function MarkObjectiveDone(objectiveID){//send quiz score data to the LMS
-	if(testing){console.log('XPJT in MarkObjectiveDone: objectiveID+= '+objectiveID+', pscore'+pScore+', pMax='+pMax+', apiok='+APIOK())}
+function MarkObjectiveDone(objectiveID, countscore, passingscore){//send quiz score data to the LMS
+	if(testing){console.log('XPJT in MarkObjectiveDone: objectiveID+= '+objectiveID+', pscore'+pScore+', pMax='+pMax +' apiok='+APIOK())}
 	var ct = SCOGetValue("cmi.objectives._count");
-	var checkdata = SCOGetObjectiveData(objectiveID, "status");
-	if(testing){console.log('GGGT in MarkObjectiveDone: checkdata = '+ checkdata+ 'cmi.objectives._count='+ct);}
-	SCOSetObjectiveData(objectiveID, "status", "completed");
+	var checkstatus = SCOGetObjectiveData(objectiveID, "status");
+	if(testing){console.log('GGGT in MarkObjectiveDone: checkstatus = '+ checkstatus+ 'cmi.objectives._count='+ct);}
+	if(countscore==3){
+		var gbPercentScore = pMax!=0?Math.round((pScore/pMax)*100):0;
+		var gbStatus = (gbPercentScore >= passingscore ? "passed":"failed"); 
+		SCOSetObjectiveData(objectiveID, "status", gbStatus);
+	}
+	else {
+		SCOSetObjectiveData(objectiveID, "status", "completed");
+	}
 	SCOSetObjectiveData(objectiveID, "score.raw", pScore.toString());
 	SCOSetObjectiveData(objectiveID, "score.max", pMax.toString());
 	SCOCommit();	 	
@@ -112,11 +119,18 @@ function quizFinish() {
 	objectiveID=('Q'+sSession);
 	//objectiveID=(ps[znThisPage].type+sSession);
 	if(testing){console.log('FFR sSession='+sSession)}
-	MarkObjectiveDone(objectiveID);	
- 
-	 
 	ps[znThisPage].qScore = pScore;
 	ps[znThisPage].qMax = pMax;
+	var qCountscore = ps[znThisPage].countscore;
+	if(qCountscore==3){ //if this is a quiz that must be passed to be completed, we need to have a passing score
+		var qPassingscore = (typeof ps[znThisPage].passingScore!="undefined")?ps[znThisPage].passingScore:80;
+		//if there is a passing score in the page array use it otherwise set it to 80.
+		}
+	 
+	MarkObjectiveDone(objectiveID, qCountscore, qPassingscore);	
+ 
+	 
+	
 	ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
 
  

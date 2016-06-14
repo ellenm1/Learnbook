@@ -189,7 +189,7 @@ function recordItem(itemID, dscore){	//record score to interactions array in loc
 	//move through interaction array to find interactions that belong to this page's quiz
     for (var m in ints){ 
 		var itmm = ints[m];
-        if (testing){ console.log('<br>in iScoreCalc itmm.id:'+itmm.id)+'objectiveID= '+objectiveID + ', objectiveID.slice(1)= '+objectiveID.slice(1)+' typeof itmm.ascore'+ typeof itmm.ascore;}		  
+       // if (testing){ console.log('<br>in iScoreCalc itmm.id:'+itmm.id)+'objectiveID= '+objectiveID + ', objectiveID.slice(1)= '+objectiveID.slice(1)+' typeof itmm.ascore'+ typeof itmm.ascore;}		  
 			if (itmm.quiz == objectiveID.slice(1)){   //itm belongs to this quiz
 				iScore+=(itmm.ascore*1);//increment this quiz' score by the amount earned for this interaction
 				iMax+= (itmm.amax*1);//increment this quiz' max score by the max amount possible for this interaction
