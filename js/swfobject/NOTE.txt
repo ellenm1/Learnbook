@@ -1,1 +1,0 @@
-SWFObject changed enough between v. 2.0 and 2.1 that we will need to have both in the common folder for a transitional period. Once older modules are adapted to the new version we can remove the old swfobject.js.

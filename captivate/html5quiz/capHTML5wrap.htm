@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name='viewport' content='initial-scale = 1, minimum-scale = 1, maximum-scale = 1'/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-ua-compatible" content="IE=10">
+<title></title>
+<link id="base-style" href="css/css/captivatehtml5.css" rel="stylesheet">
+</head>
+<body onload="onBodyLoad()">
+		<div id='initialLoading'></div>
+<script src="../../js/noframes/querystring.min.js">
+		
+<script>
+//NOTE: This script MUST be placed in a folder containing the captivate quiz inside the "captivate" folder or the hard coded paths will not work.
+//your_module_folder
+//_captivate
+//__specific_quiz_folder
+
+	(function()
+		{
+			if(document.documentMode < 9)
+			{
+				document.body.innerHTML = "";
+				document.write("The content you are trying to view is not supported in the current Document Mode of Internet Explorer. Change the Document Mode to Internet Explorer 9 Standards and try to view the content again.<br>To change the Document Mode, press F12, click Document Mode: <current mode>, and then select Internet Explorer 9 Standards.");
+				return;
+			}
+			window.addEventListener("load",function() 
+			{
+				setTimeout(function() 
+				{					
+					var script = document.createElement('script');
+					script.type = 'text/javascript';
+					script.src = 'assets/js/CPXHRLoader.js';
+					script.defer = 'defer';
+					script.onload = function()
+					{
+						var lCSSLoaded = false;
+						var lJSLoaded = false;
+						function constructDIVs()
+						{
+							if(lCSSLoaded && lJSLoaded)
+							{
+								initializeCP();
+							}
+						}
+						cpXHRJSLoader.css( 'assets/css/CPLibraryAll.css',function() {
+							lCSSLoaded = true;
+							constructDIVs();
+						});
+						 
+						var lJSFiles = [  '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', '../../js/noframes/jquery.storageapi.js','assets/js/CPM.js', 'assets/playbar/playbarScript.js' ];
+						cpXHRJSLoader.js(lJSFiles,function()
+						{
+							lJSLoaded = true;
+							constructDIVs();
+						});
+					}
+					document.getElementsByTagName('head')[0].appendChild(script);
+				},1);
+			},false);
+		})();
+		
+ 
+
+function onBodyLoad()
+{
+	if(typeof window.device === 'undefined')
+	{
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	else
+	{
+		onDeviceReady();
+		
+	}
+}
+
+function onDeviceReady()
+{
+	deviceReady = true ;
+	if(initCalled === true)
+		initializeCP();
+}
+
+function initializeCP()
+{
+	initCalled = true ;
+	if(cp.pg && deviceReady === false)
+		return;
+
+	function cpInit()
+	{
+		document.body.innerHTML = " <div class='cpMainContainer' id='cpDocument'><div id='main_container'><div id='projectBorder'></div><div class='shadow' id='project_container'><div id='project' class='cp-movie'><div id='project_main' class='cp-timeline cp-main'>
+		<div id='div_Slide' onclick='cp.handleClick(event)' ></div>		</div>		<div id='autoplayDiv'>			<img id='autoplayImage' src=''/>			<div id='playImage' tabindex='9999' role='button' aria-label='play' onkeydown='cp.CPPlayButtonHandle(event)' onClick='cp.movie.play()' ></div>		</div>	</div>	<div id='toc'>	</div>	<div id='playbar'>	</div>	<div id='cc' onclick='cp.handleCCClick(event)'>		<div id='ccText'>		<p id="pA" > </p></div> <div id='ccClose' onclick='cp.showHideCC()'>		</div>	</div>	<div id='gestureIcon' class='gestureIcon'>	</div>	<div id='gestureHint' class='gestureHintDiv'>		<div id='gImage' class='gesturesHint'></div>	</div>	<div id='pwdv'></div>	<div id='exdv'></div>	</div>	</div></div><div id='blockUserInteraction' class='blocker' > <table id="tA"  id='loading' class='loadingBackground'> <tr id="trA" >			<td id="tdA">				<image id='preloaderImage'></image>				<div id='loadingString' class='loadingString'>Loading...</div>			</td>		</tr>	</table></div> <div id='initialLoading'></div>";
+		cp.DoCPInit();
+		var lCpExit = window["DoCPExit"];
+		window["DoCPExit"] = function()
+		{
+			if(cp.UnloadActivties)
+				cp.UnloadActivties();
+			lCpExit();
+		};
+	}	
+	cpInit();
+}
+ 
+</script>
+<script>var cPath = qsParm['p']?qsParm['p'] : null;</script>
+<script src="../../js/noframes/cookie.min.js"></script>
+<script src="../../js/noframes/SCORMGeneric.unmin.js"></script>
+<script src="../../js/noframes/SCORMObjectiveLogic.js"></script>
+<script src="../../js/noframes/captivate8html5.js" defer></script>
+
+<noscript style="text-align:center;font-size:24px;">Enable Javascript support in the browser.</noscript>
+
+</body>
+</html>

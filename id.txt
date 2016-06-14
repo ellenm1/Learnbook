@@ -1,0 +1,21 @@
+ID Name:
+
+Module Go Live Date:
+
+JIRA Card#:
+
+Project/Activity owner: 
+
+SME/content expert: 
+
+MLearning Activity Code:
+
+QuestionMark
+Question View, path to quiz questions: 
+Assessment View path to quiz:
+
+Maize project folder: \Instructional Design -  Orange\_Projects\xAll\???
+
+Creator/Quiz name in Qualtrics (if applicable):
+
+Version of Captivate (if applicable):

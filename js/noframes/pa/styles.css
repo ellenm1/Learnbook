@@ -1,0 +1,19 @@
+ body
+ {
+ 	font-family: Arial, Helvetica, sans-serif;
+ 	font-size: 11px;
+ }
+.ab {
+	background: none repeat scroll 0 0 #F1F1F1;
+    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #FFFFFF;
+    color: #333;
+   width:250px;
+   padding:6px 12px 6px 12px;
+   }
+   
+   td{ padding:6px 12px 6px 12px;}
+ 
+ .label {display:block;font-weight:bold;margin-top:30px; }
+ 
+ 
