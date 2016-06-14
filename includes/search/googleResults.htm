@@ -1,0 +1,25 @@
+<html> 	   	  
+<body>
+ <table id="contentContainerTable" border="0" cellpadding="0" cellspacing="0"  >
+ 
+	 <tr id="bodyTR" valign="top">
+       	<td class="contentLftCol" style="">   
+		<p><b>Type a Keyword or phrase, then "Enter" or "Return" key</b></p>
+ 		<input name="q" id="q" type="text" size="20" onChange="event.preventDefault();return checkSubmit(event);">
+		<div style="width:550px;scroll:auto;"></div>	
+	 	<script>
+			document.getElementById("q").focus();
+			$('#q').keydown(function(e) {			
+				var q=encodeURIComponent( $("#q").val() );
+				if(e.keyCode==13){ $("#searchResults").load("includes/search/proxy3.asp?q="+q); }
+			});
+		</script>
+    	</td>	  
+	</tr>
+</table>
+ 
+	   
+</body>
+</html>
+
+ 

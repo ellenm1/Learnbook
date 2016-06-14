@@ -1,0 +1,179 @@
+	#screenmetrics{ display:none;}
+	body.metrics>div#screenmetrics{  
+		position:absolute;
+		width:300px;right:0px;top:0px;
+		display:block;
+		background:#FFF;
+		z-index:1000;
+		color:#c000000;
+		font-size:11px;
+		line-height: 100%;
+	}
+
+/*http://www.webdesignetc.co/css-100-percentheight-demystified*/
+	body, html, #content, #sidebar-left{
+		position: relative;
+		height: 100%;
+	}
+
+	#content {
+		filter: none;
+		min-height: 100%;
+		padding:0 20px 10px 20px;/*setting right padding to 10 inst. of 20 keeps content from dropping down between 1186 and 1217 width ellen*/
+		position: relative;
+		width:65%;
+	}
+	.container-fluid-full{/*this may need changing*/
+		position: relative;
+		height:100%;
+		 
+	}	
+	#sidebar-left {
+		 /*float:left;
+		 min-height: 100%;*/
+	}
+
+	.row-fluid{
+		position: relative;
+		height:100%;
+		
+	}
+
+	.row-fluid .span1{
+
+	}
+
+/* Higher than 1200 (desktop devices)
+====================================================================== */
+@media (min-width: 1200px) {
+body.debug::before{ 
+	 content: "AAA @media (min-width: 1200px)  "; 
+	font-weight: bold; display: block; text-align: left; 
+	background: rgba(41,13,212, 0.9);*/ /* Semi-transparent blue*/ 
+	position:absolute; 
+	left:50%;right:0px;top:0px;
+	width:50%;
+	z-index: 99; 
+	color:white;  
+	} 
+	
+	#content {
+		background: #ffffff;
+		filter: none;
+		min-height: 100%;
+		padding:0 20px 10px 20px;/*setting right padding to 10 inst. of 20 keeps content from dropping down between 1186 and 1217 width ellen*/
+		position: relative;
+		width:65%;
+	}
+
+	  
+}
+
+@media (max-width: 767px) {
+ 
+
+}
+
+
+@media (max-width: 979px) {
+ 
+}
+
+
+
+/* Higher than 960 (desktop devices)
+====================================================================== */
+@media only screen and (min-width: 980px) and (max-width: 1199px){
+	body.debug::before{ 
+	content: "AAB @media only screen and (min-width: 980px) and (max-width: 1199px)"; 
+	font-weight: bold; display: block; text-align: left;  color:white; 
+	background: rgba(225,13,0, 0.9); /* Semi-transparent red*/ 
+	position:absolute; left:50%;right:0px;top:0px;
+	width:50%;z-index: 99; 
+	} 
+	 #content {
+		width:78%;
+		padding:0px;
+	}
+ 	.row-fluid .span1{
+	width:15%;
+	}
+	
+}
+
+/* Tablet Portrait (devices and browsers)
+====================================================================== */
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+	body.debug::before{ 
+	content: "AAC @media only screen and (min-width: 768px) and (max-width: 979px) "; 
+	font-weight: bold; display: block; text-align: left; 
+	background: rgba(225,130,0, 0.9); /* Semi-transparent sienna*/ 
+	position:absolute; 
+	left:50%;right:0px;top:0px;
+	width:50%;
+	z-index: 99; 
+	color:white; 
+	} 
+	
+	 
+ 	#content {
+		width:65%;
+	}
+	#sidebar-left{
+		 width:16%; 
+	}
+	.row-fluid .span1{
+		width:16%;
+		
+	}
+}
+
+/* All Mobile Sizes (devices and browser)
+====================================================================== */
+@media only screen and (max-width: 767px) {
+	
+body.debug::before{ 
+	content: "AAD @media only screen and (max-width: 767px) "; 
+	font-weight: bold; display: block; text-align: center; 
+	background: rgba(13,212,18, 0.9); /* Semi-transparent green */ 
+	position:absolute; 
+	left:50%;right:0px;top:0px;
+	width:50%;
+	z-index: 99; 
+	color:white; 
+	} 
+ 
+	
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers)
+====================================================================== */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+body.debug::before{ 
+	content: "AAE @media only screen and (min-width: 480px) and (max-width: 767px)  "; 
+	font-weight: bold; display: block; text-align: center; 
+	background: rgba(13,212,18, 0.9); /* Semi-transparent green */ 
+	position:absolute; 
+	left:50%;right:0px;top:0px;
+	width:50%;
+	z-index: 99; 
+	color:white; 
+	} 	
+ 
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers)
+=================================================================== */
+@media only screen and (max-width: 479px) {
+	body.debug::before{ 
+	content: "AAF @media only screen and (max-width: 479px)   "; 
+	font-weight: bold; display: block; text-align: center; 
+	background: rgba(244,52,161, 0.9); /* Semi-transparent magenta */ 
+	position:absolute; 
+	left:50%;right:0px;top:0px;
+	width:50%;
+	z-index: 99; 
+	color:white; 
+	} 	
+ 
+}

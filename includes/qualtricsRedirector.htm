@@ -3,55 +3,66 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Returning back to the learning module</title>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  	<script src='../js/noframes/base64.js'></script>
 </head>
 <!--this file is used to get around a security patch in IE described here:
     http://thedesignspace.net/MT2archives/000472.html-->
 <body>
 
-<script>
-if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
-var testing = false;
+<script type="text/javascript">
+if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
+var testing=true;
+ 
 //this provides a function to parse the query string for various parameters. 
 var qsParm = new Array();
 function qs() {
 		var query = document.location.search.substring(1);
 		var parms = query.split('&');
-		//var score = query.split('Score');
-		//var scoremax = query.split('Max');
-	    
-	 	//alert('parms='+parms);
+
 		for (var i=0; i<parms.length; i++) {
 			 var pos = parms[i].indexOf('=');
-			// alert('pos= '+pos);
+			if (testing){ console.log('pos= '+pos);}
 		    if (pos > 0) {
 				var key = parms[i].substring(0,pos);
-				//alert('key= '+key);
+				if (testing){ console.log('key= '+key);}
 				var val = parms[i].substring(pos+1);
-				//alert('val= '+val);
-				qsParm[key] = val;
-				 
+			if (testing){ console.log('val= '+val);}
+				qsParm[key] = val;				 
 					 }//end if
-            }//end for
-//alert('done with qs function');			
+            }//end for		
 }//end function
 
-qsParm['url'] = null;
 
- 
+qsParm['url'] = null;
+qsParm['p'] = null;
+qsParm['itm'] = null;
+qsParm['o']= null;
+qsParm['score']=null;
 qs();
 
-//alert('qsParm[p]'+qsParm['p']);
-//alert('location='+location+'parent.location='+parent.location);
-//alert("1. parent.theScore= "+parent.theScore);
-parent.theScore = qsParm['score'];
-//parent.quizFinish();
-if(testing){console.log(qsParm["url"]+'?p='+qsParm["p"]+'&score='+qsParm["score"]);}
+if ((qsParm['itm'] != null )&&(qsParm['itm']!="undefined")){ //if the return string exists, break it down. 
+ 
+	 	var st = 'score='+qsParm['score'];
+		var it = 'itm='+qsParm['itm'];
+ 		if (testing){console.log('st='+st+'it='+it)}
+		var encScore = encode64(st);
+		if (testing){console.log('encScore = '+encScore)}
+  
+		newLoc = qsParm['url']+'?'+it+'&zg='+encScore;
+ 		if (testing){console.log('newLoc='+newLoc)}
+		location.href = newLoc; //this is where it redirects back to the learning module
+ 	}
+	
+	else{
+	
+		parent.theScore = qsParm['score'];
+		if(testing){console.log(qsParm["url"]+'?p='+qsParm["p"]+'&score='+qsParm["score"]);}
+		parent.location.href=qsParm['url']+"?p="+qsParm['p']+"&score="+qsParm['score']; //this is for OLD STYLE iFrame-quiz MODULES
+		}//end else
+ 
 
-parent.location.href=qsParm['url']+"?p="+qsParm['p']+"&score="+qsParm['score'];
-
-//if (qsParm['home'] != null ){parent.location.href=qsParm['home']+"?Max="+qsParm['Max'];}
-//else alert("home is null");
-</script>
+ </script>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -62,12 +73,6 @@ var pageTracker = _gat._getTracker("UA-11509774-1");
 pageTracker._trackPageview();
 } catch(err) {}
 </script>
-
-
-
-
-
-
 </body>
 
 

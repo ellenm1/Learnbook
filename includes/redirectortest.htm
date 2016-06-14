@@ -9,7 +9,9 @@
 <body>
 
 <script type="text/javascript">
-
+if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
+var testing=true;
+if(testing){console.log('in redirectortest');}
 //this provides a function to parse the query string for various parameters. 
 var qsParm = new Array();
 function qs() {
@@ -21,12 +23,12 @@ function qs() {
 	//	alert('parms='+parms);
 		for (var i=0; i<parms.length; i++) {
 			 var pos = parms[i].indexOf('=');
-			// alert('pos= '+pos);
+			if (testing){ console.log('pos= '+pos);}
 		    if (pos > 0) {
 				var key = parms[i].substring(0,pos);
-				//alert('key= '+key);
+				if (testing){ console.log('key= '+key);}
 				var val = parms[i].substring(pos+1);
-				//alert('val= '+val);
+			if (testing){ console.log('val= '+val);}
 				qsParm[key] = val;
 				 
 					 }//end if
@@ -38,14 +40,16 @@ qsParm['home'] = null;
 qsParm['p'] = null;
  
 qs();
-
-//alert('qsParm[vrsn]'+qsParm['vrsn']);
+//console.log('returning from redirectortest:'+decodeURIComponent(qsParm['p'])+'&Max='+qsParm['Max']);
+//alert(decodeURIComponent(qsParm['p'])+"&Max="+qsParm['Max']);
 //if (qsParm['home'] != null ){parent.location.href=qsParm['home']+"&Max="+qsParm['Max'];}
 //else alert("home is null");
 if (qsParm['p'] != null ){
-console.log(decodeURIComponent(qsParm['p'])+"&Max="+qsParm['Max']);
-parent.location.href= decodeURIComponent(qsParm['p'])+"&Max="+qsParm['Max'];}
-else alert("p is null");
+ if (testing){ console.log('Max='+qsParm['Max'])}
+      if (testing){ console.log('returning from redirectortest:'+decodeURIComponent(qsParm['p'])+'&Max='+qsParm['Max']);}
+      parent.location.href= decodeURIComponent(qsParm['p']);
+                          }
+//else alert("p is null");
 </script>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

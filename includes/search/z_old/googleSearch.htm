@@ -1,0 +1,37 @@
+ <html><title>Google Search</title>
+ <script>document.title='Search this site';</script>
+<body>
+
+<!--<form method="get" name="gs" id="search" action="http://10.30.15.145/search">
+<input type="text" size="40" id="searchterm" name="GSAq" value="Search" />
+<input type="hidden" name="site" value="booth_collectionname" />
+<input type="hidden" name="client" value="default_frontend" />
+<input type="hidden" name="output" value="xml_no_dtd" />
+<input type="hidden" name="proxystylesheet" value="default_frontend" />
+<input type="hidden" name="sitesearch" value="www.domainname.edu" />
+<input type="hidden" name="oe" value="utf8" />
+<input type="hidden" name="ie" value="utf8" />
+<input type="submit" value="Go"/>
+</form>-->
+
+<form method="get" action="search/googleResults.asp" target="resultsframe">
+<input type="text" name="q"><!-- search term entered by user -->
+<!--<input type="hidden" name="coutput" value="xml">-->
+<input type="hidden" name="site" value="mlearning"> <!-- collection -->
+<input type="hidden" name="client" value="test"> <!-- front end -->
+<!--<input type="hidden" name="proxystylesheet" value="test">--> <!-- which front end contains the xslt to be used to format the results-->
+<input type="hidden" name="proxyreload" value="1"><!--force it to not cache the look and feel of results page-->
+<input type="hidden" name="sort" value="date%3AD%3AL%3Ad1"> <!-- sort results by relevancy -->
+<input type="hidden" name="oe" value="UTF-8"> <!-- character formatting -->
+<input type="hidden" name="ie" value="UTF-8"> <!-- character formatting -->
+<!--<input type="hidden" name="q" value="-inurl:dir_index"> --><!-- character formatting -->
+<input type="hidden" name="num" value="5"> <!-- limit number of results to fit iFrame -->
+<!--<input type="hidden" name="output" value="xml_no_dtd">-->
+<input type="hidden" name="filter" value="1"> <!-- force results to be grouped -->
+<input type="submit" value="Search" >
+</form>
+ <iframe id="iFrame" name="resultsframe" frameborder="1" width="99%" height="600px" scrolling="" OnLoad="window.scroll(0, 0);" src=""></iframe>	   	 
+
+ 
+</body>
+</html> 

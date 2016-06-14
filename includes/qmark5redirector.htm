@@ -3,6 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Returning back to the learning module</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  	<script src='../js/noframes/base64.js'></script>
 </head>
 <!--this file is used to get around a security patch in IE described here:
     http://thedesignspace.net/MT2archives/000472.html-->
@@ -10,17 +12,14 @@
 
 <script type="text/javascript">
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
-var testing=true;
+var testing=false;
 if(testing){console.log('in redirectortest');}
 //this provides a function to parse the query string for various parameters. 
 var qsParm = new Array();
 function qs() {
 		var query = document.location.search.substring(1);
 		var parms = query.split('&');
-		//var score = query.split('Score');
-		//var scoremax = query.split('Max');
-	    
-	//	alert('parms='+parms);
+
 		for (var i=0; i<parms.length; i++) {
 			 var pos = parms[i].indexOf('=');
 			if (testing){ console.log('pos= '+pos);}
@@ -29,29 +28,66 @@ function qs() {
 				if (testing){ console.log('key= '+key);}
 				var val = parms[i].substring(pos+1);
 			if (testing){ console.log('val= '+val);}
-				qsParm[key] = val;
-				 
+				qsParm[key] = val;				 
 					 }//end if
-            }//end for
-//alert('done with qs function');			
+            }//end for		
 }//end function
 
 qsParm['home'] = null;
 qsParm['p'] = null;
- 
 qs();
-//console.log('returning from redirectortest:'+decodeURIComponent(qsParm['p'])+'&Max='+qsParm['Max']);
-//alert(decodeURIComponent(qsParm['p'])+"&Max="+qsParm['Max']);
-//if (qsParm['home'] != null ){parent.location.href=qsParm['home']+"&Max="+qsParm['Max'];}
-//else alert("home is null");
-if (qsParm['p'] != null ){
- //if (testing){ console.log('Max='+qsParm['Max'])}
- //if (testing){ console.log('Max='+decodeURIComponent(qsParm['Max']))}
-  if (testing){ console.log('returning from qmark5redirector:'+decodeURIComponent(qsParm['p']));}
-      parent.location.href= decodeURIComponent(qsParm['p']);
-                          }
-//else alert("p is null");
-</script>
+
+if (qsParm['p'] != null ){ //if the return string exists, break it down. 
+  	if (testing){ console.log('returning from qmark5redirector:'+decodeURIComponent(qsParm['p']));}
+ 	 
+ 	 //decode the URL
+  	var decodedURL = decodeURIComponent(qsParm['p']);
+	if (testing){ console.log('decodedURL='+decodedURL)}
+	
+	//get the hostname and path
+	var decodedhost_path = decodedURL.split('?');
+	if(testing){console.log('decodedhost_path[0]='+decodedhost_path[0])}
+	var newLoc = decodedhost_path[0];
+	
+	//get the params as a string  
+	var decodedParms = decodedhost_path[1].split('&');
+	if(testing){console.log('decodedParms='+decodedParms)}
+	
+	//break string down into each param	
+ 	var decodedParmsArr = {}
+	$.each(decodedParms, function(index, value) {
+		var zkey, zval;
+		if(testing){console.log(index + ': ' + value)}
+		zkey = value.split('=')[0];
+		if(testing){console.log(zkey)}
+		zval = value.split('=')[1];
+		decodedParmsArr[zkey] = zval;
+	});//end $.each
+
+	if(typeof decodedParmsArr['itm']!="undefined"){	
+		var it = 'itm='+decodedParmsArr['itm'];
+		if (testing){console.log('it='+it)}
+		
+		if(typeof decodedParmsArr['Score']!="undefined"){
+			var st = 'score='+decodedParmsArr['Score']+'&max='+decodedParmsArr['Max'];
+ 			var encScore = encode64(st);
+			if (testing){console.log('encScore = '+encScore)}
+			newLoc = newLoc+'?'+it+'&zg='+encScore;
+		}
+		else {
+				newLoc = newLoc+'?'+it;//user hit the "back to module" button on the first page of the quiz. 
+				if (testing){console.log('no score: back button used' )}	
+			}
+ 			if (testing){console.log('newLoc='+newLoc)}
+			location.href = newLoc; //this is where it redirects back to the learning module
+	} //end if(typeof decodedParmsArr['item']!="undefined")
+	
+	else{
+		 parent.location.href= decodeURIComponent(qsParm['p']); //this is for OLD STYLE iFrame-quiz MODULES
+		}//end else
+}//end if (qsParm['p'] != null ){
+
+ </script>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
