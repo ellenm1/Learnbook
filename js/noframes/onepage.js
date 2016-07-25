@@ -129,8 +129,9 @@ function checkSubmit(e){
 }
 
 
-function checkForStoredVersion(lmsVrsn, znThisPage,dl, zVrsn){	
-		 var znThisPage = (typeof znThisPage!="undefined")?znThisPage:0;
+function checkForStoredVersion(lmsVrsn, znThisPage,dl, zVrsn){	//this runs once when index loads and when coming back from questionmark quiz/qualtrics quiz. not every time content loads
+		// var znThisPage = (typeof znThisPage!="undefined")?znThisPage:0;
+		 znThisPage = ns.localStorage.isSet('znThisPage')? ns.localStorage.get('znThisPage'):0;
 		 if(testing){console.log('BBD znThisPage='+znThisPage)}
 		 if(   (lmsVrsn!=null)&&!isNaN(lmsVrsn)   ){	//this catches if there is already a version set in the lms
     		$( "#dialog-modal" ).dialog({
