@@ -127,14 +127,12 @@ function quizFinish() {
 		//if there is a passing score in the page array use it otherwise set it to 80.
 		}
 	 
-	MarkObjectiveDone(objectiveID, qCountscore, qPassingscore);	
- 
-	 
+	MarkObjectiveDone(objectiveID, qCountscore, qPassingscore);		 
 	
 	ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
 
  
-	var gNextPage = znNextPage;
+	//var gNextPage = znNextPage;
 	 	
    setTimeout('displayRedirTxt(znThisPage)',1000);
      
@@ -142,6 +140,7 @@ function quizFinish() {
 	//http://www.scorm.com/resources/cookbook/CookingUpASCORM_v1_2.pdf 10.3
 //*********	
 function displayRedirTxt(mznThisPage){   
+console.log('AAAAA mznThisPage='+mznThisPage);
 	$("#finishedDiv").html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Thank you!<\/strong> You will now be redirected to the next page of this module.<\/div>');
 	nextPage(mznThisPage);//redirects us back to index.htm
 	}	//end displayRedirTxt  
