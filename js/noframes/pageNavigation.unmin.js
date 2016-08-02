@@ -427,7 +427,8 @@ function getContent(params){
 							wipePageNo();					  							 
 							if(itmurl == "scorePage.htm"){ 		
 								scoreQuizzes();
-								$(".gothereLink,.tryagainLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
+								//changed this 02.09.16 ellen
+								$(".gothereLink,.tryagainLink, .failedLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
 									var itmno = this.id.substring(4); 
 									ns.localStorage.set('znThisPage',itmno)
 									var p4 = {
@@ -1060,14 +1061,16 @@ function quizStart(p3){
 					}
 					else{  qualtricsURL = qurl }//in future, we will specify qualtrics href's without the qualtricsWrap piece in the pageArray
 					var n = currentloc.lastIndexOf("/");
-					currentloc = currentloc.slice(0,n);
-					currentloc = currentloc+"/qualtricsQuizWrap.htm"
+					var currentloc1 = currentloc.slice(0,n);
+					currentloc = currentloc1+"/qualtricsQuizWrap.htm"
 					//console.log('ggg currentloc= '+currentloc);
+					var redir = currentloc1+"/includes/qualtricsRedirector.htm";
+					encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
 					var pr = currentloc +'&itm='+qindex;//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
 					var encpr = encodeURIComponent(pr);
 					//console.log('pr='+pr+', encpr='+encpr);
-					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz;
-    				 						
+					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;
+    				 //console.log('qualtricsURL='+qualtricsURL);
 					document.location = qualtricsURL;	
 			 		}
 			 		
@@ -1158,24 +1161,24 @@ function getMyData(){
     bMax = cp.cpEIGetValue('m_VarHandle.cpQuizInfoTotalQuizPoints');
     bScore = cp.cpEIGetValue('m_VarHandle.cpQuizInfoPointsscored');
     aPercentScore = bMax!=0?bScore/bMax:1;//if max points are zero, then user got 100 no matter what.
-	bPercentScore = aPercentScore*100;         
+	bPercentScore = aPercentScore*100;
     if(testing){console.log('bMax='+bMax+', bScore'+bScore+', bPercentScore= '+ bPercentScore );}
-    //use for printing out all values from the captivate quiz          
+    //use for printing out all values from the captivate quiz
    // $.each(cp.cpEIGetValue('m_VarHandle'), function(name, value){
    // 	if(testing){console.log(name + ": " + value);} //logs value of every single property of the current captivate object (long!)
-   //  }); 		 
-	if (APIOK()){	
+   //  });
+	if (APIOK()){
 		qPage = ps[znThisPage];//fixed 5-26-16
-		var objectiveID = "C"+qPage.quiz;						 
+		var objectiveID = "C"+qPage.quiz;
 		var fin=1;
-		$('#content div#div6').html('Storing your score. If you are not redirected after completing or closing quiz, choose another page from menu at left.'); 
-		 
-		closeModalDialog("#dialog-captivate");				
+		$('#content div#div6').html('Storing your score. If you are not redirected after completing or closing quiz, choose another page from menu at left.');
+
+		closeModalDialog("#dialog-captivate");
 		MarkCap6ObjectiveDone(bScore,bMax,objectiveID);//these quizzes are considered done once you take them, no matter the score.
 		ps[znThisPage].qScore = bScore;
 		ps[znThisPage].qMax = bMax;
 		ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
-		nextPage(znThisPage);   	 
+		nextPage(znThisPage);
 	 }//end if (parent.APIOK())
 }
 
@@ -1187,20 +1190,20 @@ function MarkCap6ObjectiveDone(score,max,objectiveID){
 	SCOSetObjectiveData(objectiveID, "score.max", bMax);
 	SCOCommit();
 	} //end MarkCap6ObjectiveDone
-	 	 
+
 function openSwf(swf){	//call a full window captivate like this: onclick="openSwf('captivate/captivate6.swf');"
 	if ($( "#dialog-captivate" ).length==0){$('body').append('<div id="dialog-captivate" style="display:none; z-index: 999;"></div>')	}
    var attr = {'wmode':'transparent','scale':'showall'}
    var wheight =  $(window).height();   // returns height of browser viewport
-   var wwidth = $(window).width(); 
+   var wwidth = $(window).width();
    var capHTML = '<div id="CaptivateContent" style="" class="span10"></div>';
-   
+
    $( "#dialog-captivate" ).dialog({
    							close:true,
    							closeText: "CLOSE",
 							height: wheight,
 							width:  wwidth,
-							modal: true }); 
+							modal: true });
 
 //http://stackoverflow.com/questions/1790724/jquery-ui-dialog-cannot-see-the-closetext
 //get the automagically created div which represents the dialog
@@ -1215,19 +1218,18 @@ if ($('#closeTitle').length==0){
 	'<span style="float:right;margin-right:18px;font-weight:normal;font-size:small;" id="closeTitle" onmousedown=" $( \'#dialog-captivate\' ).dialog(\'close\')">'+
 	  $( "#dialog-captivate" ).dialog("option","closeText")+ '</span>' );
 	}
-   
-    $( "#dialog-captivate" ).html(capHTML); 
-        
-    openModalDialog("#dialog-captivate");	
-     						
-     						
+
+    $( "#dialog-captivate" ).html(capHTML);
+
+    openModalDialog("#dialog-captivate");
+
+
     swfobject.embedSWF(swf, "CaptivateContent",  "95%",  "99%", "9", "expressInstall.swf", attr, null, null );
-						
+
 	$("#dialog-captivate").dialog("option", "position", {//this is the callback function
 				my: "center",
 				at: "center",
 				of: window
-			});  // $("#dialog-captivate").dialog	
+			});  // $("#dialog-captivate").dialog
   }
-  
-    
+
