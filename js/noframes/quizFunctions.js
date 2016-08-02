@@ -145,7 +145,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 								 
 									unfinQz +=('<tr>');
 								unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+', or '+	qPercentScore+'%.' ); 
-								unfinQz +=('Required score was '+	qPercentScore+'%'+' so this quiz is PASSED');
+								unfinQz +=('Required score was '+	qPassingscore+'%'+' so this quiz is PASSED');
 								unfinQz +=(messageLine1); 
 								unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--N--><br/></td>');				
 								unfinQz +=('</tr>');
@@ -154,7 +154,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 								if(testing){console.log('objectiveStatus was failed');}
 									unfinQz +=('<tr>');
 									unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+', or '+	qPercentScore+'%.' );
-									unfinQz +=('Required score was '+	qPercentScore+'%'+' so this quiz is FAILED'); 
+									unfinQz +=('Required score was '+	qPassingscore+'%'+' so this quiz is FAILED');
 									unfinQz +=(messageLine1); 
 									unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="failedLink">Please try again!</a><!--O--><br/></td>');				
 									unfinQz +=('</tr>');
