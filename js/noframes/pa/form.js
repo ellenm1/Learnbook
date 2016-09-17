@@ -70,11 +70,12 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        
                                        "   <div id='countscoreblock'>"+
                                        "   I want this quiz to:<br/>"+
-                                       "   <select name='countscore' id='countscore'>"+
+                                       "   <select name='countscore' id='countscore' onchange='this.value==3?toggle(\"passingscoreOptions"+$countForms+"\"):toggle(\"\");'>"+
                                        "   <option>Choose a scoring option...</option>"+
                                        "   <option value='0'  id='countscore0'>0: No display, doesn't count.</option>"+
                                        "   <option value='1'  id='countscore1' selected>1: Displays & counts.</option>"+
                                        "   <option value='2'  id='countscore2'>2: Displays but doesn\'t count.</option>"+
+                                       "   <option value='3'  id='countscore3'>3: Displays, counts, MUST be passed.</option>"+
                                        "   </select>"+
                                        "   <div id='key'>"+
                                        "   <ul style='font-size:10px;padding-left:6px;'>"+
@@ -84,10 +85,17 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   (Quiz is required to complete module: use for most quizzes)</li>"+
                                        "   <li><b>countscore 2</b> Shows a quiz score on score and status page but DOES NOT count toward total module score. "+
                                        "   (Quiz is NOT required to complete module: use for pre-tests)</li>"+
+                                       "   <li><b>countscore 3</b> Shows a quiz score on score and status page, counts toward total module score and MUST be passed to finish module. "+
+                                       "   (Quiz is required to be passed to complete module: use for critical quizzes)</li>"+
                                        "   </ul>"+
                                        "   </div><!--end key-->"+
                                        "   </div><!--end countscoreblock-->"+
-  
+  									   
+  									   "   <div id='passingscoreOptions"+$countForms+"' class='togglepassingscore"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+  									   "   <label for='passingscore'>What is the passing % score for this quiz?</label><input name='passingscore' type='text' value=''/>"+
+                                       "   </div><!--end passingscoreOptions-->"+
+  									   
+                                       
                                        "   <div id='Qoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   <label for='assessmentID'>What is the assessment ID (session ID)?</label><input name='assessmentID' type='text' value=''/>"+
                                        "   </div><!--end qoptions-->"+
