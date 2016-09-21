@@ -46,6 +46,7 @@ function createArray(){
 		 if(testing){ console.log('pathtoswf= '+pathtoswf); }
 		 var path6toswf=qforms[f].path6toswf.value;//change this!!
 		 if(testing){ console.log('path6toswf= '+path6toswf); }
+		 var pathtoHTML5wrap = qforms[f].pathtoHTML5wrap.value;
 		 var width = qforms[f].cwidth.value;
 		 var height=qforms[f].cheight.value;
 		 var width6 = qforms[f].c6width.value;
