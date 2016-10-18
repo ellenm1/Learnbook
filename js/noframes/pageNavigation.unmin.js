@@ -211,7 +211,9 @@ function getCurrentPage(){
 		//if there is no existing local storage, it will be created, so if you are coming in from a deep link it will start up correctly.
 		if ((typeof pItem != "undefined")&&(pItem != null)) {			
 			ns.localStorage.set('znThisPage', pItem);
-			document.location.href = "index.htm?ls=1";	 
+			document.location.href = "index.htm?ls=1";	
+	
+			if(testing){'HNP ns.localStorage.get(znthispage)='+ns.localStorage.get('znThisPage'); }
 		 }
 		 //check for deep link to filename also
 		else if ((typeof dl != "undefined")&&(dl!=null)){ 
@@ -262,14 +264,67 @@ function getIndexOfDeepLink(dl){
 //http://stackoverflow.com/questions/8809425/search-multi-dimensional-array-javascript
 //http://stackoverflow.com/questions/5181493/how-to-find-a-value-in-a-multidimensional-object-array-in-javascript		
 
-function getContent(params){	
+function getContent(params){
+//testing nested function
+var itm = (typeof params.itm!="undefined")? params.itm:null;
+var dl	= (typeof params.dl!="undefined")?  params.dl:null;	
+	
+	function loadAjaxContent(itm,itmurl){
+				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() { //what follows is the callback after loading content					 				 	
+							$("#sidebar-left li a[id^='itm']").css("background-color","");
+							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
+							//znThisPage = parseFloat(itm);//defined above
+							znNextPage = parseFloat(itm)+1;
+							znPrevPage = parseFloat(itm)-1;	
+							wipePageNo();					  							 
+							if(itmurl == "scorePage.htm"){ 		
+								scoreQuizzes();
+								$(".gothereLink,.tryagainLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
+									var itmno = this.id.substring(4); 
+									ns.localStorage.set('znThisPage',itmno)
+									var p4 = {
+										sScore:0,
+										qurl:ps[itmno].url,
+										quiz:ps[itmno].quiz,
+										type: ps[itmno].type,
+									 	qindex:itmno
+									}//end var params
+									znThisPage = p4.qindex;
+									znNextPage = parseFloat(p4.qindex)+1;
+									znPrevPage = parseFloat(p4.qindex)-1;	
+									wipePageNo();
+									wipeNavBar();
+									printNavBar();
+									quizStart(p4);
+									//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
+									scormDivToggle();
+									checkDataAttr();
+									writeFlash();
+								});//end $(".gothereLink
+							}//if(itmurl == "scorePage.
+							
+							checkDataAttr();
+							writeFlash();
+							//writeKalturaPlayer();
+							scormDivToggle();							
+							customFunction03();	
+							customFunction04();								 
+							wipeNavBar();
+							printNavBar();//note that this calls getCurrentPage a second time
+							changeLinks(function(){ 
+								if(testing){console.log('links changed')}
+							
+							});//note that this happens only after content is loaded: it is part of the callback
+							 
+					}); //$('#content div#div6').load(itmur
+		}//end function loadHTMLpage		
+					
 	//set currentPage to the new page and store it in local storage
 	window.scrollTo(0, 0);
-	var itm = (typeof params.itm!="undefined")? params.itm:null;
-	var dl	= (typeof params.dl!="undefined")?  params.dl:null;	      
+	 	      
  
 	//if there's a deep link, but no item, set the itm number
-	if((dl)&&(!itm)){
+	if((dl)&&(itm==null ||typeof itm=="undefined")){
 		if(typeof dl!="undefined" && dl!=null ){ 
 			if(dl=="index.htm"){itm = 0}
 			else{
@@ -280,14 +335,32 @@ function getContent(params){
 					document.location = theurl.substring(0, theurl.lastIndexOf('/'))+'/index.htm?itm='+itm;
 				}
 			} //end else
-		}//end if if(dl=="index.htm")
+		}
 	}//end if(!itm)
-	 
+	//if after all that I've missed a case and itm is STILL not defined, set it to 0.
+	if(itm==null || typeof itm=="undefined"){itm = 0;}
 	//convert itm parameter to znThisPage 
-	ns.localStorage.set('znThisPage', itm);//immediately store it in local storage
-	znThisPage =ns.localStorage.get('znThisPage');
+	if(typeof ns.localStorage !="undefined"){
+		ns.localStorage.set('znThisPage', itm);//store new value in local storage
+	}
+	else setTimeout(function(){ 
+			ns.localStorage.set('znThisPage',itm);//store new value in local storage
+			console.log("Waited 1 second for local storage to appear"); 
+			}, 1000);
+	//znThisPage =ns.localStorage.get('znThisPage');//this fails sometimes because it is done too soon after setting znThisPage in local storage for the first time
+	znThisPage = itm;
+	try {
+   				var pi = ns.localStorage.get('pageArray')[znThisPage];
+   				if(testing){"TRE in try catch"}	
+				}
+			catch (e) {
+   			// statements to handle any exceptions
+   				if(testing){console.log('exception was'+e);} // pass exception object to error handler
+   				setTimeout(function(){ 
+   				var pi = ns.localStorage.get('pageArray')[znThisPage];
+   				}, 1000);
+			}
 	
-	var pi = ns.localStorage.get('pageArray')[znThisPage];	
 	var itmurl 			= 	pi.url;
 	var itmquiz 		=	pi.quiz; 
 	var itmtype 		=	pi.type;
@@ -417,54 +490,18 @@ function getContent(params){
  	
  		//OR its not a quiz, so load the content into this page 		
 			else { 	
-			 		var ts = Math.round(new Date().getTime() / 1000);//add timestamp to create a sort of random number to prevent caching	 
-					$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() { //what follows is the callback after loading content					 				 	
-							$("#sidebar-left li a[id^='itm']").css("background-color","");
-							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
-							//znThisPage = parseFloat(itm);//defined above
-							znNextPage = parseFloat(znThisPage)+1;
-							znPrevPage = parseFloat(znThisPage)-1;	
-							wipePageNo();					  							 
-							if(itmurl == "scorePage.htm"){ 		
-								scoreQuizzes();
-								$(".gothereLink,.tryagainLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
-									var itmno = this.id.substring(4); 
-									ns.localStorage.set('znThisPage',itmno)
-									var p4 = {
-										sScore:0,
-										qurl:ps[itmno].url,
-										quiz:ps[itmno].quiz,
-										type: ps[itmno].type,
-									 	qindex:itmno
-									}//end var params
-									znThisPage = p4.qindex;
-									znNextPage = parseFloat(p4.qindex)+1;
-									znPrevPage = parseFloat(p4.qindex)-1;	
-									wipePageNo();
-									wipeNavBar();
-									printNavBar();
-									quizStart(p4);
-									//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
-									scormDivToggle();
-									checkDataAttr();
-									writeFlash();
-								});//end $(".gothereLink
-							}//if(itmurl == "scorePage.
+			
+				
+			 		//var ts = Math.round(new Date().getTime() / 1000);//add timestamp to create a sort of random number to prevent caching	 
+					try {
+							loadAjaxContent(itm,itmurl );	 				 	
+						}
+					catch(err){
+						console.error('SPV error is'+err);
+						loadAjaxContent(itm,itmurl);			
+					}
 							
-							checkDataAttr();
-							writeFlash();
-							//writeKalturaPlayer();
-							scormDivToggle();							
-							customFunction03();	
-							customFunction04();								 
-							wipeNavBar();
-							printNavBar();//note that this calls getCurrentPage a second time
-							changeLinks(function(){ 
-								if(testing){console.log('links changed')}
 							
-							});//note that this happens only after content is loaded: it is part of the callback
-							 
-				}); //$('#content div#div6').load(itmur
 			customFunction02();
 				//end $('#content').load
 	 		}//end else	
@@ -989,12 +1026,13 @@ function quizStart(p3){
 						console.log('case pr');
 						break;
 						
-						case 'au': //author
-						qmarkServer = 'http://uhqmkappsts1.umhs.med.umich.edu';
+					
+						case 'au': //saba qa
+						qmarkServer = 'http://uhqmkappsts.umhs.med.umich.edu';
 						break;
 						 
 						case 'dv': //test quiz server was specified explicitly in page array 
-						qmarkServer = 'http://uhqmkappsdv1.umhs.med.umich.edu';
+						qmarkServer = 'http://uhqmkappsdv.umhs.med.umich.edu';
 						break;
 						 
 						default:
@@ -1154,6 +1192,8 @@ function writeHeaderTitle(){ $("#hdrTitle>h1").html( ms.headerTitle );}
 
 /*Captivate Functions move to another file or dynamically load*/
 function getMyData(){
+ 
+	//console.log('TRE znThisPage4='+znThisPage);
 	cp = document.CaptivateContent;
     bMax = cp.cpEIGetValue('m_VarHandle.cpQuizInfoTotalQuizPoints');
     bScore = cp.cpEIGetValue('m_VarHandle.cpQuizInfoPointsscored');

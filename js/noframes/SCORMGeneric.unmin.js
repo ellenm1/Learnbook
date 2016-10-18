@@ -278,7 +278,7 @@ function SCOSetStatus(){
    			}	//end else
    		}//end if(lmsStatus=="completed")		
    			
-    	if(lmsStatus=="passed"){ 
+    	if((lmsStatus=="passed")&&(typeof qsParm['ls']=="undefined")){ 
     			//ask user do they want to continue or close module.				
     			var conf = confirm("You have already completed this module with a score of "+lmsScore+ "% in MLearning. Are you sure you want to continue? You will lose your completed status and score. \n Click NO or CANCEL to close window and save your existing status and score.");
     			if(conf == true){
