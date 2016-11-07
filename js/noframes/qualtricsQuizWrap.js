@@ -1,6 +1,6 @@
  
-if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
-var testing = true;
+	if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
+	var testing = true;
  
 var sSession; //this is just the quiz number without a letter prefix. 
 //objectiveID has the letter prefix.
@@ -11,8 +11,19 @@ var _InvalidArgumentError = 201;
 var _NotInitialized = 301;
 var _NotImplementedError = 401;
 var isQuizWrap = true;
-var g_objAPI = FindAPI(window.parent);
- 
+var g_objAPI = null;
+gFindAPI();
+
+function gFindAPI(){ //just the part of SCOInitialize that finds the api in any window tree available.
+	if ((window.parent) && (window.parent != window)){
+			g_objAPI = FindAPI(window.parent)
+		}
+		if ((g_objAPI == null) && (window.opener != null))	{
+			g_objAPI = FindAPI(window.opener)
+		}
+		 
+	} 
+
 $(document).ready(function() {
 	//initTracking(); 	  
 	//printNavBar();
@@ -40,9 +51,15 @@ $(document).ready(function() {
 		  		$('#finishedDiv').show();
 		  		
 	}//end if(typeof pScore
-	var thisquiz = ps[pItem].url;
-	$('#takeAgain').append('<a href="'+thisquiz+'">Let me try this quizlet again! (click here)</a>');
 	
+	else{
+		//var thisquiz = ps[pItem].url;
+		//$('#takeAgain').append('<a href="'+thisquiz+'">Let me try this quizlet again! (click here)</a>');
+			znThisPage = pItem;
+			setTimeout('openMessageBlock()',25);
+    		$("#finishedDiv").html('<div class="alert alert-block">One moment please... </div>');
+			 setTimeout('displayRedirTxt(znThisPage)',1000);
+	}
 	
 });
 
@@ -72,7 +89,7 @@ function prevPage(pageIndex){
 //*****************Quizzing functions specific to Qualtrics quizzes. Functions that pertain to all quizzes are in quizFunctions.js *************//		
 
 function MarkObjectiveDone(objectiveID){//send quiz score data to the LMS
-	if(testing){console.log('XPJT in MarkObjectiveDone: objectiveID+= '+objectiveID+', pscore'+pScore+', apiok='+APIOK())} 
+	if(testing){console.log('XPJT in MarkObjectiveDone: objectiveID+= '+objectiveID+', pscore'+pScore+', pMax='+pMax+', apiok='+APIOK())}
 	var ct = SCOGetValue("cmi.objectives._count");
 	var pMax=ps[znThisPage].qmax; //qualtrics doesn't provide max so we must get it from page array
 	var pPercent = parseInt((pScore/pMax)*100,10);
@@ -95,16 +112,10 @@ function quizFinish() {
 	//console.trace();
     sSession = ps[znThisPage].quiz;          
 	objectiveID=('U'+sSession);
-	
-	if(testing){console.log('FFR sSession='+sSession)}
-	MarkObjectiveDone(objectiveID);	
- 
-	 
+	MarkObjectiveDone(objectiveID);		 
 	ps[znThisPage].qScore = pScore;
 	ps[znThisPage].qMax = pMax;
 	ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
-
- 
 	var gNextPage = znNextPage;
 	 	
    setTimeout('displayRedirTxt(znThisPage)',1000);
@@ -117,7 +128,7 @@ function displayRedirTxt(mznThisPage){
 	nextPage(mznThisPage);//redirects us back to index.htm
 	}	//end displayRedirTxt  
  
-//*********	 	
+/*
 function takeItAnyway(){  
 $("#messageDiv").hide();
 	qzFrm.style.display='block';// get required parameters
@@ -130,7 +141,9 @@ $("#messageDiv").hide();
 	if (sCall.length == 0) { msgDiv.style.display='block'; qzFrm.style.display='none';msgDiv.innerHTML=(sNoCallText + "\n" + sNoLMSText + 'no sCall'); }	
 	
 	Go();
-}//end takeItAnyway
+}
+*/ 
+//end takeItAnyway - no longer using.
  
 
 
