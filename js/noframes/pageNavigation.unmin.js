@@ -212,7 +212,6 @@ function getCurrentPage(){
 		if ((typeof pItem != "undefined")&&(pItem != null)) {			
 			ns.localStorage.set('znThisPage', pItem);
 			document.location.href = "index.htm?ls=1";	
-	
 			if(testing){'HNP ns.localStorage.get(znthispage)='+ns.localStorage.get('znThisPage'); }
 		 }
 		 //check for deep link to filename also
@@ -265,9 +264,9 @@ function getIndexOfDeepLink(dl){
 //http://stackoverflow.com/questions/5181493/how-to-find-a-value-in-a-multidimensional-object-array-in-javascript		
 
 function getContent(params){
-//testing nested function
-var itm = (typeof params.itm!="undefined")? params.itm:null;
-var dl	= (typeof params.dl!="undefined")?  params.dl:null;	
+	//testing nested function
+	var itm = (typeof params.itm!="undefined")? params.itm:null;
+	var dl	= (typeof params.dl!="undefined")?  params.dl:null;	
 	
 	function loadAjaxContent(itm,itmurl){
 				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() { //what follows is the callback after loading content					 				 	
@@ -498,9 +497,8 @@ var dl	= (typeof params.dl!="undefined")?  params.dl:null;
 						}
 					catch(err){
 						console.error('SPV error is'+err);
-						loadAjaxContent(itm,itmurl);			
-					}
-							
+						loadAjaxContent(itm,itmurl);	//this will only work if the issue was timing. this is an attempt to catch timing problems, but will not solve authenitcation problems. probably should replace with an alert requesting reload.	
+					}							
 							
 			customFunction02();
 				//end $('#content').load
@@ -1026,13 +1024,12 @@ function quizStart(p3){
 						console.log('case pr');
 						break;
 						
-					
-						case 'au': //saba qa
-						qmarkServer = 'http://uhqmkappsts.umhs.med.umich.edu';
+						case 'au': //author
+						qmarkServer = 'http://uhqmkappsts1.umhs.med.umich.edu';
 						break;
 						 
-						case 'dv': //test quiz server was specified explicitly in page array 
-						qmarkServer = 'http://uhqmkappsdv.umhs.med.umich.edu';
+						case 'dv': //dev
+						qmarkServer = 'http://uhqmkappsdv1.umhs.med.umich.edu';
 						break;
 						 
 						default:
@@ -1098,14 +1095,13 @@ function quizStart(p3){
 					}
 					else{  qualtricsURL = qurl }//in future, we will specify qualtrics href's without the qualtricsWrap piece in the pageArray
 					var n = currentloc.lastIndexOf("/");
-					currentloc = currentloc.slice(0,n);
-					currentloc = currentloc+"/qualtricsQuizWrap.htm"
-					//console.log('ggg currentloc= '+currentloc);
+					var currentloc1 = currentloc.slice(0,n);
+					currentloc = currentloc1+"/qualtricsQuizWrap.htm"
+					var redir = currentloc1+"/includes/qualtricsRedirector.htm";
+					encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
 					var pr = currentloc +'&itm='+qindex;//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
 					var encpr = encodeURIComponent(pr);
-					//console.log('pr='+pr+', encpr='+encpr);
-					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz;
-    				 						
+					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;				
 					document.location = qualtricsURL;	
 			 		}
 			 		
@@ -1192,58 +1188,56 @@ function writeHeaderTitle(){ $("#hdrTitle>h1").html( ms.headerTitle );}
 
 /*Captivate Functions move to another file or dynamically load*/
 function getMyData(){
- 
-	//console.log('TRE znThisPage4='+znThisPage);
 	cp = document.CaptivateContent;
     bMax = cp.cpEIGetValue('m_VarHandle.cpQuizInfoTotalQuizPoints');
     bScore = cp.cpEIGetValue('m_VarHandle.cpQuizInfoPointsscored');
     aPercentScore = bMax!=0?bScore/bMax:1;//if max points are zero, then user got 100 no matter what.
-	bPercentScore = aPercentScore*100;         
+	bPercentScore = aPercentScore*100;
     if(testing){console.log('bMax='+bMax+', bScore'+bScore+', bPercentScore= '+ bPercentScore );}
-    //use for printing out all values from the captivate quiz          
-   // $.each(cp.cpEIGetValue('m_VarHandle'), function(name, value){
-   // 	if(testing){console.log(name + ": " + value);} //logs value of every single property of the current captivate object (long!)
-   //  }); 		 
-	if (APIOK()){	
+    //use for printing out all values from the captivate quiz
+    // $.each(cp.cpEIGetValue('m_VarHandle'), function(name, value){
+    // 	if(testing){console.log(name + ": " + value);} //logs value of every single property of the current captivate object (long!)
+    //  });
+	if (APIOK()){
 		qPage = ps[znThisPage];//fixed 5-26-16
-		var objectiveID = "C"+qPage.quiz;						 
+		var objectiveID = "C"+qPage.quiz;
 		var fin=1;
-		$('#content div#div6').html('Storing your score. If you are not redirected after completing or closing quiz, choose another page from menu at left.'); 
-		 
-		closeModalDialog("#dialog-captivate");				
+		$('#content div#div6').html('Storing your score. If you are not redirected after completing or closing quiz, choose another page from menu at left.');
+
+		closeModalDialog("#dialog-captivate");
 		MarkCap6ObjectiveDone(bScore,bMax,objectiveID);//these quizzes are considered done once you take them, no matter the score.
 		ps[znThisPage].qScore = bScore;
 		ps[znThisPage].qMax = bMax;
 		ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
-		nextPage(znThisPage);   	 
+		nextPage(znThisPage);
 	 }//end if (parent.APIOK())
 }
 
 //send quiz score data to the LMS for a captivate 6 quiz
 function MarkCap6ObjectiveDone(score,max,objectiveID){
- 	 if (testing){console.log("In MarkObjectiveDone: score = "+score+", max="+max+", objectiveID= "+objectiveID)}
+ 	if (testing){console.log("In MarkObjectiveDone: score = "+score+", max="+max+", objectiveID= "+objectiveID)}
   	SCOSetObjectiveData(objectiveID, "status", "completed");
 	SCOSetObjectiveData(objectiveID, "score.raw", bScore);
 	SCOSetObjectiveData(objectiveID, "score.max", bMax);
 	SCOCommit();
 	} //end MarkCap6ObjectiveDone
-	 	 
+
 function openSwf(swf){	//call a full window captivate like this: onclick="openSwf('captivate/captivate6.swf');"
 	if ($( "#dialog-captivate" ).length==0){$('body').append('<div id="dialog-captivate" style="display:none; z-index: 999;"></div>')	}
    var attr = {'wmode':'transparent','scale':'showall'}
    var wheight =  $(window).height();   // returns height of browser viewport
-   var wwidth = $(window).width(); 
+   var wwidth = $(window).width();
    var capHTML = '<div id="CaptivateContent" style="" class="span10"></div>';
-   
+
    $( "#dialog-captivate" ).dialog({
    							close:true,
    							closeText: "CLOSE",
 							height: wheight,
 							width:  wwidth,
-							modal: true }); 
+							modal: true });
 
 //http://stackoverflow.com/questions/1790724/jquery-ui-dialog-cannot-see-the-closetext
-//get the automagically created div which represents the dialog
+//get the generated div which will contain the dialog
 //var closeSpan = $("#dialog-captivate2 span.ui-icon-closethick");
 //var closeSpan = $("div[role='dialog'] span.ui-icon-closethick");
 var closeSpan = $("div[aria-describedby='dialog-captivate'] span.ui-icon-closethick");
@@ -1255,19 +1249,18 @@ if ($('#closeTitle').length==0){
 	'<span style="float:right;margin-right:18px;font-weight:normal;font-size:small;" id="closeTitle" onmousedown=" $( \'#dialog-captivate\' ).dialog(\'close\')">'+
 	  $( "#dialog-captivate" ).dialog("option","closeText")+ '</span>' );
 	}
-   
-    $( "#dialog-captivate" ).html(capHTML); 
-        
-    openModalDialog("#dialog-captivate");	
-     						
-     						
+
+    $( "#dialog-captivate" ).html(capHTML);
+
+    openModalDialog("#dialog-captivate");
+
+
     swfobject.embedSWF(swf, "CaptivateContent",  "95%",  "99%", "9", "expressInstall.swf", attr, null, null );
-						
+
 	$("#dialog-captivate").dialog("option", "position", {//this is the callback function
 				my: "center",
 				at: "center",
 				of: window
-			});  // $("#dialog-captivate").dialog	
+			});  // $("#dialog-captivate").dialog
   }
-  
-    
+
