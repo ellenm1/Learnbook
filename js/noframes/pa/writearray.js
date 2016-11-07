@@ -24,8 +24,8 @@ function createArray(){
 	          if (testing){ console.log( 'qforms.length='+qforms.length);}
 	          if (testing){ console.log('f.id= '+qforms[f].id);}
 	     var a='isQuiz_1_'+(f);
-	          if (testing){ console.log('a='+a);}
-	     if (testing){  console.log(typeof a);}
+	          if (testing){ console.log('a='+a +'typeof a'+typeof a);}
+	    
 	     var isQuiz = document.getElementById(a).checked;
 	         if (testing){  console.log('f= '+f+' isQuiz= '+isQuiz);}
 		 var buttontitle = qforms[f].buttontitle.value;
@@ -51,7 +51,8 @@ function createArray(){
 		 var height=qforms[f].cheight.value;
 		 var width6 = qforms[f].c6width.value;
 		 var height6=qforms[f].c6height.value;
-		 var rm= qforms[f].rm.value?qforms[f].rm.value:"";
+		 var rmsg= qforms[f].rmsg.value?qforms[f].rmsg.value:"";
+		 //note had to change this to rmsg because rm was reading as radio buttons and thus returning '' for value - never really figured out why
 	//if not a quiz, the url is simply the filename.	  
 		  if (isQuiz==false){
 		      	if (testing){ console.log('entry'+ f+'is not a quiz');}
@@ -108,23 +109,23 @@ function createArray(){
 			    switch(type)
 			    {
 			        case("Q"):
-			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg+"', countscore:'"+countscore+"'"; 
 			               // alert('countscore='+countscore);
 			                break;
 			        case("C"):
-			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("C6"):
-			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rmsg+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("H"):
-			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rmsg+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("U"):
-			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rmsg+"', countscore:'"+countscore+"'"; 
 			                break;
 			       case("I"):
-			               o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			               o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg+"', countscore:'"+countscore+"'"; 
 			              // startInteractionsArrayForm(f,quiz);
 			               break;
 			       }//end switch
