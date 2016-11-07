@@ -131,8 +131,8 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        
                                        "   <div id='Uoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Qualtrics survey ID:&nbsp;&nbsp; <input name='surveyid' type='text' value='' size='30' /><br/>"+                                      
-                                       "   Maximum score:&nbsp; <input name='qmax' type='text' value=''  size='4' maxlength='5'/> &nbsp;"+  
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Maximum score:&nbsp; <input name='qmax' type='text' value=''  size='4' maxlength='5'/><br/>"+  
+                                       "   <label for 'rmsg'>Custom message to show on status page (optional):<br/> <input name='rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/></label><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='uquizid' w  id='uquizid"+$countForms+"' readonly='readonly' value=''/>"+
                                        "   </div><!--end Uoptions-->"+
                                        
