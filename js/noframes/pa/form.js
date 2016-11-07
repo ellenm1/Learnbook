@@ -107,7 +107,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   path:&nbsp;&nbsp; <input name='pathtoswf' type='text' value='' size='30' /><br/>"+
                                        "   width:&nbsp; <input name='cwidth' type='text' value=''  size='4' maxlength='4'/> &nbsp;"+
                                        "   height: <input name='cheight' type='text' value=''  size='4' maxlength='4' />"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='cquizid' id='cquizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--end Coptions-->"+
                                        
@@ -116,14 +116,14 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   path:&nbsp;&nbsp; <input name='path6toswf' type='text' value='' size='30' /><br/>"+
                                        "   width:&nbsp; <input name='c6width' type='text' value=''  size='4' maxlength='4'/> &nbsp;"+
                                        "   height: <input name='c6height' type='text' value=''  size='4' maxlength='4' />"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='c6quizid' id='c6quizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--end C6options-->"+
                                        
                                        "   <div id='Hoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to captivateHTML5wrap.htm?(<i>captivate/myCaptivateQuiz</i>)<br/>"+
                                        "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/capHTML5wrap.htm</div>"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='Hquizid' id='Hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endHoptions-->"+
                                        
@@ -138,7 +138,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        
                                        "   <div id='Ioptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   <label for 'ifilename'>Filename: <input type='text' name='ifilename' id='ifilename"+$countForms+"' value='page00.htm'/></label><br/>"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+                                       
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "    Quiz ID (readonly) <input type='text' size='12' name='iquizid' id='iquizid"+$countForms+"' value=''/>"+
                                        "   </div><!--end Ioptions-->"+
                                        
