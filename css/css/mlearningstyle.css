@@ -495,7 +495,7 @@ a.tryagainLink, a:visited.tryagainLink{
 /*however if there is a non-counting quiz (pretest, survey), it will show up.*/
 .countscore0{ display:block;color:#3366CC;margin-bottom:12px; }
 
-#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, #quizMessages a.closeNowLink, a.button:link, a.button:visited{ 
+#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, #quizMessages a.closeNowLink, #quizMessages a.failedLink, a.button:link, a.button:visited{ 
 	display:block;
 	text-align:center;
 	font-weight:normal;
@@ -511,6 +511,16 @@ a.tryagainLink, a:visited.tryagainLink{
 	border-top:3px double #0099CC;
 	border-left:3px double #0099CC;
   }
+#quizMessages a.failedLink {
+	background: #ff0000; 
+	font-weight: bold;
+	color;#FFF;
+    border-top: 3px double #ff2d00;
+    border-left: 3px double #ff2d00;
+    border-right: 3px double #bf2d00;
+    border-bottom: 3px double #bf2d00;
+	}
+
   
   #quizMessages{position:relative;}
   #quizMessages a.gothereLink, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited {
@@ -538,7 +548,10 @@ a.tryagainLink, a:visited.tryagainLink{
     border-top:1px solid #CCC;
     margin-bottom:70px;
     }
-
+#quizMessages a.failedLink:hover {
+	background:#cc0000;
+	
+} 
  #quizMessages  td.unfinQzLft { 
    border-bottom:1px solid #CCCCCC; 
    padding-right:3px;
@@ -557,11 +570,8 @@ a.tryagainLink, a:visited.tryagainLink{
 	height: 130px;
 	background:#B8CDEA url(../../images/img/header.png) left no-repeat;
  	font:24px bold;
-	
 	margin-bottom: 6px;
  	color:#FFF;
- 
-		
 }
 
 #banner.michart{
