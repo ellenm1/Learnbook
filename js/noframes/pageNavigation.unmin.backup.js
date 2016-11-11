@@ -3,7 +3,7 @@
  	var busy=false;
 	if($('div.nav-no-collapse.header-nav .breadcrumb').length>0){$('div.nav-no-collapse.header-nav .breadcrumb').empty();}
 	var dialogCloseTrigger="";
-
+	
 //google analytics tracking code
 /*	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -269,7 +269,17 @@ function getContent(params){
 	var dl	= (typeof params.dl!="undefined")?  params.dl:null;	
 	
 	function loadAjaxContent(itm,itmurl){
-				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() { //what follows is the callback after loading content					 				 	
+				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) { //what follows is the callback after loading content					 				 	
+							//if(testing){console.log("in getContent:DTT responseText= "+responseText);}
+							if(responseText==""){
+								var txt;
+								var r = confirm("Your session seems to have timed out so you will have to log in again. Your work is saved.");
+								if (r == true) {
+    								 location.reload();
+								} else {
+   							 	 location.reload();
+								}
+							}//end if(responseText
 							$("#sidebar-left li a[id^='itm']").css("background-color","");
 							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
 							//znThisPage = parseFloat(itm);//defined above
@@ -278,7 +288,7 @@ function getContent(params){
 							wipePageNo();					  							 
 							if(itmurl == "scorePage.htm"){ 		
 								scoreQuizzes();
-								$(".gothereLink,.tryagainLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
+								$(".gothereLink,.tryagainLink, .failedLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
 									var itmno = this.id.substring(4); 
 									ns.localStorage.set('znThisPage',itmno)
 									var p4 = {
@@ -417,9 +427,8 @@ function getContent(params){
 					}	//end 	else if (itmtype=="U")										
 					else if(itmtype=="I"){				
 						var ts = Math.round(new Date().getTime() / 1000);
-						 $('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() {	
-							 if(testing){console.log("in getContent:DDD")} 				 	
-							 
+						 $('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) {					 	
+							if(testing){console.log("in getContent:DDD+responseText= "+responseText);}
 							$("#sidebar-left li a[id^='itm']").css("background-color","");
 							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
 							znNextPage = parseFloat(znThisPage)+1;
