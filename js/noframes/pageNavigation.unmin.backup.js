@@ -270,7 +270,6 @@ function getContent(params){
 	
 	function loadAjaxContent(itm,itmurl){
 				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) { //what follows is the callback after loading content					 				 	
-							//if(testing){console.log("in getContent:DTT responseText= "+responseText);}
 							if(responseText==""){
 								var txt;
 								var r = confirm("Your session seems to have timed out so you will have to log in again. Your work is saved.");
@@ -428,7 +427,7 @@ function getContent(params){
 					else if(itmtype=="I"){				
 						var ts = Math.round(new Date().getTime() / 1000);
 						 $('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) {					 	
-							if(testing){console.log("in getContent:DDD+responseText= "+responseText);}
+							//if(testing){console.log("in getContent:DDD+responseText= "+responseText);}
 							$("#sidebar-left li a[id^='itm']").css("background-color","");
 							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
 							znNextPage = parseFloat(znThisPage)+1;
@@ -841,9 +840,9 @@ function writeNewPageNo(){
 	var lastPageNo = parseFloat(znPages);
 	var pbarhtml = 	'<div id="spaceHolder">'+
 						'<div id="utilitiesBar">'+
-							'<div id="printBtn" class="icn-print" style="inline-block;margin-right:6px;" onclick="window.print();" title="Print this page">'+
-								'&nbsp;'+
-							'</div>'+
+							//'<div id="printBtn" class="icn-print" style="inline-block;margin-right:6px;" onclick="window.print();" title="Print this page">'+
+								//'&nbsp;'+
+							//'</div>'+
 							'<div id="progressBarContainer">'+
 								'<div align=\"left\" id="progressBarHolder">'+
 									'<img src=\"images/img/progressBarBG.jpg\" width=\"' + zWidth + '\" height=\"13\" />'+
@@ -854,9 +853,8 @@ function writeNewPageNo(){
 							'</div>'+
 						'</div>'+
 					'<div>';
-	if( ($('#banner').length==0) && ($('.dontPrintPageNo').length==0) ){
-		$(pbarhtml).prependTo('#content div#div5');
-		} 
+					$(pbarhtml).prependTo('#footer');
+	//if( ($('#banner').length==0) && ($('.dontPrintPageNo').length==0) ){ } 
   }	
   
 function wipePageNo(){

@@ -840,9 +840,9 @@ function writeNewPageNo(){
 	var lastPageNo = parseFloat(znPages);
 	var pbarhtml = 	'<div id="spaceHolder">'+
 						'<div id="utilitiesBar">'+
-							'<div id="printBtn" class="icn-print" style="inline-block;margin-right:6px;" onclick="window.print();" title="Print this page">'+
-								'&nbsp;'+
-							'</div>'+
+							//'<div id="printBtn" class="icn-print" style="inline-block;margin-right:6px;" onclick="window.print();" title="Print this page">'+
+								//'&nbsp;'+
+							//'</div>'+
 							'<div id="progressBarContainer">'+
 								'<div align=\"left\" id="progressBarHolder">'+
 									'<img src=\"images/img/progressBarBG.jpg\" width=\"' + zWidth + '\" height=\"13\" />'+
@@ -853,9 +853,8 @@ function writeNewPageNo(){
 							'</div>'+
 						'</div>'+
 					'<div>';
-	if( ($('#banner').length==0) && ($('.dontPrintPageNo').length==0) ){
-		$(pbarhtml).prependTo('#content div#div5');
-		} 
+					$(pbarhtml).prependTo('#footer');
+	//if( ($('#banner').length==0) && ($('.dontPrintPageNo').length==0) ){ } 
   }	
   
 function wipePageNo(){
