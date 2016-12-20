@@ -7,30 +7,32 @@
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }
+
 #screenmetrics{ display:none;}
-body.metrics>div#screenmetrics{  
-position:absolute;
-width:300px;right:0px;top:0px;
-display:block;
-background:#FFF;
-z-index:1000;
-color:#c000000;
-font-size:11px;
-line-height: 100%;
-}
+
+body.metrics>div#screenmetrics{  /*do not delete*/
+	position:absolute;
+	width:300px;right:0px;top:0px;
+	display:block;
+	background:#FFF;
+	z-index:1000;
+	color:#c000000;
+	font-size:11px;
+	line-height: 100%;
+} 
 body{
 		margin:0;
 		height:100%;
 		position:relative;
 	}
 	
-	div.container-fluid-full {
+div.container-fluid-full {
 		width:100%;height:100%;	
 		display:table;
 	}
 	
 	
-	div#leftColumn{
+div#leftColumn{
 		display:inline-block;
 		width:15%;
 		height:100%;
@@ -39,11 +41,11 @@ body{
 		
 	}
 	/*http://stackoverflow.com/a/14162373*/
-	div#main{
-		min-height: 100%;
-	}
+
+div#main{ min-height: 100%; }
+
 	div#sidebar-left.span3{
-		width:none; 
+		width:auto; /*needed to keep this to a reasonable width*/
 		height:100%;
 		/*padding-bottom:999em;
 		margin-bottom:-999em;*/
@@ -52,8 +54,8 @@ body{
 		position:relative;
 		  }
 		  
-	.row-fluid .span3{ width:auto; }
-	
+	/*.row-fluid .span3{ width:auto; }*/ /*interferes with proper sizing of span3 columns*/
+.row-fluid [class*="span"]:first-child {margin-left:0;}	
 		
 	div#content{
 		float:none;
@@ -438,12 +440,20 @@ a#helpButton{
 	border-right:1px solid #6C9CD0;
 	padding:0 6px 0 0;
 }
-
+/*old styles for requirements */
 .clockContainer{ padding:10px 6px 6px 6px; }
 .reqPad{ padding:6px; }
 .reqPad.whatsnew{ background:#f3c580;  }
 .reqPad.header{ background:#64a1e2;color:#FFF;font-weight:700;  }
+/*new styles for requirements column*/
+#rightCol{}
 
+#rightCol .howlong, #rightCol .howlong, #rightCol .whatsnew, #rightCol .whotakes, #rightCol .requirements{ background:#f3c580;padding:6px;  }
+#rightCol .header{ background:#64a1e2;color:#FFF;font-weight:700;}
+#rightCol.howlong{
+	height:126px;
+}
+#rightCol.requirements
 /* **********************************Styles for embedded quiz functions******************************** */
 #quizMessages{ 
 	text-align:left;
@@ -579,7 +589,7 @@ a.tryagainLink, a:visited.tryagainLink{
 /*for messages associated with tracking individual interactions */
  .interactionFdbck{color:#FF0000;display:block;margin-top:3px;padding:2px;font-weight:bold;}
  
-  /*Banner Style for ESN */
+  /*Banner Style for generic clinical banner */
 #banner{
     display:block;
 	width:100%;
@@ -589,9 +599,12 @@ a.tryagainLink, a:visited.tryagainLink{
 	margin-bottom: 6px;
  	color:#FFF;
 }
-
+/*use if you want to use a custom image*/
+#banner.localimage { 	
+	background: #3659B5 url(../../media/header.jpg) left repeat-x; 
+	}
 #banner.michart{
-	background: #3659B5  url(../../images/img/michart-header.png) no-repeat 20px;
+	background: #3659B5 url(../../images/img/michart-header.png) no-repeat 20px;
  	text-align:left;
 	display:inline-block;
 	height:125px;
@@ -599,20 +612,20 @@ a.tryagainLink, a:visited.tryagainLink{
 	 position:relative;
 	 	color:#FFF;
 	 	width:100%;
-}
+	}
 
 #banner.mcit{
-                text-align: left;
-                display: inline-block;
-                height: 125px;
-                line-height: 125%;
-                position: relative;
-                color: #FFF;
-                width: 100%;
-                background-color: #3659B5;
-                background-image: url(../../images/img/mcit-header.png);
-                background-repeat: no-repeat;
-                background-position: 20px;
+	text-align: left;
+	display: inline-block;
+	height: 125px;
+	line-height: 125%;
+	position: relative;
+	color: #FFF;
+	width: 100%;
+	background-color: #3659B5;
+	background-image: url(../../images/img/mcit-header.png);
+	background-repeat: no-repeat;
+	background-position: 20px;
 }
 
 
@@ -692,7 +705,7 @@ a.tryagainLink, a:visited.tryagainLink{
      display:block;
      }
      
-     #headerImage{margin-top:10px;}
+#headerImage{margin-top:10px;}
 
 
     
