@@ -599,10 +599,14 @@ a.tryagainLink, a:visited.tryagainLink{
 	margin-bottom: 6px;
  	color:#FFF;
 }
-/*use if you want to use a custom image*/
+/*use if you want to use a custom JPG image*/
 #banner.localimage { 	
-	background: #3659B5 url(../../media/header.jpg) left repeat-x; 
+	background: #3659B5 url(../../media/header.jpg) left no-repeat; 
 	}
+/*use if you want to use a custom PNG image*/
+#banner.localimagepng {
+	background: #3659B5 url(../../media/header.jpg) left no-repeat; 
+}
 #banner.michart{
 	background: #3659B5 url(../../images/img/michart-header.png) no-repeat 20px;
  	text-align:left;
