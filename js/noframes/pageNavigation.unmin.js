@@ -174,10 +174,22 @@ function printNavBar(){
 	//assign getcontent to onclick of all the nav links
 	$("#sidebar-left li a[id^='itm']").click(function() {
 		var itmno = this.id.substring(3);
-	//	ga('send', 'event', 'button', 'click', 'navbutton', 'navbutton id '+itmno+' |  page'+ '/'+justpathnofilename+'/'+ps[znThisPage].url);//google analytics tracking
+		
+	   // ga('send', 'event', 'button', 'click', 'navbutton', 'navbutton id '+itmno+' |  page'+ '/'+justpathnofilename+'/'+ps[znThisPage].url); //google analytics tracking
+	    ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'button',
+		  eventAction: 'click',
+		  eventLabel: 'navbutton id '+itmno+' |  page'+ '/'+justpathnofilename+'/'+ps[itmno].url
+			});
+	    ga('send', {
+  					hitType: 'pageview',
+  					page: justpathnofilename+'/'+ps[itmno].url,
+  					title: ps[itmno].buttonTitle
+			});
 		var params = {
 			itm:itmno
-		}	
+			}	
 		getContent(params);
 	});
 	
@@ -800,16 +812,36 @@ function nextPage(pageIndex){
 	var params ={ itm:newPage  }
  	//ga('send', 'event', 'button', 'click', 'nextPageBtn', justpathnofilename+'/'+ps[newPage].url);//google analytics tracking
  	//ga('send', 'pageview',{'page':justpathnofilename+'/'+ ps[newPage].url});//google analytics: track the ajax loaded page//google analytics tracking
+ 	 ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'button',
+		  eventAction: 'click',
+		  eventLabel: 'navbutton id '+newPage+' |  page'+ '/'+justpathnofilename+'/'+ps[newPage].url
+		});
+	    ga('send', {
+			hitType: 'pageview',
+			page: justpathnofilename+'/'+ps[newPage].url,
+			title: ps[newPage].buttonTitle
+		});
 	getContent(params);
 }
 
 function prevPage(pageIndex){	
-	var pageIndex = (parseFloat(pageIndex) -1);
-	if(pageIndex<0){ alert('You are on the first page!');return;  }
-	if(testing){console.log('GDD pageIndex='+pageIndex+', znThisPage='+znThisPage)}
-	var params ={ itm:pageIndex  }
-//ga('send', 'event', 'button', 'click', 'prevPageBtn | on '+justpathnofilename+'/'+ps[pageIndex].url); //google analytics tracking
-	//ga('send', 'pageview', {'page':justpathnofilename+'/'+ ps[pageIndex].url,'title': ps[pageIndex].btnTitle}) //google analytics tracking
+	var newPage = (parseFloat(pageIndex) -1);
+	if(newPage<0){ alert('You are on the first page!');return;  }
+	if(testing){console.log('GDD pageIndex='+newPage+', znThisPage='+znThisPage)}
+	var params ={ itm:newPage  }
+	ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'button',
+		  eventAction: 'click',
+		  eventLabel: 'PreviousPage: '+newPage+' |  page'+ '/'+justpathnofilename+'/'+ps[newPage].url
+		});
+	ga('send', {
+		hitType: 'pageview',
+		page: justpathnofilename+'/'+ps[newPage].url,
+		title: ps[newPage].buttonTitle
+		});	
 	getContent(params);
 }
 

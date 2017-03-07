@@ -605,7 +605,7 @@ a.tryagainLink, a:visited.tryagainLink{
 	}
 /*use if you want to use a custom PNG image*/
 #banner.localimagepng {
-	background: #3659B5 url(../../media/header.jpg) left no-repeat; 
+	background: #3659B5 url(../../media/header.png) left no-repeat; 
 }
 #banner.michart{
 	background: #3659B5 url(../../images/img/michart-header.png) no-repeat 20px;
@@ -850,7 +850,7 @@ ul.breadcrumb{
     clear: both;
 }
 #courseproperties{
-	width:229px;
+	width:100%;
 }
 
  
