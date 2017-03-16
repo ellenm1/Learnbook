@@ -448,7 +448,7 @@ a#helpButton{
 /*new styles for requirements column*/
 #rightCol{}
 
-#rightCol .howlong, #rightCol .howlong, #rightCol .whatsnew, #rightCol .whotakes, #rightCol .requirements{ background:#f3c580;padding:6px;  }
+#rightCol .howlong, #rightCol .howlong, #rightCol .whatsnew, #rightCol .whotakes, #rightCol .requirements, #rightCol .resources{ padding:6px;  }
 #rightCol .header{ background:#64a1e2;color:#FFF;font-weight:700;}
 #rightCol.howlong{
 	height:126px;
