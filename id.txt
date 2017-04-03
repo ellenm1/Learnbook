@@ -2,7 +2,7 @@ ID Name:
 
 Module Go Live Date:
 
-JIRA Card#:
+Trello Card#:
 
 Project/Activity owner: 
 
@@ -14,7 +14,7 @@ QuestionMark
 Question View, path to quiz questions: 
 Assessment View path to quiz:
 
-Maize project folder: \Instructional Design -  Orange\_Projects\xAll\???
+Maize project folder: \eLearning Team\_Projects\xAll\???
 
 Creator/Quiz name in Qualtrics (if applicable):
 
