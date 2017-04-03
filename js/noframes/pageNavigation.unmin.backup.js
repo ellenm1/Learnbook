@@ -4,20 +4,15 @@
 	if($('div.nav-no-collapse.header-nav .breadcrumb').length>0){$('div.nav-no-collapse.header-nav .breadcrumb').empty();}
 	var dialogCloseTrigger="";
 	
-//google analytics tracking code
-/*	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
- (function() {
-    	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  	})();
-	  ga('create', 'UA-11509774-1', 'auto');
-	  ga('send', 'pageview');
-*/	  
+  ga('create', 'UA-65717029-1', 'auto');
+  ga('send', 'pageview');
+
+
 	var pItem = 		qsParm['itm']? qsParm['itm'] : null;
 	var saveStorage = 	qsParm['ls']?true:false;
 	var dl = 		qsParm['dl']? qsParm['dl'] : null;
@@ -212,7 +207,8 @@ function printNavBar(){
 	writeNewPageNo();  
 	writeHeaderTitle();
 	SCOBookmark(); 
-	writeDocTitle();			 		    	  
+	writeDocTitle();
+	printEndmatterFeedbackLink();			 		    	  
 } //end printNavBar()  
 
  
@@ -747,11 +743,17 @@ function printNavToggle(){
 	var nt = "";
 	 return nt;
 }
+//feedback link in the left nav and on the bottom of page01.
+var feedbackLink = 'http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL='+encodeURI(window.location.href)+'&TITLE='+encodeURI(ms['headerTitle'])+'&EMAIL='+encodeURI(ms["contentAuthEmail"]);
+
 function printFeedbackLink(){ 
-   // document.getElementById('sidebar-left').innerHTML+=("<a href='http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL="+encodeURI(window.location.href)+"&TITLE="+encodeURI(ms['headerTitle'])+"&EMAIL="+encodeURI(ms['contentAuthEmail'])+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a>");
-	var fl=("<li><a href='http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL="+encodeURI(window.location.href)+"&TITLE="+encodeURI(ms['headerTitle'])+"&EMAIL="+encodeURI(ms['contentAuthEmail'])+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a></li>");
+	var fl=("<li><a href='"+feedbackLink+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a></li>");
 	return fl;
 }//end printFeedbackLink 
+
+function printEndmatterFeedbackLink(){
+	$("#feedbackinfo").length>0 ? $("#feedbackinfo").html("<a href= '"+feedbackLink+"' target='_blank'>Submit Comments or Questions</a>"):"";
+}
 
 function printContentExpert(){
 	if((typeof ms.contentExpert!="undefined")&&(ms.contentExpert!="")){
