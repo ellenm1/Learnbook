@@ -26,7 +26,7 @@ $(document).ready(function() {
 	$('#footer').append(footerStr);
  	 	
 	/*module version stuff - this opens a "loading" dialog if there is a version param set either in lms or query string*/
-if(testing){console.log('ERTY znThisPage='+znThisPage+' window.znThisPage='+window.znThisPage)}
+//if(testing){console.log('ERTY znThisPage='+znThisPage+' window.znThisPage='+window.znThisPage)}
 	checkForStoredVersion(lmsVrsn, znThisPage, dl, zVrsn);
 	
 	
@@ -135,11 +135,11 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){
 		if(typeof indexOfThisPage=="undefined"){
 		//if it's too early for znThisPage to have been calculated, indexOfThisPage will be undefined. 
 		//look in local storage for a value or set indexOfThisPage to zero.
-			if(testing){console.log('GWE indexOfThisPage is undefined');}
+			//if(testing){console.log('GWE indexOfThisPage is undefined');}
 			indexOfThisPage = (ns.localStorage.get('znThisPage')!="undefined") ? ns.localStorage.get('znThisPage'):0;
 		}
 		 
-		 if(testing){console.log('BBD indexOfThisPage='+indexOfThisPage)}
+		// if(testing){console.log('BBD indexOfThisPage='+indexOfThisPage)}
 //is there already a version set in the lms?		 
 		 if(   (lmsVrsn!=null)&&!isNaN(lmsVrsn)   ){	
     		$( "#dialog-modal" ).dialog({//then open a dialog
@@ -188,7 +188,7 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){
    				// }//if(!saveStorage	
      
  		else{ 
- 			if(testing){console.log('BBX indexOfThisPage='+indexOfThisPage)}
+ 			//if(testing){console.log('BBX indexOfThisPage='+indexOfThisPage)}
  			
  			writePage(indexOfThisPage,dl);
  		 
@@ -276,7 +276,7 @@ function setupQuizzes(){
 		    	qType=(typeof q.type!="undefined")?q.type:"Q";
 				if(qType=="I"){
 					interactionsQuizzes=true;
-					if(testing){console.log('in setupQuizzes GPD interactionsQuizzes='+interactionsQuizzes)}		    
+					//if(testing){console.log('in setupQuizzes GPD interactionsQuizzes='+interactionsQuizzes)}		    
 				}
 				var objectiveID= (qType+q.quiz);
 				if (testing){ console.log('in setupQuizzes GPE objectiveID='+objectiveID) }
