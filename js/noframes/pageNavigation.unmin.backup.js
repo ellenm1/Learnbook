@@ -34,7 +34,7 @@
 		//znThisPage is a number, the index of a page in the Array
 		//pageNo is the actual number that shows up as the page number - this should be znThisPage+1
 		//currentPage is the page object containing all the data from the page array
-	var pageNo,currentPage,znThisPage,znNextPage,znPrevPage,znPages; ;
+	var pageNo,currentPage,znThisPage,znNextPage,znPrevPage,znPages;
 	var thispage = (document.location.href); 
 	var justpath = window.location.pathname;
 	var lastslash = (window.location.pathname.lastIndexOf("/")+1);	
@@ -105,11 +105,10 @@
 	}//end else	
 	
 function printNavBar(){
-	var urls='',urlStr='', str1; 	 
+	var urls='',urlStr='', str1, printList=''; 	 
 	ps = ns.localStorage.get('pageArray');//pulls current state of page array from local storage
 	znPages = ps.length;
 	str1= ('<div class="nav-collapse sidebar-nav">\n<ul class="nav nav-tabs nav-stacked main-menu">');	
-	if(testing){console.log('in printNavBar APB ns.localStorage.isEmpty()='+ns.localStorage.isEmpty('pageArray') )}         
 	getCurrentPage();	//this returns znThisPage integer and currentPage object	
  	str1+=printNavToggle();
  	str1+=printExpander(1);
@@ -133,7 +132,6 @@ function printNavBar(){
 		var expand = 'closed';
 		var current = '';  
 		if(urlclean=="scorePage.htm"){ isScorePage = 'isScorePage';buttonTitle='Submit Score & Complete'; }
-		//if (i==x){ current = 'current';expand='open2'; }
 		if(typeof znThisPage=="undefined"){znThisPage=ps[0]}
 		if (i==znThisPage){ current = 'active';expand='open'; }
 		if (level==1){expand='open';}
@@ -144,10 +142,21 @@ function printNavBar(){
 		//if(testing){console.log('<a href="#" id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' + isScorePage+'">' + buttonTitle + '</a>');  }			
 		str1+=('<li>');
 		str1+=('<a id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' + isScorePage+'" title="'+ url +'">');
-		//if(isquiz=='quiz'){str1+= ('<i class="icon-edit"></i>');}
 		str1+=('<span class="hidden-tablet">');
 		str1+= buttonTitle; 
-		str1+=('</span></a></li>');		 
+		str1+=('</span></a></li>');	
+		
+		//console.log('urlclean='+urlclean);
+		if((isquiz=="notquiz")&&(urlclean!="scorePage.htm")){
+			printList += urlclean+";";  	  
+		}	 //end if not quiz and not score page
+		else if((ps[znThisPage].type=="C6")||(ps[znThisPage].type=="I") ) {
+			printList += urlclean+";";
+		}//end if printable quizzes
+		 
+		
+		//console.log('printList= '+printList);
+		//console.log('i='+i+' ps.length= '+ps.length);
 	} //end of for(var i=0 loop	
 	 
 	str1+=printExpander(2);
@@ -159,10 +168,6 @@ function printNavBar(){
 	 
   
 	if ( (trackingmode == "scorm") && APIOK() && (ms['quizSetupDone']!=true) ){  setupQuizzes();  } 
-	
-	//urls +=( urlStr+'" />');//new 8-12-07
-	//if(document.getElementById('pdfForm')){ document.getElementById('pdfForm').innerHTML+=urls;	 }
-	//setHdrBtns();//new 8-8-07
 	
 	$('#sidebar-left').append(str1);//this is where sidebar buttons all get written to page
 	 
@@ -204,7 +209,8 @@ function printNavBar(){
   		openModalDialog("#dialog-modal");	
   	}//end if((trackingmode == "scorm") && !APIOK()
 	
-	writeNewPageNo();  
+	writeNewPageNo();
+	writePrintForm(printList);  
 	writeHeaderTitle();
 	SCOBookmark(); 
 	writeDocTitle();
@@ -243,8 +249,6 @@ function getCurrentPage(){
 		 		 		
 		pageNo = parseFloat(znThisPage)+1; //page number 		
 		currentPage =  thePageArray[znThisPage]; /// is there a local storage for this item or not? If so use it
-		
-	 if(testing){console.log('in getCurrentPage YYY I am finally done with getCurrent Page znThisPage ='+znThisPage)}
 	return znThisPage, currentPage;  
 }//end getCurrentPage
         	
@@ -386,7 +390,7 @@ function getContent(params){
 	var objectiveID		=   itmtype+itmquiz;
 	var itmserver		= 	pi.svr;
 	
-			if(testing){console.log("in getContent:BAA typeof itmquiz=="+typeof itmquiz+' '+itmquiz+ ' itmtype='+itmtype+', itmquiz= '+itmquiz)}
+			//if(testing){console.log("in getContent:BAA typeof itmquiz=="+typeof itmquiz+' '+itmquiz+ ' itmtype='+itmtype+', itmquiz= '+itmquiz)}
 			customFunction01();
 			//determine "is it a quiz" then is it a remote quiz or not and what to do with it. 
 				if(typeof itmquiz!="undefined"){ 		  	
@@ -679,7 +683,7 @@ function customFunction04(){}
 function changeLinks(callback){
 	//change all local links to "itm=" ajax links
 	 
-	var nodes = $("a").not( $("#sidebar-left .main-menu a") ).not($("navbar-inner ul.nav .pull-right a.btn")).not($("#sidebar-left a.expander")).not($("a[target$='blank']")).not($("a[href^='mailto:']")).not($("a[href^='#']")).not($("a[data-link-change='no']")), i = nodes.length;
+	var nodes = $("a").not( $("#sidebar-left .main-menu a") ).not($("navbar-inner ul.nav .pull-right a.btn")).not($("#sidebar-left a.expander")).not($("a[target$='blank']")).not($("a[target$='new']")).not($("a[href^='mailto:']")).not($("a[href^='#']")).not($("a[data-link-change='no']")), i = nodes.length;
 	//.not($("a[target='_blank']")) hold out resources that open in a new window
 	//var regExp = new RegExp("//" + location.host + "($|/)");
 	//var regExp = new RegExp("//" + thispathUnEnc + "($|/)");
@@ -760,7 +764,7 @@ function printContentExpert(){
 			var co ="<li><div class=\"navContentExpert\"><ul class='expertlist'>";
 		if (ms.contentExpert.length>1){  co+="Content Experts:<br/> ";  }
 			$.each(ms.contentExpert,function(k,v){
-				if(testing){console.log('k='+k+'ms.contentExpert.length='+ms.contentExpert.length);}
+				//if(testing){console.log('k='+k+'ms.contentExpert.length='+ms.contentExpert.length);}
 				co += "<a href='mailto:"+ms.contentExpert[k].email+"'>"+ms.contentExpert[k].name+"</a>";
 				if(k<ms.contentExpert.length){co+="<br/> ";}
 			});//end each
@@ -789,7 +793,6 @@ function printHelpBtn(){
     }
 
 function printExpander(n){
-  if(testing){console.log('in print expander')}
   var exp=('<li><a href=\"#\"  id=\"expander'+n+'\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>');
   return exp;
    // document.getElementById('sidebar-left').innerHTML+=('<a href=\"#\" onmousedown=\"toggleByChapter();\" id=\"expander'+n+'\" class=\"expander\">expand all<\/a>');	
@@ -797,7 +800,6 @@ function printExpander(n){
 
 function nextPage(pageIndex){
 	if(testing){console.log('JJK znThisPage='+pageIndex+', znNextPage'+znNextPage)}
-	//pageIndex = (parseFloat(pageIndex) +1);
 	var newPage = (parseFloat(pageIndex) +1);
 	if(newPage==ps.length){ 
 		if(ps[pageIndex].url =="scorePage.htm"){
@@ -812,8 +814,6 @@ function nextPage(pageIndex){
 	//note - we are going to hide the unneeded button in the top nav, but in case someone uses these functions elsewhere, the message is still needed.
 	if(testing){console.log('GFF  itm= newPage='+newPage)}
 	var params ={ itm:newPage  }
- 	//ga('send', 'event', 'button', 'click', 'nextPageBtn', justpathnofilename+'/'+ps[newPage].url);//google analytics tracking
- 	//ga('send', 'pageview',{'page':justpathnofilename+'/'+ ps[newPage].url});//google analytics: track the ajax loaded page//google analytics tracking
  	 ga('send', {
 		  hitType: 'event',
 		  eventCategory: 'button',
@@ -870,7 +870,7 @@ function findPageArray(){
 function writeNewPageNo(){
 	var percentOfPagesBrowsed = (parseFloat(znThisPage)+1) / znPages;
 	var zWidth = Math.round(percentOfPagesBrowsed * 92);
-	if(testing){console.log('percentOfPagesBrowsed='+percentOfPagesBrowsed+' znThisPage='+znThisPage+', znPages'+znPages+', zWidth='+zWidth)}
+	//if(testing){console.log('percentOfPagesBrowsed='+percentOfPagesBrowsed+' znThisPage='+znThisPage+', znPages'+znPages+', zWidth='+zWidth)}
 	var lastPageNo = parseFloat(znPages);
 	var pbarhtml = 	'<div id="spaceHolder">'+
 						'<div id="utilitiesBar">'+
@@ -883,13 +883,27 @@ function writeNewPageNo(){
 								'</div>'+
 								'<div id="pageNumHolder">'+
 									'PAGE ' + (parseFloat(znThisPage) +1) + ' of ' + lastPageNo +
-								'</div>'+
+								'</div>'+			
+								'<div id="printBtn" class="test"><div class="icn-print"></div><form id="pdfForm" name="pdfForm" target="_blank" method="post" action="https://mlearningcontent2.med.umich.edu/PDFGenerator/default.aspx"></form></div>'+					
 							'</div>'+
 						'</div>'+
 					'<div>';
-					$(pbarhtml).prependTo('#footer');
-	//if( ($('#banner').length==0) && ($('.dontPrintPageNo').length==0) ){ } 
+					$(pbarhtml).prependTo('#footer'); 
   }	
+  
+ function writePrintForm(listofpages){
+ 	var subpathstart = window.location.pathname.indexOf("/ct/");
+ 	var subpath = window.location.pathname.substring(subpathstart+4);
+ 	var gsaurl="https://mlearningcontent2.med.umich.edu/gsa/"+subpath;
+ 	var str = ('<input name="uPath" type="hidden" value="'+gsaurl+'"/>\n');
+	str+=('<input name="uUrl" type="hidden" value="'+listofpages+'"/>'); 
+	document.getElementById("pdfForm").innerHTML=str;
+	
+	$(".icn-print").click(function(){
+		$("#pdfForm").submit();
+		})	 
+ }
+ 
   
 function wipePageNo(){
 	if($('#spaceHolder').length > 0){
