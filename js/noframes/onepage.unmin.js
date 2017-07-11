@@ -43,19 +43,19 @@ $(document).ready(function() {
 //assign functions to previous/next buttons	 
 	$(".prevbtn").click(function(){ 
 		prevPage(znThisPage); 
-		//ga('send', 'event', 'button', 'click', 'prevButton', 'on page# '+ znThisPage+1);//google analytics tracking
+		ga('send', 'event', 'button', 'click', 'prevButton', 'on page '+ znThisPage+1);//google analytics tracking
 		});
 	$(".nextbtn").click(function(){ 
 		nextPage(znThisPage); 
-		//ga('send', 'event', 'button', 'click', 'nextButton', 'on page#'+ znThisPage+1); //google analytics tracking 
+		ga('send', 'event', 'button', 'click', 'nextButton', 'on page'+ znThisPage+1); //google analytics tracking 
 		});
 //assign functions to expander buttons	
 	$(".expander").click(function(){ toggleByChapter(); 
-		 //ga('send', 'event', 'button', 'click', 'expander', 'on page#'+ znThisPage+1); //google analytics tracking
+		 ga('send', 'event', 'button', 'click', 'expander', 'on page'+ znThisPage+1); //google analytics tracking
 		 });
 //search button functionality	
 	$('#headerSearch').click(function(e) {
-		//ga('send', 'event', 'button', 'click', 'headerSearch', 'on page#'+ znThisPage+1);//google analytics tracking
+		//ga('send', 'event', 'button', 'click', 'headerSearch', 'on page'+ znThisPage+1);//google analytics tracking
 	  	$('#myModal').html('<div id="searchDiv"></div><div id="searchResults"></div> <a class="close-reveal-modal"><span class="closeText">CLOSE</span> &#215;</a>');
 		$('.close-reveal-modal').click(function(e) {
  			turnOffMsg();
