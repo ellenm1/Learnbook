@@ -5,6 +5,8 @@
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>  
 	<link id="base-style" href="css/css/stylesimple.css" rel="stylesheet">
+	<link id="bootstrap-style" href="css/css/bootstrap.min.css" rel="stylesheet">
+	<link id="base-style" href="css/css/style.css" rel="stylesheet">
 	<link id="mlearning-style" href="css/css/mlearningstyle.css" rel="stylesheet">
  	<link id="custom-style" href="css-local/userStyles.css" rel="stylesheet">
  	<script src="js/noframes/deeplink.js"></script>
@@ -15,12 +17,16 @@
     
   
 	 <div id="content">
-	 <div id="banner">
-     <div id="bnrTitle">MLearning SCORM-compatible HTML template</div></div>
+	<style>
+	li {margin-bottom: 10px;}
+
+	</style>
      <!--*********************put content below this line!!!!************-->
-         <table width="728" border="0" id="contenTable">
-	         <tr>
-	           <td width="478" valign="top">
+       <!--**the class "localimage" points the banner at "media/header.jpg". "localimagepng" will point at "media/header.png" If you want to use a generic image, remove the class "localimage".-->
+     <div id="banner" class="localimagepng"><div id="bnrTitle" style=" text-shadow: 2px 2px 4px #000000;">Surgery Workshop Series</div></div>               
+    <div class="row-fluid"">
+      
+        <div class="box span8">
                			<h1>Competency</h1>
 	             		<p>Competency statement goes here</p>
 	             		<h1>Critical Behaviors</h1>
@@ -29,71 +35,83 @@
                             <li><a href="index.htm" onclick="ns.localStorage.removeAll();">Clear namespace of local storage</a></li>
                             <li><a href="index.htm" onclick="localStorage.removeAll();">Clear local storage</a></li>
                             <li><a href="media/bestcareatlowercost.pdf" target="_blank">click to open a local pdf in a new window</a></li>
-                        </ul></td>
-	           <td width="248px" valign="top" bgcolor="#FFFFFF">
-               <div align="right">
-               <table width="92%" border="0" cellpadding="0" cellspacing="0" id="courseproperties">
-	             <tr>
-	              <td class="reqPad whatsnew header" style="font-size:90%">How much time will I need?</td>
-                 </tr>
-	             <tr>
-	               <td width="50%" valign="middle" bgcolor="#C0D6F3"  class="clockContainer" >
-                  <div id="leftside" >
-                  <div class="clockTextLarge">36</div>
-                   <div class="clockTextSmall">minutes</div>
-                   </div>
-                  <div id="rightside" style="float:left;">
-                    <div class="clockTextQuiz" style="margin-top:12px;">Module: 20 minutes</div>
-                   <div class="clockTextQuiz">Quiz: 16 minutes</div>
-                   </div>
-                   <div class="clearboth" style="clear:both;width:100%;"></div></td>
-                 </tr>
-	             <tr>
-	               <td valign="top" class="reqPad whatsnew header">What's new?</td></tr>
-	               <td valign="top" class="reqPad whatsnew"> 
-                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        </ul>
+        </div>
+  		
+  		
+  		<div class="box span4">
+               <div id="courseproperties">
+               <!--durations-->   	
+               	<div class="reqPad whatsnew header">
+               	How much time will I need?
+               	</div>
+              
+               <div class="clockContainer">
+					<div id="leftside" >
+					  <div class="clockTextLarge">36</div>
+					   <div class="clockTextSmall">minutes</div>
+					   </div>
+					  <div id="rightside" style="float:left;">
+						<div class="clockTextQuiz" style="margin-top:12px;">Module: 20 minutes</div>
+					   <div class="clockTextQuiz">Quiz: 16 minutes</div>
+					   </div>
+					    <div class="clearboth" style="clear:both;width:100%;"></div>
+               	</div>
+               
+              <!--whats new--> 
+               <div class="reqPad whatsnew header">
+               	What's new?
+               	</div>
+               	 
+               	 <div class="reqPad whatsnew">
+               	 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
                    <ul>
                       <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
                       <li>Donec at lacus ac nulla lobortis dignissim.</li>
                       <li>Praesent pellentesque placerat purus, in rutrum nibh sollicitudin ac.<br />
                         <br />
                       </li>
-                   </ul></td>
-                 </tr>
-	             <tr>
-	               <td class="reqPad whatsnew header" style="font-size:85%">Who is the audience for this lesson?</td>
-                 </tr>
-	             <tr>
-	               <td valign="top" class="reqPad"><p>All UMHS Employees</p></td>
-                 </tr>
-	             <tr>
-	             <td class="reqPad whatsnew header" style="font-size:90%">What are the requirements?</td>
-                 </tr>
-	             <tr>
-	               <td valign="top" class="reqPad"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non felis vitae mi ornare consequat.</p></td>
-                 </tr>
-                 <tr>
-<!-- if you wish to remove additional resources, delete starting here -->                 
-	               <td class="reqPad whatsnew header" style="font-size:90%">Additional Resources</td>
-                 </tr>
-	             <tr>
-	               <td valign="top" class="reqPad"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non felis vitae mi ornare consequat.</p></td>
-                 </tr>
-	             <tr>
-<!-- if you wish to remove additional resources, delete ending here -->
-	               <td valign="top"><img src="media/bandBottom.jpg" width="229" height="19" /></td>
-                 </tr>
-               </table></div></td>
-            </tr>
-	         <tr>
-	           <td valign="top"><hr width="100%" noshade="noshade" /></td>
-            </tr>
-	         <tr>
-	           <td valign="top"><div id="endmatter">Copyright &copy; 2015 Regents of the University of Michigan<br />
-	             All rights reserved. Comments or suggestions to <a href="mailto:mlearninginfo@umich.edu">the MLearning team</a><br />Last modified: Sept. 2, 2015 (emeiselm)</div></td>
-	           <td valign="top"></td>
-            </tr>
-       </table>
+                   </ul>
+               	</div>
+               	
+               <!--audience--> 
+               <div class="reqPad whotakes header">
+               Who is the audience for this lesson?
+               	</div>
+               	 
+               	 <div class="reqPad whotakes">
+               	 <p>All UMHS Employees</p>
+               	</div>
+             
+              <!--requirements--> 
+               <div class="reqPad requirements header">
+               What are the requirements?
+               	</div>
+               	 
+               	 <div class="reqPad requirements">
+               	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non felis vitae mi ornare consequat.</p>
+               	</div>
+               	
+               	  <!--requirements--> 
+               <div class="reqPad resources header">
+               	Additional Resources
+               	</div>
+               	 
+               	 <div class="reqPad resources">
+               	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non felis vitae mi ornare consequat.</p>
+               	</div>
+              
+             
+              </div><!--end courseproperties-->
+               
+               
+        </div> <!-- end span3-->
+               
+         <div id="endmatter" class="box span10">Copyright &copy; 2017 Regents of the University of Michigan<br />
+	             All rights reserved. <span id="feedbackinfo"></span>.
+	             <br />Last modified: Nov. 2, 2016 (emeiselm)
+	       </div> <!--end endmatter--> 
+	   </div><!--end row-fluid-->        
            <!--*********put content above this line!!!!!*****-->
 	   </div><!--end content-->
        
