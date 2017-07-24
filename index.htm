@@ -91,12 +91,10 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 		<script src="js/noframes/jquery.ui.position.js"></script>
 		<script src="js/noframes/metro/jquery-migrate-1.0.0.min.js"></script>	
-		<!--<script src="js/noframes/metro/jquery-ui-1.10.0.custom.min.js"></script>-->
 		<script src="js/noframes/metro/jquery.ui.touch-punch.js"></script>		
 		<script src="js/noframes/metro/modernizr.js"></script>	
 		<script src="js/noframes/metro/bootstrap.min.js"></script>	
 		<script src="js/noframes/metro/jquery.cookie.js"></script>	
-		<!--<script src='js/noframes/metro/fullcalendar.min.js'></script>	-->
 		<script src='js/noframes/metro/jquery.dataTables.min.js'></script>
 		<script src="js/noframes/metro/excanvas.js"></script>
 		<script src="js/noframes/metro/jquery.flot.js"></script>
@@ -107,16 +105,11 @@
 		<script src="js/noframes/metro/jquery.uniform.min.js"></script>		
 		<script src="js/noframes/metro/jquery.cleditor.min.js"></script>	
 		<script src="js/noframes/metro/jquery.noty.js"></script>	
-		<!--<script src="js/noframes/metro/jquery.elfinder.min.js"></script>
-		<script src="js/noframes/metro/jquery.raty.min.js"></script>	-->	
-		<script src="js/noframes/metro/jquery.iphone.toggle.js"></script>	
-		<!--<script src="js/noframes/metro/jquery.uploadify-3.1.min.js"></script>-->	
+		<script src="js/noframes/metro/jquery.iphone.toggle.js"></script>		
 		<script src="js/noframes/metro/jquery.gritter.min.js"></script>	
 		<script src="js/noframes/metro/jquery.imagesloaded.js"></script>	
-		<!--<script src="js/noframes/metro/jquery.masonry.min.js"></script>	-->
 		<script src="js/noframes/metro/jquery.knob.modified.js"></script>	
 		<script src="js/noframes/metro/jquery.sparkline.min.js"></script>		
-		<!--<script src="js/noframes/metro/counter.js"></script>-->	
 		<script src="js/noframes/metro/retina.js"></script>
 		<script src="js/noframes/metro/custom.js"></script>
 		<script src="js/noframes/swfobject.js"></script>
@@ -127,7 +120,6 @@
    		<script src="js/noframes/jquery.storageapi.js"></script>
 		<script src="js/noframes/cookie.min.js"></script>
 		<script src="js/noframes/querystring.min.js"></script> 
-		<!--<script src="js/noframes/arrayVersion.js"></script>-->
 		<script src="js-local/pageArray.js"></script>
 		<script src="js/noframes/toggleOpen.js"></script>
 		<script src="js/noframes/SCORMGeneric.js"></script>
@@ -140,36 +132,10 @@
 		<script src="js/noframes/interactionsPage.js"></script>
 		<script src="js-local/customScripts.js"></script>
 		<script src="js/noframes/googleanalytics.js"></script>
-		<script>
-			//= function({options}, callback) {
-			  $("#handle").pageslide({href:"#sidebar-left",direction: "right"}, function(){  
-			  		//override built in responsive styles so that even though side-bar is really hidden, the pageslide duplicate will not be.
-			  		$('#pageslide #sidebar-left').removeClass('span1');
-			  		$('#pageslide #sidebar-left').removeClass('span2');
-			  		$('#pageslide #sidebar-left').addClass('span3');
-			  	 $( window ).resize(function(){//close pageslide if window is stretched to the point where the sidebar would reappear.
-			  	 	 var wi = $(window).width();
-			  	 	 //$( "body" ).prepend( "<div>" + $( window ).width() + "</div>");
-			  	 	if(wi > 480){ $.pageslide.close();}			  	 
-			  	 })
-			  		});
-			 
-			 if($("body").hasClass( "metrics" )){
-			 	$(window).bind("resize", changemetrics);
-			 	}
-			 	
-			  function changemetrics(){
-				var wheight =  $(window).height();   // returns height of browser viewport
-  				var dheight =	$(document).height(); // returns height of HTML document
-				var wwidth = $(window).width();   // returns width of browser viewport
-				var dwidth = $(document).width(); // returns width of HTML document
-  				var sheight = screen.height;
-				var swidth = screen.width;
-				//http://stackoverflow.com/questions/3437786/how-to-get-web-page-size-browser-window-size-screen-size-in-a-cross-browser-wa/11744120#11744120
-				$('#screenmetrics').html( 'window height ='+ wheight+', window width'+wwidth+'<br/>doc width='+dwidth+', doc height ='+dheight+ '<br/>sheight= '+sheight+ ', swidth='+swidth);
-			  }	//end changemetrics
-		</script>
-	
+		<script src="js/base64.js"></script>   
+        <script src="js/xapiwrapper.min.js"></script>    
+    	<script src="js/config.js"></script>
+		<script src="js-local/page02.js"></script>		
 		<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 	  	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>

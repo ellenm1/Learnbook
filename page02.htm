@@ -1,44 +1,97 @@
-<!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>  
-	<link id="base-style" href="css/css/styleSimple.css" rel="stylesheet">
+	<link id="base-style" href="css/css/stylesimple.css" rel="stylesheet">
 	<link id="bootstrap-style" href="css/css/bootstrap.min.css" rel="stylesheet">
 	<link id="base-style" href="css/css/style.css" rel="stylesheet">
 	<link id="mlearning-style" href="css/css/mlearningstyle.css" rel="stylesheet">
  	<link id="custom-style" href="css-local/userStyles.css" rel="stylesheet">
- 	<script src="js/noframes/deeplink.js"></script>
+ 	 <!--<script src="js/noframes/deeplink.js"></script>-->
  	</head>
 	 
 <body>
 
+    
   
-	 	 <div id="content" >
-	  <!--*********************put content below this line!!!!************-->
-       <div class="row-fluid"  >
-       
-         	<div class="span6">
-			 	<h1>Headline</h1>
-			 	<p>
-			 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in tempus augue. Vivamus semper eget dolor eget sollicitudin. Nullam imperdiet purus ante, sit amet mollis nibh condimentum vel. Cras eu diam at sapien rhoncus tempor. Ut sagittis dui arcu, vitae fermentum odio convallis sed. Aliquam pharetra venenatis neque et malesuada. Phasellus eleifend nec nulla ut faucibus.</p>
-				<p>
-Mauris ultrices, libero at euismod faucibus, dolor purus consequat lacus, sit amet dictum purus sapien sed mauris. Fusce et sem varius, finibus nibh vel, mollis metus. Suspendisse vel iaculis turpis, et ullamcorper enim. Fusce id ultrices eros, vitae vestibulum purus. Vestibulum pellentesque nunc velit, eget vulputate quam ultricies non. Suspendisse pulvinar iaculis purus, vitae tempor lectus aliquet in. Proin tristique velit facilisis dapibus cursus. Quisque elit tortor, egestas ac mauris ac, accumsan imperdiet felis. Fusce dapibus vitae magna in interdum. Quisque ac mauris sed mauris suscipit porta. Nulla eu neque sed lorem venenatis luctus quis id massa.
-</p>
-			</div><!--box span6-->
-			<div class="span6">
-				<h1>&nbsp;</h1>
-				<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in tempus augue. Vivamus semper eget dolor eget sollicitudin. Nullam imperdiet purus ante, sit amet mollis nibh condimentum vel. Cras eu diam at sapien rhoncus tempor. Ut sagittis dui arcu, vitae fermentum odio convallis sed. Aliquam pharetra venenatis neque et malesuada. Phasellus eleifend nec nulla ut faucibus.
-</p>
-				<p>
-Mauris ultrices, libero at euismod faucibus, dolor purus consequat lacus, sit amet dictum purus sapien sed mauris. Fusce et sem varius, finibus nibh vel, mollis metus. Suspendisse vel iaculis turpis, et ullamcorper enim. Fusce id ultrices eros, vitae vestibulum purus. Vestibulum pellentesque nunc velit, eget vulputate quam ultricies non. Suspendisse pulvinar iaculis purus, vitae tempor lectus aliquet in. Proin tristique velit facilisis dapibus cursus. Quisque elit tortor, egestas ac mauris ac, accumsan imperdiet felis. Fusce dapibus vitae magna in interdum. Quisque ac mauris sed mauris suscipit porta. Nulla eu neque sed lorem venenatis luctus quis id massa.</p>	 
-   		</div> <!--box span6-->
-	
-				 <!--*********put content above this line!!!!!*****-->
-	   </div><!--end row-fluid-->
-       
-    	</body>
+	 <div id="content">
+	<style>
+	li {margin-bottom: 10px;]
+
+	</style>
+     <!--*********************put content below this line!!!!************-->
+       <!--**the class "localimage" points the banner at "media/header.jpg". "localimagepng" will point at "media/header.png" If you want to use a generic image, remove the class "localimage".-->
+     
+     
+     
+     
+     <div id="banner" class="localimagepng"><div id="bnrTitle" style=" text-shadow: 2px 2px 4px #000000;">SCORM Module / Kaltura Video / xAPI integration version 2</div></div>               
+    <div class="row-fluid"">
+
+  		<div class="box span4" id="coursepropertiescontainer">
+               <div id="courseproperties">
+               <div class="reqPad whatsnew header">
+               <span style="font-size:24px;font-style:bolder;">1.</span> Enter email address and first and last name. Click "Start xAPI".
+               	</div>  	 
+               	 <div class="reqPad whatsnew" style="text-align:right;">   
+					<div><label for="email">Email address: <input type="text" name="email" id="email" size="50" placeholder="name@example.com" value=""/></label></div>
+					<div><label for="lastname">Last name: <input type="text" name="lastname" id="lastname" size="50" placeholder="lastname" value=""/></label></div>
+					<div><label for="firstname"></label>First name: <input type="text" name="firstname" id="firstname" size="50" placeholder="firstname" value=""/></div>
+				 <input type="button" value="Start xAPI" id="startBtn">			 
+               	</div>             
+              </div><!--end courseproperties-->
+               
+               
+        </div> <!-- end span3-->
+        <div id = "playerbox" class="box span8">
+        <div class="reqPad whatsnew header"><span style="font-size:24px;font-style:bolder;">2.</span> Click video controls: play, pause, seek,<br/>volume, etc.</div>
+            <!--  <div id="kaltura_player_1414591334" style="width: 540px; height: 490px;" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+				  
+					<span itemprop="name" content="Learning Catalyst"></span>
+					<span itemprop="description" content="Learning Catalyst Awards"></span>
+					<span itemprop="duration" content="682"></span>
+					<span itemprop="thumbnail" content="https://cdnsecakmi.kaltura.com/p/1038472/sp/103847200/thumbnail/entry_id/1_dqtsvhe0/version/100000"></span>
+					<span itemprop="thumbnail" content="media/posterframevid20.jpg"></span>
+					<span itemprop="width" content="540"></span>
+					<span itemprop="height" content="490"></span>
+				</div>
+			<span data-script="https://cdnapisec.kaltura.com/p/1038472/sp/103847200/embedIframeJs/uiconf_id/22909021/partner_id/1038472?&entry_id=1_dqtsvhe0&autoembed=true&playerId=kaltura_player_1414591334&cache_st=1414591334&width=640&height=510"></span>
+  			 
+         <script src="https://cdnapisec.kaltura.com/p/1038472/sp/103847200/embedIframeJs/uiconf_id/23677471/partner_id/1038472?autoembed=true&entry_id=1_dqtsvhe0&playerId=kaltura_player_1499898486&cache_st=1499898486&width=720&height=455&flashvars[streamerType]=auto"></script>
+ -->
  
+ <div id="kaltura_player_1499899357" style="width: 720px; height: 455px;" itemprop="video" itemscope itemtype="http://schema.org/VideoObject"> 
+ <span itemprop="name" content="Catalyst Awards 2014 - Part 2"></span> 
+ <span itemprop="description" content=""></span> 
+ <span itemprop="duration" content="193"></span> 
+ <span itemprop="thumbnail" content="http://cdnsecakmi.kaltura.com/p/1038472/sp/103847200/thumbnail/entry_id/1_nolmlgzu/version/100031"></span> 
+ <span itemprop="width" content="720"></span> <span itemprop="height" content="455"></span> </div> 
+ <span data-script="https://cdnapisec.kaltura.com/p/1038472/sp/103847200/embedIframeJs/uiconf_id/23677471/partner_id/1038472?autoembed=true&entry_id=1_nolmlgzu&playerId=kaltura_player_1499899357&cache_st=1499899357&width=720&height=455&flashvars[streamerType]=auto"></span>
+ 
+ 
+			<div id="endpoint"></div>
+			
+			<div id="result" style="border:1px solid red;"></div>
+        </div>
+        
+        <!--<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script> --> 
+        <span data-script="js/base64.js"></span>               
+        <span data-script="js/xapiwrapper.js"></span>      
+        <span data-script="js/config.js"></span>      
+         <!--<span data-script="js-local/page02.js"></span> -->	  
+      <span data-script="js-local/page02init.js"></span> 
+          
+	   </div><!--end row-fluid-->      
+ 
+	 
+           <!--*********put content above this line!!!!!*****-->
+	   </div><!--end content-->
+     <script src="js/base64.js"></script>               
+        <script src="js/xapiwrapper.js"></script>      
+        <script src="js/config.js"></script>      
+      <!--  <script src="js-local/page01.js"></script> -->
+		 
+</body> 
 </html>
