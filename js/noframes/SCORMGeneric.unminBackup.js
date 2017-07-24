@@ -1,4 +1,4 @@
-/*v 1.13 2-22-2013 emeiselm*/
+/*01.06.17  emeiselm*/
 
 //based on:
 // SCORM 1.2 SCO Logic management script sample
@@ -263,33 +263,12 @@ function SCOSetStatus(){
     	//check if they already have a completed or passed status in lms
     	
     	if( (lmsStatus=="completed")&&(typeof qsParm['ls']=="undefined") ){
-   			var conf = confirm("You have already completed this module. Are you sure you want to continue? Your score may change.\n Click NO or CANCEL to close window and save your existing status");
-    		if(conf == true){
-				SCOSetValue("cmi.core.lesson_status","incomplete"); //this won't work I don't think, with current rustici settings.
-   			}//end if(conf == true)
-   			else{  //they want to close module
-   				if(testing){console.log('PPR lmsStatus='+lmsStatus+' and user asked to close the window')  }
-					SCOSetValue("cmi.core.lesson_status","completed");
-					SCOSetValue("cmi.core.exit","");
-					//SCOSaveData();
-					//if(window.data.cookieVrsn){parent.SetCookie('cVrsn',"",-1);}
-					SCOReportSessionTime();
-					g_bFinishDone = (g_objAPI.LMSFinish("") == "true");		
-   			}	//end else
+    		SCOSetValue("cmi.core.lesson_status","incomplete");		 
    		}//end if(lmsStatus=="completed")		
    			
-    	if(lmsStatus=="passed"){ 
-    			//ask user do they want to continue or close module.				
-    			var conf = confirm("You have already completed this module with a score of "+lmsScore+ "% in MLearning. Are you sure you want to continue? You will lose your completed status and score. \n Click NO or CANCEL to close window and save your existing status and score.");
-    			if(conf == true){
-						//use the score from the LMS.
-						SCOSetValue("cmi.core.lesson_status","incomplete");
+    	if((lmsStatus=="passed")&&(typeof qsParm['ls']=="undefined")){ 
+    					SCOSetValue("cmi.core.lesson_status","incomplete");
 						moduleScore = lmsScore;
-   					}//end if(conf == true)
-   				else{  //they want to close module
-   					if(testing){console.log('PPX lmsStatus='+lmsStatus+' and user asked to close the window')  }
-					closingActions();
-   				}	//end else
    		}//end if(lmsStatus=="passed")
    		
    		else{ //there was no previous completion in the lms

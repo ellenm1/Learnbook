@@ -1,15 +1,12 @@
- 
-	//if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
-	var testing = false;
 function IE(v) {//use like this: if(IE()){}
   var r = RegExp('msie' + (!isNaN(v) ? ('\\s' + v) : ''), 'i');
   return r.test(navigator.userAgent);
 }
  
 $(document).ready(function() {
-	//var cookieVrsn=ReadCookie('cVrsn'); 
 	var pageHasBeenSet;
-	zVrsn = 	qsParm['vrsn'] ? qsParm['vrsn'] : null;//is there a vrsn param set in the query string?
+	//this is already handled in pagearray.js CHECK AND FIX
+	zVrsn = 	qsParm['vrsn'] ? qsParm['vrsn'] : null;//is there a vrsn param set in the query string? zVrsn defined in trackingFunctions.js
 	$('div.nav-no-collapse.header-nav .breadcrumb').empty();
 	initTracking(); //doesn't require document.ready
 	$('body').append('<div id="dialog-modal" style="display:none; z-index: 1000;"></div>');
@@ -28,44 +25,10 @@ $(document).ready(function() {
 				
 	$('#footer').append(footerStr);
  	 	
-	/*module version stuff - this opens a "loading" dialog if there is a version param set*/
-	 //if(!saveStorage){
-	// if(saveStorage){debugger;}	
-		
-		 if(   (lmsVrsn!=null)&&!isNaN(lmsVrsn)   ){	//this catches if there is already a version set in the lms
-    		$( "#dialog-modal" ).dialog({
-    			close:true,
-            	height: 140,
-           		//autoOpen:false,
-           		modal: true
-       	 	});     	 	     	 	
-       	 	setVrsn(lmsVrsn,0);//set the version of the pageArray to the version stored in the lmsVrsn objective 
-    	  	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");  
-    	  	closeModalDialog("#dialog-modal");	
-    	  	writePage(znThisPage,dl);
-    	  	//debugger;
-    	}//if(lmsVrsn)
-    	
-    	else if((zVrsn!=null)&&!isNaN(zVrsn)) { 
-    		$( "#dialog-modal" ).dialog({
-    			close:true,
-            	height: 140,
-           		//autoOpen:false,
-           		modal: true
-       	 	}); 
-       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");      	 	     	 	
-       	 	setVrsn(zVrsn,0);//set the version of the pageArray to the version set in the query string 
-    		closeModalDialog("dialog-captivate");
-    		writePage(znThisPage,dl);
-    		//debugger;	
-    	}//else
-   				// }//if(!saveStorage	
-     
- else{  
- 		writePage(znThisPage,dl);
- 		 
- 		}			  
-	 
+	/*module version stuff - this opens a "loading" dialog if there is a version param set either in lms or query string*/
+//if(testing){console.log('ERTY znThisPage='+znThisPage+' window.znThisPage='+window.znThisPage)}
+	checkForStoredVersion(lmsVrsn, znThisPage, dl, zVrsn);
+	
 	
 	//assign getcontent to onclick of all the nav links
 	$("#sidebar-left li a[id^='itm']").click(function() {
@@ -80,19 +43,19 @@ $(document).ready(function() {
 //assign functions to previous/next buttons	 
 	$(".prevbtn").click(function(){ 
 		prevPage(znThisPage); 
-		//ga('send', 'event', 'button', 'click', 'prevButton', 'on page# '+ znThisPage+1);//google analytics tracking
+		ga('send', 'event', 'button', 'click', 'prevButton', 'on page '+ znThisPage+1);//google analytics tracking
 		});
 	$(".nextbtn").click(function(){ 
 		nextPage(znThisPage); 
-		//ga('send', 'event', 'button', 'click', 'nextButton', 'on page#'+ znThisPage+1); //google analytics tracking 
+		ga('send', 'event', 'button', 'click', 'nextButton', 'on page'+ znThisPage+1); //google analytics tracking 
 		});
 //assign functions to expander buttons	
 	$(".expander").click(function(){ toggleByChapter(); 
-		 //ga('send', 'event', 'button', 'click', 'expander', 'on page#'+ znThisPage+1); //google analytics tracking
+		 ga('send', 'event', 'button', 'click', 'expander', 'on page'+ znThisPage+1); //google analytics tracking
 		 });
 //search button functionality	
 	$('#headerSearch').click(function(e) {
-		//ga('send', 'event', 'button', 'click', 'headerSearch', 'on page#'+ znThisPage+1);//google analytics tracking
+		//ga('send', 'event', 'button', 'click', 'headerSearch', 'on page'+ znThisPage+1);//google analytics tracking
 	  	$('#myModal').html('<div id="searchDiv"></div><div id="searchResults"></div> <a class="close-reveal-modal"><span class="closeText">CLOSE</span> &#215;</a>');
 		$('.close-reveal-modal').click(function(e) {
  			turnOffMsg();
@@ -121,7 +84,7 @@ $(document).ready(function() {
 	}//if($("#header")
 
 	
-  maximizeSabaPlayer();	
+  maximizeSabaPlayer();	// was written to get around issues with saba players, but left in place when we stopped using that player since it expands module when needed
  // ga('send', 'pageview');//google analytics tracking
  // var _gaq = _gaq || [];//google analytics tracking
  });//end ready
@@ -131,14 +94,13 @@ $(document).ready(function() {
 $.fn.bootstrapBtn = bootstrapButton;
 
 function writePage(znthisp,deepLink){
-	printNavBar();	
+	//printNavBar();	this is in getContent where needed
 	var params = {
-			itm:znThisPage,
+			itm:znthisp,
 			dl:dl?dl:null
 		}	
 	getContent(params);
 } 
-
 
 function maximizeSabaPlayer(){
 	top.window.moveTo(0,0);
@@ -163,29 +125,166 @@ function checkSubmit(e){
 	
 }
 
+
+function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){	
+
+		//this runs once when index loads and when coming back from questionmark quiz/qualtrics quiz. not every time content loads
+		// var znThisPage = (typeof znThisPage!="undefined")?znThisPage:0;
+		//indexOfThisPage will be used for landing page
+		
+		if(typeof indexOfThisPage=="undefined"){
+		//if it's too early for znThisPage to have been calculated, indexOfThisPage will be undefined. 
+		//look in local storage for a value or set indexOfThisPage to zero.
+			//if(testing){console.log('GWE indexOfThisPage is undefined');}
+			indexOfThisPage = (ns.localStorage.get('znThisPage')!="undefined") ? ns.localStorage.get('znThisPage'):0;
+		}
+		 
+		// if(testing){console.log('BBD indexOfThisPage='+indexOfThisPage)}
+//is there already a version set in the lms?		 
+		 if(   (lmsVrsn!=null)&&!isNaN(lmsVrsn)   ){	
+    		$( "#dialog-modal" ).dialog({//then open a dialog
+    			close:true,
+            	height: 140,
+           		//autoOpen:false,
+           		modal: true
+       	 	});
+       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");  
+//if so, is it a user-selected version?      	 	
+       	 	if(lmsVrsn==99){//if the version is a user-selected custom version figure out what the page array should be...
+       	 		var suspendDataFromLMS = SCOGetValue("cmi.suspend_data");
+       	 		console.log('lmsVrsn==99 and suspendDataFromLMS= '+suspendDataFromLMS);
+       	 		var start = suspendDataFromLMS.indexOf('CustVrsn_');
+       	 		var end =  suspendDataFromLMS.indexOf('_CustVrsn');
+       	 		if((start!=-1)&&(end!=-1)){
+       	 			var selecteditems = suspendDataFromLMS.substring(start+9,end);
+       	 			var selecteditemsArray  =( selecteditems.split(','));
+       	 			var newpagelist = getNewPageList(selecteditemsArray);
+					startUpCustomVersion(newpagelist, selecteditems);	//and start that version up.  
+       	 		}
+       	 		 else{ alert('custom version selections were not successfully stored in suspendDataFromLMS, so will have to be re-selected') }	
+       	 	
+       	 	}
+//there WAS a specific version stored in the LMS, and it is not a custom version (99) so no need to check anything else, just restore it:       	 	
+       	 	else{  	     	 	
+       	 		setVrsn(lmsVrsn,0);//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
+       	 	}
+    	  	
+    	  	closeModalDialog("#dialog-modal");	
+    	  	writePage(indexOfThisPage,dl);
+    	}//if(lmsVrsn)
+    	
+    	else if((zVrsn!=null)&&!isNaN(zVrsn)) { //check to see if a version was requested in the query string
+    		$( "#dialog-modal" ).dialog({
+    			close:true,
+            	height: 140,
+           		//autoOpen:false,
+           		modal: true
+       	 	}); 
+       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");      	 	     	 	
+       	 	setVrsn(zVrsn,0);//set the version of the pageArray to the version requested in the query string 
+    		closeModalDialog("dialog-captivate");
+    		writePage(indexOfThisPage,dl);	
+    	}//else
+   				// }//if(!saveStorage	
+     
+ 		else{ 
+ 			//if(testing){console.log('BBX indexOfThisPage='+indexOfThisPage)}
+ 			
+ 			writePage(indexOfThisPage,dl);
+ 		 
+ 		}			  
+	 }//end checkForStoredVersion
 //*********	 		
- 
+
+
+function getNewPageList(selitms){ //creates a user-selected version from a set of comma delimited short string identifiers, such as comma delimited values from a set of checkboxes or comma delimited values from suspend_data retrieved from the LMS
+//each identifier is associated with a set of pages listed in pagesets in pageArray.js
+ 		var thelist=new Array();
+ 		var intro = $(pagesets.intro).toArray();
+ 		 $.each(intro, function(j, val){
+ 		 	thelist.push(intro[j]);//intro
+ 		 });
+ 		
+ 		
+ 		$.each(selitms, function( i, val){
+ 				console.log('i='+i+', val='+val+', pagesets[val]= '+pagesets[val]);
+ 				 
+ 				///var gg = $.makeArray(pagesets[0][val]);
+ 				var gg = $(pagesets[val]).toArray();
+ 				$.each(gg, function(k,val){
+ 		 			thelist.push(gg[k]);//add page by page
+ 		 		});
+  						
+  			}); //end each
+  		var ending = $(pagesets.ending).toArray();
+  		
+  		$.each(ending, function(m, val){
+ 		 	thelist.push(ending[m]);//intro
+ 		 });
+  		 
+  		//$.makeArray(thelist);
+  		return thelist;
+	}//end getNewPageList
+	
+	 
+function startUpCustomVersion(znewpagelist,selecteditems, landingPage) {
+ 			ns.localStorage.set('pageArray',znewpagelist);	 //store new page array in local storage
+			ps=ns.localStorage.get('pageArray');
+			SCOSetObjectiveData("version","score.raw",'99');
+			//need to check suspend data to see if new version needs to replace old.
+			 window.lmsVrsn = 99;
+			 ms.vrsn = 99;
+			 ns.localStorage.set('moduleVars',ms);
+			
+			//if selected items is not null, that means there is a NEW selection which should replace whatever might be in the suspend_data. 
+			//otherwise, leave suspend_data alone - you are just starting up again after storing the version previously 
+			//http://stackoverflow.com/questions/18388799/replace-text-between-two-words
+			var newstr;
+			if((selecteditems!=null)&&(typeof selecteditems!="undefined")){
+				var suspendDataFromLMS = SCOGetValue("cmi.suspend_data");
+				if(suspendDataFromLMS.indexOf('CustVrsn_')!=-1){
+					//custom version number was saved previously in suspendData. Replace with new version.
+					 newstr = suspendDataFromLMS.replace(/(CustVrsn_)(.+?)(?= _CustVrsn)/, "$1 "+selecteditems);
+					console.log('KLE newstr='+newstr);
+				}
+				
+				else{ newstr=suspendDataFromLMS+";CustVrsn_"+selecteditems+"_CustVrsn"}
+				
+				SCOSetValue("cmi.suspend_data", newstr);
+				if(testing){console.log('VBN after saving new custom version, suspendData = '+ SCOGetValue("cmi.suspend_data") )}
+			 }
+			 
+			znThisPage = (typeof landingPage!="undefined"&&landingPage>0)?landingPage:0;
+			 
+			setupQuizzes();
+			wipePageNo();
+			wipeNavBar();
+			writePage(0,null);	
+
+}//end startUpCustomVersion
+	
+	 
 function setupQuizzes(){
 	interactionsQuizzes=false;//set it to false each time this runs. It will be set to true again if there are any in this version.
-  //  console.log('in setupQuizzes GPB ps='+ps);
-   	for(var m=0; m< ps.length; m++){ 
-  
-        var q =  ps[m];
-	    if (typeof q.quiz!="undefined"){ 
-	        quizCount++;
+   		console.log('in setupQuizzes GPB ps='+ps);
+   		for(var m=0; m< ps.length; m++){ 
+  	 
+        	var q =  ps[m];
+	    	if (typeof q.quiz!="undefined"){ 
+	        	quizCount++;
 	        	//console.log('in setupQuizzes GPC quizCount='+quizCount);
-		    qType=(typeof q.type!="undefined")?q.type:"Q";
-		    if(qType=="I"){
-		    	interactionsQuizzes=true;
-		    	if(testing){console.log('in setupQuizzes GPD interactionsQuizzes='+interactionsQuizzes)}		    
-		    }
-		    var objectiveID= (qType+q.quiz);
-		    if (testing){ console.log('in setupQuizzes GPE objectiveID='+objectiveID) }
-			var obj_count = parseInt(SCOGetValue('cmi.objectives._count'), 10);
+		    	qType=(typeof q.type!="undefined")?q.type:"Q";
+				if(qType=="I"){
+					interactionsQuizzes=true;
+					//if(testing){console.log('in setupQuizzes GPD interactionsQuizzes='+interactionsQuizzes)}		    
+				}
+				var objectiveID= (qType+q.quiz);
+				if (testing){ console.log('in setupQuizzes GPE objectiveID='+objectiveID) }
+				var obj_count = parseInt(SCOGetValue('cmi.objectives._count'), 10);
 			 
-			 if( SCOGetObjectiveData(objectiveID, "status") ){ 
-			 if(testing){console.log('there was an objective for id '+objectiveID) }
-			  }
+				 if( SCOGetObjectiveData(objectiveID, "status") ){ 
+				 if(testing){console.log('there was an objective for id '+objectiveID) }
+				  }
     		else{	SCOSetObjectiveData(objectiveID, 'status', '')}
  			//sets up the maximum score for each objective
            	var objStatus =  (SCOGetObjectiveData(objectiveID, "status"   ))?(SCOGetObjectiveData( objectiveID, "status"   )):'';
@@ -208,26 +307,28 @@ function setupQuizzes(){
 		}// end if (typeof q.quiz!="undefined"){
       } //end for (var...
     if(interactionsQuizzes){loadInteractions();}
-    //quizSetupDone = true;
+    
    ms["quizSetupDone"] = true
    	ns.localStorage.set("moduleVars",ms);
  } //end setupQuizzes function
  
  
-function setVrsn(n,p){//p is landingpage: //it is the number of the item in the array, eg 0, 1, 2, 3, etc.
-   	
-   	//set some variables
-	//zVrsn = 	qsParm['vrsn'] ? qsParm['vrsn'] : null;
-	
+function setVrsn(n,p){
+//n is desired version number, it should match the pageArray number desired.
+//p is index of desired landing page of new version
+	if(testing){console.log('ETE n='+n+', p='+p)}	
+//need to check value of lmsVrsn again in case it changed since module was initialized.
 	zLmsVrsn = 	(lmsVrsn && !isNaN(lmsVrsn) ) ? lmsVrsn : null;
-	zCookieVrsn = ReadCookie('cVrsn');
-	
-	if(n &&!isNaN(n)){
+	//zCookieVrsn = ReadCookie('cVrsn');
+	var lp = p?p:0;//landing page error catch
+	//if n is a valid number, use it to set the version
+	if(!isNaN(n) ){
 		zVrsn=n; 
-		if(ms.version!=zVrsn){ //if the version we are setting now with this function is different than what is already in storage, change it.
+		if(ms.version!=zVrsn){ 
+			//if the version we are setting now with this function is different than what is already in storage, change it.
 			 //need to figure out how to keep track of quizzes across versions maybe? If a person takes a quiz in one version and then another in another, it will be tracked in the lms, but not in local storage yet.
 			ms.version = zVrsn;
-			versionSelectedPageArray=window['PageArray'+zVrsn];
+			var versionSelectedPageArray=window['PageArray'+zVrsn];
  			ns.localStorage.set('pageArray',versionSelectedPageArray);
  			ps = ns.localStorage.get('pageArray');	
  			ns.localStorage.set('moduleVars', ms);
@@ -235,28 +336,29 @@ function setVrsn(n,p){//p is landingpage: //it is the number of the item in the 
 			SetCookie('cVrsn',n,1);
 			zCookieVrsn = ReadCookie('cVrsn');
 			SCOSetObjectiveData("version","score.raw",zVrsn);
-			lmsVrsn, zLmsVrsn = n;
-			 var lp = p?p:0;
+			lmsVrsn = n, zLmsVrsn = n;			
 			setTimeout('detArrayVrsn('+n+','+lp+')',1000);
 			}
 	}
+	else{setVrsn(0,lp);}//if no valid 'n' argument was provided in the function call start over with version "0"
 	if(testing){console.log('EEE zVrsn='+zVrsn+' zLmsVrsn='+zLmsVrsn+ ' zCookieVrsn='+zCookieVrsn)}		 
  	
 }//end function setVrsn() 
 
-function detArrayVrsn(vrsn,landingpage){ //landing page is the page to open once version has changed.
-//it is the number of the item in the array, eg 0, 1, 2, 3, etc.
-	//if  a version number IS explicitly set. Set pagearray to that version, and set the cookie and save new pageArray to local storage.
+function detArrayVrsn(vrsn,landingpage){ 
+	//landing page is the page to open once version has changed.
+	//it is the number of the item in the array, eg 0, 1, 2, 3, etc.
+	//if a version number IS explicitly set. Set pagearray to that version, and set the cookie and save new pageArray to local storage.
 
 	if(typeof vrsn!="undefined" ){  			
  		
  		//if version  is 1 or 0 then default page array.
  		if(vrsn==1||vrsn==0){           
- 			versionSelectedPageArray=window['PageArray']; 
+ 			var versionSelectedPageArray=window['PageArray']; 
  			ns.localStorage.set('pageArray',versionSelectedPageArray);	
  			ps = ns.localStorage.get('pageArray');
  			ms.version = vrsn;
- 			ms.localStorage.set('version', vrsn);
+ 			ns.localStorage.set('version', vrsn);
  			justOpened=false;
  			vrsnDone=true;	
  			setupQuizzes();	 	 	
@@ -264,7 +366,7 @@ function detArrayVrsn(vrsn,landingpage){ //landing page is the page to open once
   		
   		//else version NOT 1 or 0: it is NOT same as original pagearray 			
  		else{                    
- 			versionSelectedPageArray=window['PageArray'+vrsn];
+ 			var versionSelectedPageArray=window['PageArray'+vrsn];
  			ns.localStorage.set('pageArray',versionSelectedPageArray);
  			ps = ns.localStorage.get('pageArray');	
  			ms.version = vrsn;
@@ -275,13 +377,11 @@ function detArrayVrsn(vrsn,landingpage){ //landing page is the page to open once
  		}//end else
  	}//end if(typeof vrsn!="undefined" )
  	
-  if(landingpage){ var lp = landingpage }else lp = 0;
+if(typeof landingpage!="undefined" && !isNaN(landingpage)){ var lp = landingpage }
+else {lp = 0;}
  	  
-	var params = {
-			itm:lp
-		}	
-	getContent(params); 
- 
+	var params = { itm:lp }	
+	getContent(params);  
 	
 }//end function detArrayVrsn
  	
@@ -294,8 +394,6 @@ function redirectToFirstPageOfNewVersion(){
  	
  	} 	
  	
- //********* end version setting functions *****//
-
+//********* end version setting functions *****//
 //add search result display functions from headcontent CHANGE
-
 //if localstorage has been cleared, nav buttons should work, using either retrieved data from lms or original pagearray as fallback.

@@ -62,7 +62,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 			console.log('In scoreQuizzes: iMasteryScore= '+iMasteryScore+', moduleStatus= '+moduleStatus);
 			console.log('totalmaxRawScore= '+totalmaxRawScore+', totalRawScore= '+totalRawScore+', totalPercentScore= '+totalPercentScore);
 		}//end debug
-	 	if(testing){console.log('moduleStatus='+moduleStatus )}
+	  
 	 	
 	 	var ps = ns.localStorage.get('pageArray');
 		 
@@ -72,13 +72,14 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 			if(q.quiz){ //if this page is a quiz
 			    var qType=q.type?q.type:"Q";
 			    var objectiveID=(qType+q.quiz);
+			    var qPassingscore = (typeof q.passingscore!="undefined")?q.passingscore:null;
 			    var qRm = q.rm?q.rm:"";
 			    var gReqMsg;
 			    //normalize countscore for use in classname of button in case it's missing or wrong.
                 countscore=((typeof q.countscore!="undefined")&&(q.countscore>=0))?q.countscore:'1'; 
-			    if (countscore==1){ gReqMsg=(qRm!="")?qRm+" ":"Required.";  }
+			    if (countscore==1||countscore==3){ gReqMsg=(qRm!="")?qRm+" ":"Required.";  }
 			    else{  gReqMsg=(qRm!="")?qRm+" ":"Recommended."; }
-              	for (var key in q){
+              	for (var key in q){ //loop thru all properties of q and define them as variables
 					var val = q[key];
 					if(testing){console.log(key+' '+val);}	
 				}
@@ -89,7 +90,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				//check for status in mlearning. if none, use not attempted for judging quizzes below					
 			    objStatus = (typeof SCOGetObjectiveData(objectiveID, "status")!="undefined")?(SCOGetObjectiveData(objectiveID, "status")):'not attempted';
 			    if (testing){ console.log('objStatus= '+ objStatus); }
-			   //if (testing){ console.log('typeof SCOGetObjectiveData:score.max='+typeof   SCOGetObjectiveData(objectiveID, 'score.max')+',  SCOGetObjectiveData(objectiveID, score.max)='+SCOGetObjectiveData(objectiveID, 'score.max')+'q.qmax='+q.qmax); }
+			    
 			  	//is a max score set in mlearning? if so, use it as objScore, else use what is CURRENTLY in page array (can be different than what was there when setupQuizzes ran). 
 			  	objMax =   (typeof  SCOGetObjectiveData(objectiveID, "score.max")!="undefined")?parseInt(SCOGetObjectiveData( objectiveID, "score.max"),10):'q.qMax';
 			  	 if (testing){ console.log('objMax= '+ objMax); }
@@ -100,7 +101,8 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 			   	qMax   = (typeof objMax!="undefined")?parseInt(objMax,10):0; 			   
 			   	//now, is a raw score set in pageArray? if not, use 0 for judging below.
 			   	qScore= ( (typeof objMax!="undefined")&&(!isNaN(objScore) ) )?parseInt(objScore,10):0; 
-				if(testing){ console.log('GXP typeof q.qScore='+typeof q.qScore+' q.qScore='+q.qScore+'qScore= '+qScore+', qMax'+qMax);  } 	
+			   	qPercentScore = qMax!=0?Math.round((qScore/qMax)*100):0;
+				if(testing){ console.log('GXP typeof q.qScore='+typeof q.qScore+' q.qScore='+q.qScore+'qScore= '+qScore+', qMax'+qMax+'qPercentScore='+qPercentScore);  } 	
 		 		/*set up the status message for each quiz*/
 		  		if (testing){	 
 		            console.log('about to list all quizzes in quizFunctions.js');
@@ -113,7 +115,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
                     unfinQz += (messageLine1); 
 				    unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--A--><br/></td></tr>');			                    
 				    //if any one page is required but not attempted, set overall module status to incomplete.
-				    if(countscore==1){ moduleStatus='incomplete';}
+				    if(countscore==1||countscore==3){ moduleStatus='incomplete';}
 				}//end if( (objStatus=="not attempted")||(q.qStatus=="not attempted"...    
 		      		      
 				else{    		       
@@ -129,8 +131,8 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 									unfinQz += ('<td class="unfinQzRt"  id="msg03_p'+(i+1)+'">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--B--><br/></td></tr>');
 									}
 						//if there is a raw score or completion status for this quiz in MLearning, it is considered completed (need not be passed)
-						else if(  ( (typeof objScore!="undefined")&&(objStatus!="not attempted")  ) || (objStatus=="completed") ){ 
-							//if it is scored quiz  - or - quiz scores but does not COUNT toward final module score ( score shows up but doesn't count!)    
+						else if(  ( (typeof objScore!="undefined")&&(objStatus!="not attempted")  ) || (objStatus=="completed")||(objStatus=="passed") ){ 
+							//if it is scored quiz  - or - if quiz scores but does not COUNT toward final module score ( score shows up but doesn't count!)    
 							if(typeof countscore=="undefined"||countscore==1||countscore==2){     
 								unfinQz +=('<tr>');
 								unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+'.' ); 
@@ -138,11 +140,34 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 								unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--C--><br/></td>');				
 								unfinQz +=('</tr>');
 							}//end if(typeof coun
+							else if( countscore==3  ){//this is a quiz that MUST BE PASSED to complete the module
+								if ( objStatus =="passed") { 
+								 
+									unfinQz +=('<tr>');
+								unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+', or '+	qPercentScore+'%. ' ); 
+								unfinQz +=('Required score was '+	qPassingscore+'%'+' so this quiz is PASSED. ');
+								unfinQz +=(messageLine1); 
+								unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--N--><br/></td>');				
+								unfinQz +=('</tr>');
+								}
+								else if(objStatus=="failed"){
+								if(testing){console.log('objectiveStatus was failed');}
+									unfinQz +=('<tr>');
+									unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+', or '+	qPercentScore+'%. ' );
+									unfinQz +=('Required score was '+	qPassingscore+'%'+' so this quiz is FAILED. '); 
+									unfinQz +=(messageLine1); 
+									unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="failedLink">Please try again!</a><!--O--><br/></td>');				
+									unfinQz +=('</tr>');
+									moduleStatus = 'incomplete';
+								}
+								//do we need something to catch "completed" here
+							}
+							
+							
 							else if (countscore==0){
 								unfinQz +=('<tr>');
 								unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>' ); 
-								unfinQz +=(messageLine1); 
-								//unfinQz +=('<td class="unfinQzRt"><a href=\"'+q.url+'" class="tryagainLink">Try again?</a><!--C2--><br/></td>');	
+								unfinQz +=(messageLine1);  	
 								unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--C2--><br/></td>');				
 								unfinQz +=('</tr>');		        
 							}//end else if (countscor
@@ -287,7 +312,10 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 		     //if there IS NO countscore, or if it is 1 consider the quiz required/counted, and add quiz score to the total module score
 		     //if it is 2 or 0, it does not count.
 		    
-	    	if ( (typeof q.countscore=="undefined")||((typeof q.countscore!="undefined")&&(q.countscore==1)) ){
+	    	if ( 
+	    		typeof q.countscore=="undefined"||  (typeof q.countscore!="undefined" &&(q.countscore==1||q.countscore==3) )
+	    	
+	    	 ){
 				//console.log('quiz: '+objectiveID+'===========');
 				//console.log('totalmaxRawScore= '+totalmaxRawScore+' qMax='+qMax);
 				totalmaxRawScore+=parseInt(qMax,10);
@@ -319,7 +347,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				(iMasteryScore > totalPercentScore)?( SCOSetValue( "cmi.core.lesson_status", "failed" ),moduleStatus="failed"):(SCOSetValue( "cmi.core.lesson_status", "passed" ),moduleStatus="passed");
 				SCOCommit(); 
 				//end else there IS a mastery score
-				//alert('<table id="unfinQzTbl">'+unfinQz+'</table>');
+				 
 				msgWin.innerHTML +=('<div id="modStatus">This module is<br><span class="moduleStatusMsg">'+moduleStatus+'</span>');				 
 				msgWin.innerHTML +=(' <div id="finOptions">');
 				msgWin.innerHTML +=('<table><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr></table></div>');
@@ -336,13 +364,13 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 						//do something
 						break;
 						default:
-						//do something
+						//'<div id="certHelp"></div>'
 					}
 				}
 				else{  //zEnvironment is undefined
 					 msgWin.innerHTML +=('<div class="CertInstructions"></div>' ); 
 				}	
-					
+		 			
 				$('.finalCompleteButton').click(function(){ns.localStorage.removeAll()})
 			}//end else there IS a mastery score
 		}//end if moduleStatus is not incomplete

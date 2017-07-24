@@ -4,20 +4,15 @@
 	if($('div.nav-no-collapse.header-nav .breadcrumb').length>0){$('div.nav-no-collapse.header-nav .breadcrumb').empty();}
 	var dialogCloseTrigger="";
 	
-//google analytics tracking code
-/*	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
- (function() {
-    	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  	})();
-	  ga('create', 'UA-11509774-1', 'auto');
-	  ga('send', 'pageview');
-*/	  
+  ga('create', 'UA-65717029-1', 'auto');
+  ga('send', 'pageview');
+
+
 	var pItem = 		qsParm['itm']? qsParm['itm'] : null;
 	var saveStorage = 	qsParm['ls']?true:false;
 	var dl = 		qsParm['dl']? qsParm['dl'] : null;
@@ -39,7 +34,7 @@
 		//znThisPage is a number, the index of a page in the Array
 		//pageNo is the actual number that shows up as the page number - this should be znThisPage+1
 		//currentPage is the page object containing all the data from the page array
-	var pageNo,currentPage,znThisPage,znNextPage,znPrevPage,znPages; ;
+	var pageNo,currentPage,znThisPage,znNextPage,znPrevPage,znPages;
 	var thispage = (document.location.href); 
 	var justpath = window.location.pathname;
 	var lastslash = (window.location.pathname.lastIndexOf("/")+1);	
@@ -110,11 +105,10 @@
 	}//end else	
 	
 function printNavBar(){
-	var urls='',urlStr='', str1; 	 
+	var urls='',urlStr='', str1, printList=''; 	 
 	ps = ns.localStorage.get('pageArray');//pulls current state of page array from local storage
 	znPages = ps.length;
 	str1= ('<div class="nav-collapse sidebar-nav">\n<ul class="nav nav-tabs nav-stacked main-menu">');	
-	if(testing){console.log('in printNavBar APB ns.localStorage.isEmpty()='+ns.localStorage.isEmpty('pageArray') )}         
 	getCurrentPage();	//this returns znThisPage integer and currentPage object	
  	str1+=printNavToggle();
  	str1+=printExpander(1);
@@ -138,7 +132,6 @@ function printNavBar(){
 		var expand = 'closed';
 		var current = '';  
 		if(urlclean=="scorePage.htm"){ isScorePage = 'isScorePage';buttonTitle='Submit Score & Complete'; }
-		//if (i==x){ current = 'current';expand='open2'; }
 		if(typeof znThisPage=="undefined"){znThisPage=ps[0]}
 		if (i==znThisPage){ current = 'active';expand='open'; }
 		if (level==1){expand='open';}
@@ -149,10 +142,21 @@ function printNavBar(){
 		//if(testing){console.log('<a href="#" id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' + isScorePage+'">' + buttonTitle + '</a>');  }			
 		str1+=('<li>');
 		str1+=('<a id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' + isScorePage+'" title="'+ url +'">');
-		//if(isquiz=='quiz'){str1+= ('<i class="icon-edit"></i>');}
 		str1+=('<span class="hidden-tablet">');
 		str1+= buttonTitle; 
-		str1+=('</span></a></li>');		 
+		str1+=('</span></a></li>');	
+		
+		//console.log('urlclean='+urlclean);
+		if((isquiz=="notquiz")&&(urlclean!="scorePage.htm")){
+			printList += urlclean+";";  	  
+		}	 //end if not quiz and not score page
+		else if((ps[znThisPage].type=="C6")||(ps[znThisPage].type=="I") ) {
+			printList += urlclean+";";
+		}//end if printable quizzes
+		 
+		
+		//console.log('printList= '+printList);
+		//console.log('i='+i+' ps.length= '+ps.length);
 	} //end of for(var i=0 loop	
 	 
 	str1+=printExpander(2);
@@ -165,19 +169,27 @@ function printNavBar(){
   
 	if ( (trackingmode == "scorm") && APIOK() && (ms['quizSetupDone']!=true) ){  setupQuizzes();  } 
 	
-	//urls +=( urlStr+'" />');//new 8-12-07
-	//if(document.getElementById('pdfForm')){ document.getElementById('pdfForm').innerHTML+=urls;	 }
-	//setHdrBtns();//new 8-8-07
-	
 	$('#sidebar-left').append(str1);//this is where sidebar buttons all get written to page
 	 
 	//assign getcontent to onclick of all the nav links
 	$("#sidebar-left li a[id^='itm']").click(function() {
 		var itmno = this.id.substring(3);
-	//	ga('send', 'event', 'button', 'click', 'navbutton', 'navbutton id '+itmno+' |  page'+ '/'+justpathnofilename+'/'+ps[znThisPage].url);//google analytics tracking
+		
+	   // ga('send', 'event', 'button', 'click', 'navbutton', 'navbutton id '+itmno+' |  page'+ '/'+justpathnofilename+'/'+ps[znThisPage].url); //google analytics tracking
+	    ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'button',
+		  eventAction: 'click',
+		  eventLabel: 'navbutton id '+itmno+' |  page'+ '/'+justpathnofilename+'/'+ps[itmno].url
+			});
+	    ga('send', {
+  					hitType: 'pageview',
+  					page: justpathnofilename+'/'+ps[itmno].url,
+  					title: ps[itmno].buttonTitle
+			});
 		var params = {
 			itm:itmno
-		}	
+			}	
 		getContent(params);
 	});
 	
@@ -197,10 +209,12 @@ function printNavBar(){
   		openModalDialog("#dialog-modal");	
   	}//end if((trackingmode == "scorm") && !APIOK()
 	
-	writeNewPageNo();  
+	writeNewPageNo();
+	writePrintForm(printList);  
 	writeHeaderTitle();
 	SCOBookmark(); 
-	writeDocTitle();			 		    	  
+	writeDocTitle();
+	printEndmatterFeedbackLink();			 		    	  
 } //end printNavBar()  
 
  
@@ -211,7 +225,8 @@ function getCurrentPage(){
 		//if there is no existing local storage, it will be created, so if you are coming in from a deep link it will start up correctly.
 		if ((typeof pItem != "undefined")&&(pItem != null)) {			
 			ns.localStorage.set('znThisPage', pItem);
-			document.location.href = "index.htm?ls=1";	 
+			document.location.href = "index.htm?ls=1";	
+			if(testing){'HNP ns.localStorage.get(znthispage)='+ns.localStorage.get('znThisPage'); }
 		 }
 		 //check for deep link to filename also
 		else if ((typeof dl != "undefined")&&(dl!=null)){ 
@@ -234,8 +249,6 @@ function getCurrentPage(){
 		 		 		
 		pageNo = parseFloat(znThisPage)+1; //page number 		
 		currentPage =  thePageArray[znThisPage]; /// is there a local storage for this item or not? If so use it
-		
-	 if(testing){console.log('in getCurrentPage YYY I am finally done with getCurrent Page znThisPage ='+znThisPage)}
 	return znThisPage, currentPage;  
 }//end getCurrentPage
         	
@@ -262,14 +275,76 @@ function getIndexOfDeepLink(dl){
 //http://stackoverflow.com/questions/8809425/search-multi-dimensional-array-javascript
 //http://stackoverflow.com/questions/5181493/how-to-find-a-value-in-a-multidimensional-object-array-in-javascript		
 
-function getContent(params){	
+function getContent(params){
+	//testing nested function
+	var itm = (typeof params.itm!="undefined")? params.itm:null;
+	var dl	= (typeof params.dl!="undefined")?  params.dl:null;	
+	
+	function loadAjaxContent(itm,itmurl){
+				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) { //what follows is the callback after loading content					 				 	
+							if(responseText==""){
+								var txt;
+								var r = confirm("Your session seems to have timed out so you will have to log in again. Your work is saved.");
+								if (r == true) {
+    								 location.reload();
+								} else {
+   							 	 location.reload();
+								}
+							}//end if(responseText
+							$("#sidebar-left li a[id^='itm']").css("background-color","");
+							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
+							//znThisPage = parseFloat(itm);//defined above
+							znNextPage = parseFloat(itm)+1;
+							znPrevPage = parseFloat(itm)-1;	
+							wipePageNo();					  							 
+							if(itmurl == "scorePage.htm"){ 		
+								scoreQuizzes();
+								$(".gothereLink,.tryagainLink, .failedLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
+									var itmno = this.id.substring(4); 
+									ns.localStorage.set('znThisPage',itmno)
+									var p4 = {
+										sScore:0,
+										qurl:ps[itmno].url,
+										quiz:ps[itmno].quiz,
+										type: ps[itmno].type,
+									 	qindex:itmno
+									}//end var params
+									znThisPage = p4.qindex;
+									znNextPage = parseFloat(p4.qindex)+1;
+									znPrevPage = parseFloat(p4.qindex)-1;	
+									wipePageNo();
+									wipeNavBar();
+									printNavBar();
+									quizStart(p4);
+									//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
+									scormDivToggle();
+									checkDataAttr();
+									writeFlash();
+								});//end $(".gothereLink
+							}//if(itmurl == "scorePage.
+							
+							checkDataAttr();
+							writeFlash();
+							//writeKalturaPlayer();
+							scormDivToggle();							
+							customFunction03();	
+							customFunction04();								 
+							wipeNavBar();
+							printNavBar();//note that this calls getCurrentPage a second time
+							changeLinks(function(){ 
+								if(testing){console.log('links changed')}
+							
+							});//note that this happens only after content is loaded: it is part of the callback
+							 
+					}); //$('#content div#div6').load(itmur
+		}//end function loadHTMLpage		
+					
 	//set currentPage to the new page and store it in local storage
 	window.scrollTo(0, 0);
-	var itm = (typeof params.itm!="undefined")? params.itm:null;
-	var dl	= (typeof params.dl!="undefined")?  params.dl:null;	      
+	 	      
  
 	//if there's a deep link, but no item, set the itm number
-	if((dl)&&(!itm)){
+	if((dl)&&(itm==null ||typeof itm=="undefined")){
 		if(typeof dl!="undefined" && dl!=null ){ 
 			if(dl=="index.htm"){itm = 0}
 			else{
@@ -280,14 +355,32 @@ function getContent(params){
 					document.location = theurl.substring(0, theurl.lastIndexOf('/'))+'/index.htm?itm='+itm;
 				}
 			} //end else
-		}//end if if(dl=="index.htm")
+		}
 	}//end if(!itm)
-	 
+	//if after all that I've missed a case and itm is STILL not defined, set it to 0.
+	if(itm==null || typeof itm=="undefined"){itm = 0;}
 	//convert itm parameter to znThisPage 
-	ns.localStorage.set('znThisPage', itm);//immediately store it in local storage
-	znThisPage =ns.localStorage.get('znThisPage');
+	if(typeof ns.localStorage !="undefined"){
+		ns.localStorage.set('znThisPage', itm);//store new value in local storage
+	}
+	else setTimeout(function(){ 
+			ns.localStorage.set('znThisPage',itm);//store new value in local storage
+			console.log("Waited 1 second for local storage to appear"); 
+			}, 1000);
+	//znThisPage =ns.localStorage.get('znThisPage');//this fails sometimes because it is done too soon after setting znThisPage in local storage for the first time
+	znThisPage = itm;
+	try {
+   				var pi = ns.localStorage.get('pageArray')[znThisPage];
+   				if(testing){"TRE in try catch"}	
+				}
+			catch (e) {
+   			// statements to handle any exceptions
+   				if(testing){console.log('exception was'+e);} // pass exception object to error handler
+   				setTimeout(function(){ 
+   				var pi = ns.localStorage.get('pageArray')[znThisPage];
+   				}, 1000);
+			}
 	
-	var pi = ns.localStorage.get('pageArray')[znThisPage];	
 	var itmurl 			= 	pi.url;
 	var itmquiz 		=	pi.quiz; 
 	var itmtype 		=	pi.type;
@@ -297,7 +390,7 @@ function getContent(params){
 	var objectiveID		=   itmtype+itmquiz;
 	var itmserver		= 	pi.svr;
 	
-			if(testing){console.log("in getContent:BAA typeof itmquiz=="+typeof itmquiz+' '+itmquiz+ ' itmtype='+itmtype+', itmquiz= '+itmquiz)}
+			//if(testing){console.log("in getContent:BAA typeof itmquiz=="+typeof itmquiz+' '+itmquiz+ ' itmtype='+itmtype+', itmquiz= '+itmquiz)}
 			customFunction01();
 			//determine "is it a quiz" then is it a remote quiz or not and what to do with it. 
 				if(typeof itmquiz!="undefined"){ 		  	
@@ -345,9 +438,8 @@ function getContent(params){
 					}	//end 	else if (itmtype=="U")										
 					else if(itmtype=="I"){				
 						var ts = Math.round(new Date().getTime() / 1000);
-						 $('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() {	
-							 if(testing){console.log("in getContent:DDD")} 				 	
-							 
+						 $('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) {					 	
+							//if(testing){console.log("in getContent:DDD+responseText= "+responseText);}
 							$("#sidebar-left li a[id^='itm']").css("background-color","");
 							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
 							znNextPage = parseFloat(znThisPage)+1;
@@ -417,54 +509,17 @@ function getContent(params){
  	
  		//OR its not a quiz, so load the content into this page 		
 			else { 	
-			 		var ts = Math.round(new Date().getTime() / 1000);//add timestamp to create a sort of random number to prevent caching	 
-					$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function() { //what follows is the callback after loading content					 				 	
-							$("#sidebar-left li a[id^='itm']").css("background-color","");
-							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
-							//znThisPage = parseFloat(itm);//defined above
-							znNextPage = parseFloat(znThisPage)+1;
-							znPrevPage = parseFloat(znThisPage)-1;	
-							wipePageNo();					  							 
-							if(itmurl == "scorePage.htm"){ 		
-								scoreQuizzes();
-								$(".gothereLink,.tryagainLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
-									var itmno = this.id.substring(4); 
-									ns.localStorage.set('znThisPage',itmno)
-									var p4 = {
-										sScore:0,
-										qurl:ps[itmno].url,
-										quiz:ps[itmno].quiz,
-										type: ps[itmno].type,
-									 	qindex:itmno
-									}//end var params
-									znThisPage = p4.qindex;
-									znNextPage = parseFloat(p4.qindex)+1;
-									znPrevPage = parseFloat(p4.qindex)-1;	
-									wipePageNo();
-									wipeNavBar();
-									printNavBar();
-									quizStart(p4);
-									//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
-									scormDivToggle();
-									checkDataAttr();
-									writeFlash();
-								});//end $(".gothereLink
-							}//if(itmurl == "scorePage.
+			
+				
+			 		//var ts = Math.round(new Date().getTime() / 1000);//add timestamp to create a sort of random number to prevent caching	 
+					try {
+							loadAjaxContent(itm,itmurl );	 				 	
+						}
+					catch(err){
+						console.error('SPV error is'+err);
+						loadAjaxContent(itm,itmurl);	//this will only work if the issue was timing. this is an attempt to catch timing problems, but will not solve authenitcation problems. probably should replace with an alert requesting reload.	
+					}							
 							
-							checkDataAttr();
-							writeFlash();
-							//writeKalturaPlayer();
-							scormDivToggle();							
-							customFunction03();	
-							customFunction04();								 
-							wipeNavBar();
-							printNavBar();//note that this calls getCurrentPage a second time
-							changeLinks(function(){ 
-								if(testing){console.log('links changed')}
-							
-							});//note that this happens only after content is loaded: it is part of the callback
-							 
-				}); //$('#content div#div6').load(itmur
 			customFunction02();
 				//end $('#content').load
 	 		}//end else	
@@ -628,7 +683,7 @@ function customFunction04(){}
 function changeLinks(callback){
 	//change all local links to "itm=" ajax links
 	 
-	var nodes = $("a").not( $("#sidebar-left .main-menu a") ).not($("navbar-inner ul.nav .pull-right a.btn")).not($("#sidebar-left a.expander")).not($("a[target$='blank']")).not($("a[href^='mailto:']")).not($("a[href^='#']")).not($("a[data-link-change='no']")), i = nodes.length;
+	var nodes = $("a").not( $("#sidebar-left .main-menu a") ).not($("navbar-inner ul.nav .pull-right a.btn")).not($("#sidebar-left a.expander")).not($("a[target$='blank']")).not($("a[target$='new']")).not($("a[href^='mailto:']")).not($("a[href^='#']")).not($("a[data-link-change='no']")), i = nodes.length;
 	//.not($("a[target='_blank']")) hold out resources that open in a new window
 	//var regExp = new RegExp("//" + location.host + "($|/)");
 	//var regExp = new RegExp("//" + thispathUnEnc + "($|/)");
@@ -692,18 +747,24 @@ function printNavToggle(){
 	var nt = "";
 	 return nt;
 }
+//feedback link in the left nav and on the bottom of page01.
+var feedbackLink = 'http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL='+encodeURI(window.location.href)+'&TITLE='+encodeURI(ms['headerTitle'])+'&EMAIL='+encodeURI(ms["contentAuthEmail"]);
+
 function printFeedbackLink(){ 
-   // document.getElementById('sidebar-left').innerHTML+=("<a href='http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL="+encodeURI(window.location.href)+"&TITLE="+encodeURI(ms['headerTitle'])+"&EMAIL="+encodeURI(ms['contentAuthEmail'])+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a>");
-	var fl=("<li><a href='http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL="+encodeURI(window.location.href)+"&TITLE="+encodeURI(ms['headerTitle'])+"&EMAIL="+encodeURI(ms['contentAuthEmail'])+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a></li>");
+	var fl=("<li><a href='"+feedbackLink+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a></li>");
 	return fl;
 }//end printFeedbackLink 
+
+function printEndmatterFeedbackLink(){
+	$("#feedbackinfo").length>0 ? $("#feedbackinfo").html("<a href= '"+feedbackLink+"' target='_blank'>Submit Comments or Questions</a>"):"";
+}
 
 function printContentExpert(){
 	if((typeof ms.contentExpert!="undefined")&&(ms.contentExpert!="")){
 			var co ="<li><div class=\"navContentExpert\"><ul class='expertlist'>";
 		if (ms.contentExpert.length>1){  co+="Content Experts:<br/> ";  }
 			$.each(ms.contentExpert,function(k,v){
-				if(testing){console.log('k='+k+'ms.contentExpert.length='+ms.contentExpert.length);}
+				//if(testing){console.log('k='+k+'ms.contentExpert.length='+ms.contentExpert.length);}
 				co += "<a href='mailto:"+ms.contentExpert[k].email+"'>"+ms.contentExpert[k].name+"</a>";
 				if(k<ms.contentExpert.length){co+="<br/> ";}
 			});//end each
@@ -732,7 +793,6 @@ function printHelpBtn(){
     }
 
 function printExpander(n){
-  if(testing){console.log('in print expander')}
   var exp=('<li><a href=\"#\"  id=\"expander'+n+'\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>');
   return exp;
    // document.getElementById('sidebar-left').innerHTML+=('<a href=\"#\" onmousedown=\"toggleByChapter();\" id=\"expander'+n+'\" class=\"expander\">expand all<\/a>');	
@@ -740,7 +800,6 @@ function printExpander(n){
 
 function nextPage(pageIndex){
 	if(testing){console.log('JJK znThisPage='+pageIndex+', znNextPage'+znNextPage)}
-	//pageIndex = (parseFloat(pageIndex) +1);
 	var newPage = (parseFloat(pageIndex) +1);
 	if(newPage==ps.length){ 
 		if(ps[pageIndex].url =="scorePage.htm"){
@@ -755,18 +814,36 @@ function nextPage(pageIndex){
 	//note - we are going to hide the unneeded button in the top nav, but in case someone uses these functions elsewhere, the message is still needed.
 	if(testing){console.log('GFF  itm= newPage='+newPage)}
 	var params ={ itm:newPage  }
- 	//ga('send', 'event', 'button', 'click', 'nextPageBtn', justpathnofilename+'/'+ps[newPage].url);//google analytics tracking
- 	//ga('send', 'pageview',{'page':justpathnofilename+'/'+ ps[newPage].url});//google analytics: track the ajax loaded page//google analytics tracking
+ 	 ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'button',
+		  eventAction: 'click',
+		  eventLabel: 'navbutton id '+newPage+' |  page'+ '/'+justpathnofilename+'/'+ps[newPage].url
+		});
+	    ga('send', {
+			hitType: 'pageview',
+			page: justpathnofilename+'/'+ps[newPage].url,
+			title: ps[newPage].buttonTitle
+		});
 	getContent(params);
 }
 
 function prevPage(pageIndex){	
-	var pageIndex = (parseFloat(pageIndex) -1);
-	if(pageIndex<0){ alert('You are on the first page!');return;  }
-	if(testing){console.log('GDD pageIndex='+pageIndex+', znThisPage='+znThisPage)}
-	var params ={ itm:pageIndex  }
-//ga('send', 'event', 'button', 'click', 'prevPageBtn | on '+justpathnofilename+'/'+ps[pageIndex].url); //google analytics tracking
-	//ga('send', 'pageview', {'page':justpathnofilename+'/'+ ps[pageIndex].url,'title': ps[pageIndex].btnTitle}) //google analytics tracking
+	var newPage = (parseFloat(pageIndex) -1);
+	if(newPage<0){ alert('You are on the first page!');return;  }
+	if(testing){console.log('GDD pageIndex='+newPage+', znThisPage='+znThisPage)}
+	var params ={ itm:newPage  }
+	ga('send', {
+		  hitType: 'event',
+		  eventCategory: 'button',
+		  eventAction: 'click',
+		  eventLabel: 'PreviousPage: '+newPage+' |  page'+ '/'+justpathnofilename+'/'+ps[newPage].url
+		});
+	ga('send', {
+		hitType: 'pageview',
+		page: justpathnofilename+'/'+ps[newPage].url,
+		title: ps[newPage].buttonTitle
+		});	
 	getContent(params);
 }
 
@@ -793,27 +870,40 @@ function findPageArray(){
 function writeNewPageNo(){
 	var percentOfPagesBrowsed = (parseFloat(znThisPage)+1) / znPages;
 	var zWidth = Math.round(percentOfPagesBrowsed * 92);
-	if(testing){console.log('percentOfPagesBrowsed='+percentOfPagesBrowsed+' znThisPage='+znThisPage+', znPages'+znPages+', zWidth='+zWidth)}
+	//if(testing){console.log('percentOfPagesBrowsed='+percentOfPagesBrowsed+' znThisPage='+znThisPage+', znPages'+znPages+', zWidth='+zWidth)}
 	var lastPageNo = parseFloat(znPages);
 	var pbarhtml = 	'<div id="spaceHolder">'+
 						'<div id="utilitiesBar">'+
-							'<div id="printBtn" class="icn-print" style="inline-block;margin-right:6px;" onclick="window.print();" title="Print this page">'+
-								'&nbsp;'+
-							'</div>'+
+							//'<div id="printBtn" class="icn-print" style="inline-block;margin-right:6px;" onclick="window.print();" title="Print this page">'+
+								//'&nbsp;'+
+							//'</div>'+
 							'<div id="progressBarContainer">'+
 								'<div align=\"left\" id="progressBarHolder">'+
 									'<img src=\"images/img/progressBarBG.jpg\" width=\"' + zWidth + '\" height=\"13\" />'+
 								'</div>'+
 								'<div id="pageNumHolder">'+
 									'PAGE ' + (parseFloat(znThisPage) +1) + ' of ' + lastPageNo +
-								'</div>'+
+								'</div>'+			
+								'<div id="printBtn" class="test"><div class="icn-print"></div><form id="pdfForm" name="pdfForm" target="_blank" method="post" action="https://mlearningcontent2.med.umich.edu/PDFGenerator/default.aspx"></form></div>'+					
 							'</div>'+
 						'</div>'+
 					'<div>';
-	if( ($('#banner').length==0) && ($('.dontPrintPageNo').length==0) ){
-		$(pbarhtml).prependTo('#content div#div5');
-		} 
+					$(pbarhtml).prependTo('#footer'); 
   }	
+  
+ function writePrintForm(listofpages){
+ 	var subpathstart = window.location.pathname.indexOf("/ct/");
+ 	var subpath = window.location.pathname.substring(subpathstart+4);
+ 	var gsaurl="https://mlearningcontent2.med.umich.edu/gsa/"+subpath;
+ 	var str = ('<input name="uPath" type="hidden" value="'+gsaurl+'"/>\n');
+	str+=('<input name="uUrl" type="hidden" value="'+listofpages+'"/>'); 
+	document.getElementById("pdfForm").innerHTML=str;
+	
+	$(".icn-print").click(function(){
+		$("#pdfForm").submit();
+		})	 
+ }
+ 
   
 function wipePageNo(){
 	if($('#spaceHolder').length > 0){
@@ -993,7 +1083,7 @@ function quizStart(p3){
 						qmarkServer = 'http://uhqmkappsts1.umhs.med.umich.edu';
 						break;
 						 
-						case 'dv': //test quiz server was specified explicitly in page array 
+						case 'dv': //dev
 						qmarkServer = 'http://uhqmkappsdv1.umhs.med.umich.edu';
 						break;
 						 
@@ -1060,14 +1150,13 @@ function quizStart(p3){
 					}
 					else{  qualtricsURL = qurl }//in future, we will specify qualtrics href's without the qualtricsWrap piece in the pageArray
 					var n = currentloc.lastIndexOf("/");
-					currentloc = currentloc.slice(0,n);
-					currentloc = currentloc+"/qualtricsQuizWrap.htm"
-					//console.log('ggg currentloc= '+currentloc);
+					var currentloc1 = currentloc.slice(0,n);
+					currentloc = currentloc1+"/qualtricsQuizWrap.htm"
+					var redir = currentloc1+"/includes/qualtricsRedirector.htm";
+					encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
 					var pr = currentloc +'&itm='+qindex;//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
 					var encpr = encodeURIComponent(pr);
-					//console.log('pr='+pr+', encpr='+encpr);
-					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz;
-    				 						
+					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;				
 					document.location = qualtricsURL;	
 			 		}
 			 		
@@ -1158,52 +1247,52 @@ function getMyData(){
     bMax = cp.cpEIGetValue('m_VarHandle.cpQuizInfoTotalQuizPoints');
     bScore = cp.cpEIGetValue('m_VarHandle.cpQuizInfoPointsscored');
     aPercentScore = bMax!=0?bScore/bMax:1;//if max points are zero, then user got 100 no matter what.
-	bPercentScore = aPercentScore*100;         
+	bPercentScore = aPercentScore*100;
     if(testing){console.log('bMax='+bMax+', bScore'+bScore+', bPercentScore= '+ bPercentScore );}
-    //use for printing out all values from the captivate quiz          
-   // $.each(cp.cpEIGetValue('m_VarHandle'), function(name, value){
-   // 	if(testing){console.log(name + ": " + value);} //logs value of every single property of the current captivate object (long!)
-   //  }); 		 
-	if (APIOK()){	
+    //use for printing out all values from the captivate quiz
+    // $.each(cp.cpEIGetValue('m_VarHandle'), function(name, value){
+    // 	if(testing){console.log(name + ": " + value);} //logs value of every single property of the current captivate object (long!)
+    //  });
+	if (APIOK()){
 		qPage = ps[znThisPage];//fixed 5-26-16
-		var objectiveID = "C"+qPage.quiz;						 
+		var objectiveID = "C"+qPage.quiz;
 		var fin=1;
-		$('#content div#div6').html('Storing your score. If you are not redirected after completing or closing quiz, choose another page from menu at left.'); 
-		 
-		closeModalDialog("#dialog-captivate");				
+		$('#content div#div6').html('Storing your score. If you are not redirected after completing or closing quiz, choose another page from menu at left.');
+
+		closeModalDialog("#dialog-captivate");
 		MarkCap6ObjectiveDone(bScore,bMax,objectiveID);//these quizzes are considered done once you take them, no matter the score.
 		ps[znThisPage].qScore = bScore;
 		ps[znThisPage].qMax = bMax;
 		ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
-		nextPage(znThisPage);   	 
+		nextPage(znThisPage);
 	 }//end if (parent.APIOK())
 }
 
 //send quiz score data to the LMS for a captivate 6 quiz
 function MarkCap6ObjectiveDone(score,max,objectiveID){
- 	 if (testing){console.log("In MarkObjectiveDone: score = "+score+", max="+max+", objectiveID= "+objectiveID)}
+ 	if (testing){console.log("In MarkObjectiveDone: score = "+score+", max="+max+", objectiveID= "+objectiveID)}
   	SCOSetObjectiveData(objectiveID, "status", "completed");
 	SCOSetObjectiveData(objectiveID, "score.raw", bScore);
 	SCOSetObjectiveData(objectiveID, "score.max", bMax);
 	SCOCommit();
 	} //end MarkCap6ObjectiveDone
-	 	 
+
 function openSwf(swf){	//call a full window captivate like this: onclick="openSwf('captivate/captivate6.swf');"
 	if ($( "#dialog-captivate" ).length==0){$('body').append('<div id="dialog-captivate" style="display:none; z-index: 999;"></div>')	}
    var attr = {'wmode':'transparent','scale':'showall'}
    var wheight =  $(window).height();   // returns height of browser viewport
-   var wwidth = $(window).width(); 
+   var wwidth = $(window).width();
    var capHTML = '<div id="CaptivateContent" style="" class="span10"></div>';
-   
+
    $( "#dialog-captivate" ).dialog({
    							close:true,
    							closeText: "CLOSE",
 							height: wheight,
 							width:  wwidth,
-							modal: true }); 
+							modal: true });
 
 //http://stackoverflow.com/questions/1790724/jquery-ui-dialog-cannot-see-the-closetext
-//get the automagically created div which represents the dialog
+//get the generated div which will contain the dialog
 //var closeSpan = $("#dialog-captivate2 span.ui-icon-closethick");
 //var closeSpan = $("div[role='dialog'] span.ui-icon-closethick");
 var closeSpan = $("div[aria-describedby='dialog-captivate'] span.ui-icon-closethick");
@@ -1215,19 +1304,18 @@ if ($('#closeTitle').length==0){
 	'<span style="float:right;margin-right:18px;font-weight:normal;font-size:small;" id="closeTitle" onmousedown=" $( \'#dialog-captivate\' ).dialog(\'close\')">'+
 	  $( "#dialog-captivate" ).dialog("option","closeText")+ '</span>' );
 	}
-   
-    $( "#dialog-captivate" ).html(capHTML); 
-        
-    openModalDialog("#dialog-captivate");	
-     						
-     						
+
+    $( "#dialog-captivate" ).html(capHTML);
+
+    openModalDialog("#dialog-captivate");
+
+
     swfobject.embedSWF(swf, "CaptivateContent",  "95%",  "99%", "9", "expressInstall.swf", attr, null, null );
-						
+
 	$("#dialog-captivate").dialog("option", "position", {//this is the callback function
 				my: "center",
 				at: "center",
 				of: window
-			});  // $("#dialog-captivate").dialog	
+			});  // $("#dialog-captivate").dialog
   }
-  
-    
+
