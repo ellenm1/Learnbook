@@ -20,4 +20,4 @@ Creator/Quiz name in Qualtrics (if applicable):
 
 Version of Captivate (if applicable):
 
-Change History: 
+Change History: .
