@@ -24,8 +24,7 @@ function createArray(){
 	          if (testing){ console.log( 'qforms.length='+qforms.length);}
 	          if (testing){ console.log('f.id= '+qforms[f].id);}
 	     var a='isQuiz_1_'+(f);
-	          if (testing){ console.log('a='+a);}
-	     if (testing){  console.log(typeof a);}
+	          if (testing){ console.log('a='+a +'typeof a'+typeof a);}	    
 	     var isQuiz = document.getElementById(a).checked;
 	         if (testing){  console.log('f= '+f+' isQuiz= '+isQuiz);}
 		 var buttontitle = qforms[f].buttontitle.value;
@@ -36,21 +35,14 @@ function createArray(){
 		 var pagetitle = qforms[f].pagetitle.value;
 		 var type = qforms[f].quiztype.value;
 		     if (testing){  console.log('type= '+type);}
-		 var countscore = qforms[f].countscore.value;
-		
-		     if(testing){ console.log('countscore= '+countscore); }
+		  var countscore = qforms[f].countscore.value;
+		 	if(testing){ console.log('countscore= '+countscore); }
+		 var passingscore = qforms[f].passingscore.value;	
+		     if(testing){ console.log('passingscore= '+passingscore); }
 		 var quiz;
-		 var surveyid = qforms[f].surveyid.value;
-		 var pathtoswf=qforms[f].pathtoswf.value;//change this!!
-		 if(testing){ console.log('pathtoswf= '+pathtoswf); }
-		 var path6toswf=qforms[f].path6toswf.value;//change this!!
-		 if(testing){ console.log('path6toswf= '+path6toswf); }
-		 var pathtoHTML5wrap = qforms[f].pathtoHTML5wrap.value;
-		 var width = qforms[f].cwidth.value;
-		 var height=qforms[f].cheight.value;
-		 var width6 = qforms[f].c6width.value;
-		 var height6=qforms[f].c6height.value;
-		 var rm= qforms[f].rm.value?qforms[f].rm.value:"";
+		  
+		
+		 //note had to change this to rmsg because rm was reading as radio buttons and thus returning '' for value - never really figured out why
 	//if not a quiz, the url is simply the filename.	  
 		  if (isQuiz==false){
 		      	if (testing){ console.log('entry'+ f+'is not a quiz');}
@@ -65,32 +57,42 @@ function createArray(){
 				  case("Q"):
 				  if (testing){  console.log('case q');}
 				  quiz=qforms[f].assessmentID.value;
+			 
+				  var rmsg= qforms[f].qrmsg.value?qforms[f].qrmsg.value:"";
 				  url="quizWrap.htm?call=embed&session="+quiz+"&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php";
 				  break;
-		          case("C"):
-		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-				  url="captivateWrap.htm?swf="+pathtoswf+"&w="+width+"&h="+height;
-				  //http://roshanbh.com.np/2008/09/get-random-number-range-two-numbers-javascript.html
-				  break;
+				  //got rid of old captivate on 3-1-17
+		          
 		          case("C6"):
 		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-				  url="captivate6Wrap.htm?swf="+path6toswf+"&w="+width6+"&h="+height6;			 
+		        
+		          var width = qforms[f].c6width.value;
+				  var height=qforms[f].c6height.value;
+				  var pathtoswf=qforms[f].c6pathtoswf.value;
+				  var rmsg= qforms[f].c6rmsg.value?qforms[f].c6rmsg.value:"";
+				  url="captivate6Wrap.htm?swf="+pathtoswf+"&w="+width+"&h="+height;			 
 				  break;
+				  
 				  case("H"):
 		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          var pathtoHTML5wrap = qforms[f].pathtoHTML5wrap.value;
+		          var rmsg= qforms[f].hrmsg.value?qforms[f].hrmsg.value:"";
 				  url=pathtoHTML5wrap+"/capHTML5wrap.htm";			 
 				  break;
+				 
 				  case ("I"):
-				  // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
 				    quiz=qforms[f].iquizid.value;
+				    var rmsg= qforms[f].irmsg.value?qforms[f].irmsg.value:"";
 				    url=qforms[f].ifilename.value;
 				  //add interactions array generator form
 				  break;
 				
 				case ("U"):
 				 quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-				 url="qualtricsWrap.htm?href=https://umichumhs.qualtrics.com/SE/?SID="+surveyid;
+				 var surveyid = qforms[f].surveyid.value;
+				 var rmsg= qforms[f].urmsg.value?qforms[f].urmsg.value:"";
 				 var qmax=qforms[f].qmax.value;
+				 url="qualtricsWrap.htm?href=https://umichumhs.qualtrics.com/SE/?SID="+surveyid;
 				 break;
 				 }
 		  }
@@ -107,27 +109,30 @@ function createArray(){
 			    switch(type)
 			    {
 			        case("Q"):
-			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			               // alert('countscore='+countscore);
 			                break;
 			        case("C"):
-			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("C6"):
-			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("H"):
-			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("U"):
-			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			       case("I"):
-			               o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rm+"', countscore:'"+countscore+"'"; 
+			               o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			              // startInteractionsArrayForm(f,quiz);
 			               break;
 			       }//end switch
 			   }//end if(isQuiz==1)
+			if((countscore=="3")&&(typeof passingscore!=="undefined")){
+								o+=", passingscore:'"+passingscore+"'";
+					}//end  if
 			if( lastitm==0){ 
 			                    o+="},\n" 
 			       }//end  if
@@ -144,17 +149,17 @@ function createArray(){
     }//end for 
      
         o+="var moduletype=";
-        o+=moduletype
+        o+=moduletype;
         o+=";\n";
         o+="var contentExpertName =('";
-        o+= contentExpName.value
+        o+= contentExpName.value;
         o+="');\n"; 
         o+="var contentExpertEmail =('";
-        o+= contentExpEmail.value
+        o+= contentExpEmail.value;
         o+="');\n";
          
         o+="var docTitle=('";
-	    o+= doctitle
+	    o+= doctitle;
 	    o+="');\n";
 	    o+="var headerTitle=('";
 	    o+= headertitle;

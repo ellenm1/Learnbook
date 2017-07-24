@@ -60,8 +60,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   <p>What type of quiz is it?</p>"+
                                        "   <select name='quiztype' id='quiztype"+$countForms+"' onchange='val=this.value;quiztypefn("+$countForms+",val);toggle(val+\"options"+$countForms+"\",\"togglequiz"+$countForms+"\")'>"+
                                        "   <option selected='selected'>Select type of quiz...</option>"+
-                                       "   <option value='Q'  id='qmarksel'>Questionmark</option>"+
-                                       "   <option value='C'  id='captsel'>Captivate</option>"+
+                                       "   <option value='Q'  id='qmarksel'>Questionmark</option>"+                                    
                                        "   <option value='C6' id='capt6sel'>Captivate 6 or greater</option>"+
                                         "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
@@ -70,11 +69,12 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        
                                        "   <div id='countscoreblock'>"+
                                        "   I want this quiz to:<br/>"+
-                                       "   <select name='countscore' id='countscore'>"+
+                                       "   <select name='countscore' id='countscore' onchange='this.value==3?toggle(\"passingscoreOptions"+$countForms+"\"):toggle(\"\");'>"+
                                        "   <option>Choose a scoring option...</option>"+
                                        "   <option value='0'  id='countscore0'>0: No display, doesn't count.</option>"+
                                        "   <option value='1'  id='countscore1' selected>1: Displays & counts.</option>"+
                                        "   <option value='2'  id='countscore2'>2: Displays but doesn\'t count.</option>"+
+                                       "   <option value='3'  id='countscore3'>3: Displays, counts, MUST be passed.</option>"+
                                        "   </select>"+
                                        "   <div id='key'>"+
                                        "   <ul style='font-size:10px;padding-left:6px;'>"+
@@ -84,53 +84,54 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   (Quiz is required to complete module: use for most quizzes)</li>"+
                                        "   <li><b>countscore 2</b> Shows a quiz score on score and status page but DOES NOT count toward total module score. "+
                                        "   (Quiz is NOT required to complete module: use for pre-tests)</li>"+
+                                       "   <li><b>countscore 3</b> Shows a quiz score on score and status page, counts toward total module score and MUST be passed to finish module. "+
+                                       "   (Quiz is required to be passed to complete module: use for critical quizzes)</li>"+
                                        "   </ul>"+
                                        "   </div><!--end key-->"+
                                        "   </div><!--end countscoreblock-->"+
-  
+  									   
+  									   "   <div id='passingscoreOptions"+$countForms+"' class='togglepassingscore"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+  									   "   <label for='passingscore'>What is the passing % score for this quiz?</label><input name='passingscore' type='text' value=''/>"+
+                                       "   </div><!--end passingscoreOptions-->"+
+  									   
+                                       
                                        "   <div id='Qoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
-                                       "   <label for='assessmentID'>What is the assessment ID (session ID)?</label><input name='assessmentID' type='text' value=''/>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='qrmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   <label for='assessmentID'>What is the assessment ID (session ID)?</label><input name='assessmentID' type='text' value=''/>"+ 
                                        "   </div><!--end qoptions-->"+
                                        
                                       
                                       
-                                      "   <div id='Coptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
-                                       "   Relative path to the Captivate SWF?(<i>captivate/myfile.swf</i>)<br/>"+
-                                       "   path:&nbsp;&nbsp; <input name='pathtoswf' type='text' value='' size='30' /><br/>"+
-                                       "   width:&nbsp; <input name='cwidth' type='text' value=''  size='4' maxlength='4'/> &nbsp;"+
-                                       "   height: <input name='cheight' type='text' value=''  size='4' maxlength='4' />"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
-                                       "   Quiz ID (readonly) <input type='text' size='12'  name='cquizid' id='cquizid"+$countForms+"' readonly='readonly' value=' ' />"+
-                                       "   </div><!--end Coptions-->"+
+                                     
                                        
                                        "   <div id='C6options"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to the Captivate 6 SWF?(<i>captivate/myfile.swf</i>)<br/>"+
-                                       "   path:&nbsp;&nbsp; <input name='path6toswf' type='text' value='' size='30' /><br/>"+
+                                       "   path:&nbsp;&nbsp; <input name='c6pathtoswf' type='text' value='' size='30' /><br/>"+
                                        "   width:&nbsp; <input name='c6width' type='text' value=''  size='4' maxlength='4'/> &nbsp;"+
                                        "   height: <input name='c6height' type='text' value=''  size='4' maxlength='4' />"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='c6rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='c6quizid' id='c6quizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--end C6options-->"+
                                        
                                        "   <div id='Hoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to captivateHTML5wrap.htm?(<i>captivate/myCaptivateQuiz</i>)<br/>"+
                                        "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/capHTML5wrap.htm</div>"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
-                                       "   Quiz ID (readonly) <input type='text' size='12'  name='Hquizid' id='Hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='hrmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='hquizid' id='hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endHoptions-->"+
                                        
                                        
                                        
                                        "   <div id='Uoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Qualtrics survey ID:&nbsp;&nbsp; <input name='surveyid' type='text' value='' size='30' /><br/>"+                                      
-                                       "   Maximum score:&nbsp; <input name='qmax' type='text' value=''  size='4' maxlength='5'/> &nbsp;"+  
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Maximum score:&nbsp; <input name='qmax' type='text' value=''  size='4' maxlength='5'/><br/>"+  
+                                       "   <label for 'rmsg'>Custom message to show on status page (optional):<br/> <input name='urmsg' type='text' value='Required Quiz' size='30' maxlength='50'/></label><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='uquizid' w  id='uquizid"+$countForms+"' readonly='readonly' value=''/>"+
                                        "   </div><!--end Uoptions-->"+
                                        
                                        "   <div id='Ioptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   <label for 'ifilename'>Filename: <input type='text' name='ifilename' id='ifilename"+$countForms+"' value='page00.htm'/></label><br/>"+
-                                       "   Custom message to show on status page (optional):&nbsp; <input name='rm' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+                                       
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='irmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "    Quiz ID (readonly) <input type='text' size='12' name='iquizid' id='iquizid"+$countForms+"' value=''/>"+
                                        "   </div><!--end Ioptions-->"+
                                        
@@ -284,19 +285,14 @@ var quizidentifier;//the name of the quizidentifier input for the current quiz e
 var int_quizid_input_name;//name of the quizidentifier input for the current interaction entry
 
 function quiztypefn(formnumber,type){
-                               currentformnumber=formnumber;
-                            if (type=="C"){
-                               quizidentifier=['cquizid'+formnumber];
-                                document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
-                            }
-                            
+                            currentformnumber=formnumber;                      
                             if (type=="C6"){
                                quizidentifier=['c6quizid'+formnumber];
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
                             
                              if (type=="H"){
-                               quizidentifier=['Hquizid'+formnumber];
+                               quizidentifier=['hquizid'+formnumber];
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
 				            
