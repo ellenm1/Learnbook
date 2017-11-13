@@ -7,30 +7,32 @@
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }
+
 #screenmetrics{ display:none;}
-body.metrics>div#screenmetrics{  
-position:absolute;
-width:300px;right:0px;top:0px;
-display:block;
-background:#FFF;
-z-index:1000;
-color:#c000000;
-font-size:11px;
-line-height: 100%;
-}
+
+body.metrics>div#screenmetrics{  /*do not delete*/
+	position:absolute;
+	width:300px;right:0px;top:0px;
+	display:block;
+	background:#FFF;
+	z-index:1000;
+	color:#c000000;
+	font-size:11px;
+	line-height: 100%;
+} 
 body{
 		margin:0;
 		height:100%;
 		position:relative;
 	}
 	
-	div.container-fluid-full {
+div.container-fluid-full {
 		width:100%;height:100%;	
 		display:table;
 	}
 	
 	
-	div#leftColumn{
+div#leftColumn{
 		display:inline-block;
 		width:15%;
 		height:100%;
@@ -39,11 +41,11 @@ body{
 		
 	}
 	/*http://stackoverflow.com/a/14162373*/
-	div#main{
-		min-height: 100%;
-	}
+
+div#main{ min-height: 100%; }
+
 	div#sidebar-left.span3{
-		width:none; 
+		width:auto; /*needed to keep this to a reasonable width*/
 		height:100%;
 		/*padding-bottom:999em;
 		margin-bottom:-999em;*/
@@ -52,14 +54,17 @@ body{
 		position:relative;
 		  }
 		  
-	.row-fluid .span3{ width:auto; }
+	/*.row-fluid .span3{ width:auto; }*/ /*interferes with proper sizing of span3 columns*/
+.row-fluid [class*="span"]:first-child {margin-left:0;}	
+		
 	div#content{
 		float:none;
 		display:inline-block;
 		width:75%;
 		overflow:visible;
 		vertical-align: top;
-		margin-left:12px;
+		margin-left:3px;
+		padding:6px;
 	}
 	 
 a img { border:none;}
@@ -159,13 +164,18 @@ padding-top:2px;
 	padding:12px 6px 6px 6px;
 	}
 #spaceHolder{
-	width:100%;
-	height:35px;
+	/*width:100%;
+	height:35px;*/
+	width:auto;
+	height;auto;
+	float:left;
 }
 #utilitiesBar{
 	float:right;
-	line-height:0px;
-	margin:0 0 6px 24px;
+	/*line-height:0px;
+	margin:0 0 6px 24px;*/
+	line-height: 0;
+    margin: 0;
 }
 #progressBarContainer {
 	white-space:nowrap;
@@ -173,11 +183,12 @@ padding-top:2px;
 	vertical-align:top;
 } 
 #progressBarHolder {
-	border:1px solid black;
+	/*border:1px solid black;
 	padding:0px;
 	background-color:#FFF;
 	width:92px;
-	overflow:visible;
+	overflow:visible;*/
+	display:none;
 } 
 #progressBarHolder	img{
 	height:13px;
@@ -185,10 +196,16 @@ padding-top:2px;
 	padding:0px;
 }
 #pageNumHolder{
-	height:20px;
+	/*height:20px;
 	line-height:100%;
 	background-color:rgba (255, 0, 0, 0.4);
-	margin-bottom:-3px;
+	margin-bottom:-3px;*/
+	height: 20px;
+    line-height: 100%;
+    margin-bottom: -3px;
+    color:#fff;
+    font-size:small;
+    margin:3px 0 0 6px;
 }
 .nav-tabs > li {
 	margin-bottom:0px;
@@ -423,12 +440,20 @@ a#helpButton{
 	border-right:1px solid #6C9CD0;
 	padding:0 6px 0 0;
 }
-
+/*old styles for requirements */
 .clockContainer{ padding:10px 6px 6px 6px; }
 .reqPad{ padding:6px; }
 .reqPad.whatsnew{ background:#f3c580;  }
 .reqPad.header{ background:#64a1e2;color:#FFF;font-weight:700;  }
+/*new styles for requirements column*/
+#rightCol{}
 
+#rightCol .howlong, #rightCol .howlong, #rightCol .whatsnew, #rightCol .whotakes, #rightCol .requirements, #rightCol .resources{ padding:6px;  }
+#rightCol .header{ background:#64a1e2;color:#FFF;font-weight:700;}
+#rightCol.howlong{
+	height:126px;
+}
+#rightCol.requirements
 /* **********************************Styles for embedded quiz functions******************************** */
 #quizMessages{ 
 	text-align:left;
@@ -495,7 +520,7 @@ a.tryagainLink, a:visited.tryagainLink{
 /*however if there is a non-counting quiz (pretest, survey), it will show up.*/
 .countscore0{ display:block;color:#3366CC;margin-bottom:12px; }
 
-#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, #quizMessages a.closeNowLink, a.button:link, a.button:visited{ 
+#quizMessages a.tryagainLink, #quizMessages a.gothereLink, a.button, #quizMessages a.tryagainLink:link, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited, #quizMessages a.tryagainLink:visited, #quizMessages a.closeNowLink, #quizMessages a.failedLink, a.button:link, a.button:visited{ 
 	display:block;
 	text-align:center;
 	font-weight:normal;
@@ -511,6 +536,16 @@ a.tryagainLink, a:visited.tryagainLink{
 	border-top:3px double #0099CC;
 	border-left:3px double #0099CC;
   }
+#quizMessages a.failedLink {
+	background: #ff0000; 
+	font-weight: bold;
+	color;#FFF;
+    border-top: 3px double #ff2d00;
+    border-left: 3px double #ff2d00;
+    border-right: 3px double #bf2d00;
+    border-bottom: 3px double #bf2d00;
+	}
+
   
   #quizMessages{position:relative;}
   #quizMessages a.gothereLink, #quizMessages a.gothereLink:link, #quizMessages a.gothereLink:visited {
@@ -529,6 +564,7 @@ a.tryagainLink, a:visited.tryagainLink{
 	 margin-left:auto;
 	 margin-right:auto;
  }
+ 
  #quizMessages a.tryagainLink:hover, a.button:hover{
    background:#0046FF;}
  #quizMessages a.gothereLink:hover{background:#00FF33;}
@@ -538,7 +574,10 @@ a.tryagainLink, a:visited.tryagainLink{
     border-top:1px solid #CCC;
     margin-bottom:70px;
     }
-
+#quizMessages a.failedLink:hover {
+	background:#cc0000;
+	
+} 
  #quizMessages  td.unfinQzLft { 
    border-bottom:1px solid #CCCCCC; 
    padding-right:3px;
@@ -550,22 +589,26 @@ a.tryagainLink, a:visited.tryagainLink{
 /*for messages associated with tracking individual interactions */
  .interactionFdbck{color:#FF0000;display:block;margin-top:3px;padding:2px;font-weight:bold;}
  
-  /*Banner Style for ESN */
+  /*Banner Style for generic clinical banner */
 #banner{
     display:block;
 	width:100%;
 	height: 130px;
 	background:#B8CDEA url(../../images/img/header.png) left no-repeat;
  	font:24px bold;
-	
 	margin-bottom: 6px;
  	color:#FFF;
- 
-		
 }
-
+/*use if you want to use a custom JPG image*/
+#banner.localimage { 	
+	background: #3659B5 url(../../media/header.jpg) left no-repeat; 
+	}
+/*use if you want to use a custom PNG image*/
+#banner.localimagepng {
+	background: #3659B5 url(../../media/header.png) left no-repeat; 
+}
 #banner.michart{
-	background: #3659B5  url(../../images/img/michart-header.png) no-repeat 20px;
+	background: #3659B5 url(../../images/img/michart-header.png) no-repeat 20px;
  	text-align:left;
 	display:inline-block;
 	height:125px;
@@ -573,7 +616,22 @@ a.tryagainLink, a:visited.tryagainLink{
 	 position:relative;
 	 	color:#FFF;
 	 	width:100%;
+	}
+
+#banner.mcit{
+	text-align: left;
+	display: inline-block;
+	height: 125px;
+	line-height: 125%;
+	position: relative;
+	color: #FFF;
+	width: 100%;
+	background-color: #3659B5;
+	background-image: url(../../images/img/mcit-header.png);
+	background-repeat: no-repeat;
+	background-position: 20px;
 }
+
 
 #banner.michart #bannerTitle {
 	/*width:20%; */
@@ -651,7 +709,7 @@ a.tryagainLink, a:visited.tryagainLink{
      display:block;
      }
      
-     #headerImage{margin-top:10px;}
+#headerImage{margin-top:10px;}
 
 
     
@@ -792,7 +850,7 @@ ul.breadcrumb{
     clear: both;
 }
 #courseproperties{
-	width:229px;
+	width:100%;
 }
 
  
@@ -817,7 +875,14 @@ ul.breadcrumb{
 	background:url(../../images/img/1393291550_arrow-left-thickGray20.png) no-repeat;
 }
 
-
+a.linkbtn {
+			display:inline-block;
+			margin-right:24px;
+			color:#FFFFFF;
+			font-weight:bold;
+			text-decoration:none;
+} 
+		
 #footer {
 -webkit-box-shadow: 3px -5px 10px 0px rgba(0,0,0,0.5);
 -moz-box-shadow: 3px -5px 10px 0px rgba(0,0,0,0.5);
