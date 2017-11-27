@@ -301,7 +301,7 @@ function template_functions(){
 	});
 	
 	/* ---------- Text editor ---------- */
-	$('.cleditor').cleditor();
+	/* $('.cleditor').cleditor(); */
 	
 	/* ---------- Datapicker ---------- */
 	$('.datepicker').datepicker();

@@ -33,6 +33,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
 
 (function($){
           $countForms = 0;
+          $pa = new Array();
           $.fn.addForms = function(){
          // alert('addForms');
 			              var myform = "<form id='form"+$countForms+"' name='form"+$countForms+"' method='post' action='' >"+
@@ -52,19 +53,18 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   This is <b><u>not</u></b> a Quiz</label><br />"+
                                        "    <label>"+
                                        "   <input type='radio' name='isQuiz' value='1' id='isQuiz_1_"+$countForms+"' onclick='toggle(\"quizsettings"+$countForms+"\",\"togglequizsettings"+$countForms+"\")'/>"+
-                                       "   This is a Quiz</label><br />"+
-                                      
-
+                                       "   This is a Quiz</label><br />"+ 
 
                                 "   <div id='quizsettings"+$countForms+"' class='togglequizsettings"+$countForms+"' style='display:none'>"+
                                        "   <p>What type of quiz is it?</p>"+
                                        "   <select name='quiztype' id='quiztype"+$countForms+"' onchange='val=this.value;quiztypefn("+$countForms+",val);toggle(val+\"options"+$countForms+"\",\"togglequiz"+$countForms+"\")'>"+
-                                       "   <option selected='selected'>Select type of quiz...</option>"+
-                                       "   <option value='Q'  id='qmarksel'>Questionmark</option>"+                                    
+                                       "   <option selected='selected'>Select type of quiz...</option>"+                                
                                        "   <option value='C6' id='capt6sel'>Captivate 6 or greater</option>"+
-                                        "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
-                                       "   <option value='U'  id='qualsel'>Qualtrics</option>"+
+                                       "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
+                                       "   <option value='U'  id='qualsel'>Qualtrics</option>"+
+                                       "   <option value='Q'  id='qmarksel'>Questionmark</option>"+   
+                                       "   <option value='S' id='storyHsel'>Storyline HTML5</option>"+                                      
                                        "   </select>"+
                                        
                                        "   <div id='countscoreblock'>"+
@@ -110,16 +110,22 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   width:&nbsp; <input name='c6width' type='text' value=''  size='4' maxlength='4'/> &nbsp;"+
                                        "   height: <input name='c6height' type='text' value=''  size='4' maxlength='4' />"+
                                        "   Custom message to show on status page (optional):&nbsp; <input name='c6rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
-                                       "   Quiz ID (readonly) <input type='text' size='12'  name='c6quizid' id='c6quizid"+$countForms+"' readonly='readonly' value=' ' />"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='c6quizid"+$countForms+"' id='c6quizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--end C6options-->"+
                                        
                                        "   <div id='Hoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to captivateHTML5wrap.htm?(<i>captivate/myCaptivateQuiz</i>)<br/>"+
                                        "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/capHTML5wrap.htm</div>"+
                                        "   Custom message to show on status page (optional):&nbsp; <input name='hrmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
-                                       "   Quiz ID (readonly) <input type='text' size='12'  name='hquizid' id='hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='hquizid"+$countForms+"' id='hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endHoptions-->"+
                                        
+                                       "   <div id='Soptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+                                       "   Relative path to storylineHTML5wrap.htm?(<i>storyline/myStorylineQuiz</i>)<br/>"+
+                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoSLHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/storylineHTML5wrap.htm</div>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='srmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='squizid"+$countForms+"' id='squizid"+$countForms+"' readonly='readonly' value=' ' />"+
+                                       "   </div><!--endSoptions-->"+
                                        
                                        
                                        "   <div id='Uoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
@@ -132,7 +138,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   <div id='Ioptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   <label for 'ifilename'>Filename: <input type='text' name='ifilename' id='ifilename"+$countForms+"' value='page00.htm'/></label><br/>"+
                                        "   Custom message to show on status page (optional):&nbsp; <input name='irmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
-                                       "    Quiz ID (readonly) <input type='text' size='12' name='iquizid' id='iquizid"+$countForms+"' value=''/>"+
+                                       "    Quiz ID (readonly) <input type='text' size='12' name='iquizid"+$countForms+"' id='iquizid"+$countForms+"' value=''/>"+
                                        "   </div><!--end Ioptions-->"+
                                        
                                        "    </div><!--end quizsettings-->"+
@@ -210,7 +216,7 @@ function zeropad3(number) {return (number < 100) ? ( (number >= 10) ? ("0" + num
           
           $.fn.addInteractionsForm = function(){
           
-              console.log('inaddInteractionsForm');
+               console.log('inaddInteractionsForm');
  
 		   var intform=  "<form name='interactionsForm"+$countIntForms+"'>"+
 		                 "       <table style='border-top:1px solid #999;width:800px'><tr valign='top' class='ab'><td>"+
@@ -221,14 +227,14 @@ function zeropad3(number) {return (number < 100) ? ( (number >= 10) ? ("0" + num
 						 "             <option value='2' id='ireqN'>No<\/option>"+
 						 "              <\/select><\/label>"+
 						 "        <label for='imsg'>Custom Message? (opt.)<input name='imsg' type='text' id='imsg' value=''  size='12' \/><\/label>"+
-						 "       <label for='iquiz'>Quiz ID<input name='iquiz' type='text' id='iquiz"+$countIntForms+"' value='"+document.getElementById(quizidentifier).value+"'  size='12' \/><\/label>"+
+						 "       <label for='belongsToQuiz'>Quiz ID<input name='belongsToQuiz"+$countIntForms+"' type='text' id='belongsToQuiz"+$countIntForms+"' value='"+document.getElementById(quizidentifier).value+"'  size='12' \/><\/label>"+
                          "       <input name='iquizformnumber' type='hidden' id='iquizformnumber"+$countIntForms+"' value='"+$countForms+"'  size='12' \/><\/label>"+
-						 "       </td></tr></table>"+
+						 "       </td><td name='intformtd2'><button type='button' id='remover'>remove</button></td></tr></table>"+
 						 "<\/form>";
               
 
 
-                        intform = $("<div id='interactionDiv"+$countIntForms+"' name='interactionDiv"+$countIntForms+"'>"+intform+"</div>");
+                         intform = $("<div id='interactionDiv"+$countIntForms+"' name='interactionDiv"+$countIntForms+"'>"+intform+"</div>");
                         // $("button", $(intform)).click(function(){ $(this).parent().parent().remove(); $countIntForms--;  console.log('3 after --$countIntForms= '+$countIntForms);});
 
                          $(this).append(intform);
@@ -242,7 +248,7 @@ function zeropad3(number) {return (number < 100) ? ( (number >= 10) ? ("0" + num
     $(function(){  $("#addInteraction").bind("click", function(){  $("#interactionsFormContainer").addInteractionsForm();  });
    
    
-   }); 
+   }); //end $(function()
 
 
 
@@ -258,7 +264,7 @@ function zeropad3(number) {return (number < 100) ? ( (number >= 10) ? ("0" + num
 								 "             <option value='2' id='ireqN'>No<\/option>"+
 								 "              <\/select><\/label>"+
 								 "        <label for='imsg'>Custom Message? (opt.)<input name='imsg' type='text' id='imsg' value=''  size='12' \/><\/label>"+
-								 "       <label for='iquiz'>Quiz ID<input name='iquiz' type='text' id='iquiz"+$countIntForms+"' value='"+quizidentifier+"'  size='12' \/><\/label>"+
+								 "       <label for='belongsToQuiz'>Quiz ID<input name='belongsToQuiz"+$countIntForms+"' type='text' id='belongsToQuiz"+$countIntForms+"' value='"+quizidentifier+"'  size='12' \/><\/label>"+
 								 "       <input name='iquizformnumber' type='hidden' id='iquizformnumber"+$countIntForms+"' value='"+$countForms+"'  size='12' \/><\/label>"+
 								 "       </td><td name='intformtd2'><button type='button' id='remover'>remove</button></td></tr></table>"+
 								 "<\/form>";
@@ -279,25 +285,26 @@ function zeropad3(number) {return (number < 100) ? ( (number >= 10) ? ("0" + num
 //  alert(event.data.msg);
 //});
 
-var currentformnumber;
+ 
 var theform;
 var quizidentifier;//the name of the quizidentifier input for the current quiz entry that is generating this set of interactions.
 var int_quizid_input_name;//name of the quizidentifier input for the current interaction entry
 
 function quiztypefn(formnumber,type){
-                            currentformnumber=formnumber;                      
-                            if (type=="C6"){
-                               quizidentifier=['c6quizid'+formnumber];
+                            
+                            quizidentifier=(type.toLowerCase()+'quizid'+formnumber);                     
+                            if (type=="C6"){    
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
                             
                              if (type=="H"){
-                               quizidentifier=['hquizid'+formnumber];
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
-				            
+				             if (type=="S"){
+                                document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
+                            }
 				            if (type=="I"){ //if type I is selected add these things to the entry form'
-				               quizidentifier=['iquizid'+formnumber];
+				               document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
 				               getInteractions(formnumber);
 				               var divid=('Ioptions'+formnumber);
 				               theform=['form'+formnumber];
@@ -305,13 +312,12 @@ function quiztypefn(formnumber,type){
 				               document.getElementById(divid).style.display="block";
 				               intformIsOpen=true;
 				               document.getElementById("addIntBtn"+formnumber).style.display="block"; 
-				               document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
-				               document.getElementById('form'+formnumber).iquizid.value=document.getElementById(quizidentifier).value;
-				               //console.log('addAnotherInteraction'+formnumber);
+				              
+				               document.getElementById('form'+formnumber)['iquizid'+formnumber].value=document.getElementById(quizidentifier).value;
 				               document.getElementById('addAnotherInteraction'+formnumber).onclick=function(){addAnotherInteractionForm(formnumber,document.getElementById(quizidentifier).value)};
 				               var j=($countIntForms-1);
 				             
-				               int_quizid_input_name=['iquiz'+j];
+				               int_quizid_input_name=['belongsToQuiz'+j];
 				               document.getElementById(quizidentifier).style.backgroundColor="#FFCC00";
                                document.getElementById(int_quizid_input_name).value=document.getElementById(quizidentifier).value
                          		
@@ -325,8 +331,8 @@ function quiztypefn(formnumber,type){
 			                 
 			                 
 			                 if (type=="U"){ //qualtrics
-			                  quizidentifier=['uquizid'+formnumber];
-			                  document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
+			                  
+			                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
 				              document.getElementById('form'+formnumber).iquizid.value=document.getElementById(quizidentifier).value;
 			                 }
 			                
@@ -349,7 +355,7 @@ function quiztypefn(formnumber,type){
 			 }  
 			 else { $("#interactionsFormContainer").addInteractionsForm();  }
 			 
-			 int_quizid_element=['iquiz'+($countIntForms-1)]; //set id of current iquiz element
+			 int_quizid_element=['belongsToQuiz'+($countIntForms-1)]; //set id of current iquiz element
 			 console.log('int_quizid_element='+int_quizid_element);
 			 document.getElementById(int_quizid_element).value=document.getElementById(quizidentifier).value;
 	      }//end getInteractions(n)

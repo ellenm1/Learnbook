@@ -17,6 +17,7 @@ function createArray(){
 	//for (var f=0; f<document.getElementById('container').forms.length; f++){ 
 	//http://stackoverflow.com/questions/4443202/jquery-get-elements-by-tag-within-a-specific-div/4443207#4443207
 	var qforms = $('#container form'); //using jquery to get all forms within div "container"
+	 
 	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
 	var quizexists = 0;
@@ -35,11 +36,15 @@ function createArray(){
 		 var pagetitle = qforms[f].pagetitle.value;
 		 var type = qforms[f].quiztype.value;
 		     if (testing){  console.log('type= '+type);}
+		
+		 
+		  var quiz;
+		 
 		  var countscore = qforms[f].countscore.value;
 		 	if(testing){ console.log('countscore= '+countscore); }
 		 var passingscore = qforms[f].passingscore.value;	
 		     if(testing){ console.log('passingscore= '+passingscore); }
-		 var quiz;
+		
 		  
 		
 		 //note had to change this to rmsg because rm was reading as radio buttons and thus returning '' for value - never really figured out why
@@ -57,15 +62,14 @@ function createArray(){
 				  case("Q"):
 				  if (testing){  console.log('case q');}
 				  quiz=qforms[f].assessmentID.value;
-			 
 				  var rmsg= qforms[f].qrmsg.value?qforms[f].qrmsg.value:"";
 				  url="quizWrap.htm?call=embed&session="+quiz+"&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php";
 				  break;
 				  //got rid of old captivate on 3-1-17
 		          
 		          case("C6"):
-		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-		        
+		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          quiz = qforms[f]['hquizid'+f].value;
 		          var width = qforms[f].c6width.value;
 				  var height=qforms[f].c6height.value;
 				  var pathtoswf=qforms[f].c6pathtoswf.value;
@@ -74,21 +78,31 @@ function createArray(){
 				  break;
 				  
 				  case("H"):
-		          quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          quiz = qforms[f]['c6quizid'+f].value;
 		          var pathtoHTML5wrap = qforms[f].pathtoHTML5wrap.value;
 		          var rmsg= qforms[f].hrmsg.value?qforms[f].hrmsg.value:"";
 				  url=pathtoHTML5wrap+"/capHTML5wrap.htm";			 
 				  break;
+				  
+				  case("S"):
+		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          quiz=  qforms[f]['squizid'+f].value;
+		          var pathtoSLHTML5wrap = qforms[f].pathtoSLHTML5wrap.value;
+		          var rmsg= qforms[f].srmsg.value?qforms[f].srmsg.value:"";
+				  url=pathtoSLHTML5wrap+"/storylineHTML5wrap.htm";			 
+				  break;
 				 
 				  case ("I"):
-				    quiz=qforms[f].iquizid.value;
+				    quiz=qforms[f]['iquizid'+f].value;
 				    var rmsg= qforms[f].irmsg.value?qforms[f].irmsg.value:"";
 				    url=qforms[f].ifilename.value;
 				  //add interactions array generator form
 				  break;
 				
 				case ("U"):
-				 quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+				 //quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+				   quiz=qforms[f]['uquizid'+f].value;
 				 var surveyid = qforms[f].surveyid.value;
 				 var rmsg= qforms[f].urmsg.value?qforms[f].urmsg.value:"";
 				 var qmax=qforms[f].qmax.value;
@@ -120,6 +134,9 @@ function createArray(){
 			                break;
 			        case("H"):
 			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
+			                break;
+			         case("S"):
+			                o+=", type:'S', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("U"):
 			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 

@@ -493,17 +493,41 @@ function getContent(params){
 								quizStart(params); 
 								znNextPage = parseFloat(znThisPage)+1;
 								znPrevPage = parseFloat(znThisPage)-1;	
-								wipePageNo();
-								wipeNavBar();
-								printNavBar();
-								changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
-								scormDivToggle();
-								checkDataAttr();
-								writeFlash();
+								//wipePageNo();
+								//wipeNavBar();
+								//printNavBar();
+								//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
+								//scormDivToggle();
+								//checkDataAttr();
+								//writeFlash();	
+							}//end if (sScore == nul
+							else showTryAgainMsg(params);
+					}	
+					
+					else if (itmtype=="S"){ //html5 storyline quiz
+					params={
+								//sMax:itmmax,
+								sScore:parseFloat(sScore),
+								qurl:itmurl,//path to assets
+								quiz:itmquiz,
+								type: itmtype,
+								qindex:itm
+								}//end params	
+							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined") {
+								quizStart(params); 
+								znNextPage = parseFloat(znThisPage)+1;
+								znPrevPage = parseFloat(znThisPage)-1;	
+								//wipePageNo();
+								//wipeNavBar();
+								//printNavBar();
+								//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
+								//scormDivToggle();
+								//checkDataAttr();
+								//writeFlash();
 								//writeKalturaPlayer()	
 							}//end if (sScore == nul
 							else showTryAgainMsg(params);
-					}				
+					}							
 				}//end if(typeof itmquiz!="undefined" 	
  	
  	
@@ -1047,7 +1071,8 @@ function suspendActions(id){
 function showSpinner(id){
 	$('#'+id).html('<img src="images/img/ajax-loader-1.gif" class="spinnerImg">');
 }
-function quizStart(p3){		
+function quizStart(p3){	
+
 		var quiztype =typeof p3.type!="undefined" ? p3.type : "Q";	
 		var quiz = p3.quiz;
 		var qindex = p3.qindex;
@@ -1227,6 +1252,12 @@ function quizStart(p3){
 			  case "H":
 			  
 			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
+		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
+	 
+			  break;
+			    case "S":
+			  
+			  //document.location = 'storyline/test/storylineHTML5wrap.htm?p='+qurl+'&itm='+qindex+'&obj='+quiz;
 		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
 	 
 			  break;
