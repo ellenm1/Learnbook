@@ -1234,3 +1234,91 @@ ul.breadcrumb{
 	margin-bottom:0px;
 	padding-bottom:0px;
 }
+
+
+/*styles for bootstrap-based tabs widget*/
+
+.tabsetContainer .floatRight {
+	float: right; 
+	padding: 10px; 
+	clear: both;
+	}	
+	
+	
+.tabsetContainer li {padding-top: 5px;}
+.tabsetContainer .midPad {
+	padding:3px 0 3px 0;
+	margin: 3px 0 3px 0;
+	}
+	
+.tabsetContainer h4 {
+	color:#0066CC; 
+	font-size: 14px; 
+	font-weight:bold;
+	}
+		
+.tabsetContainer {
+	background-color:#ddd;
+	background-color:#BCBABA;
+	padding-bottom:15px;
+}
+ 
+.tabsetContainer .tab a:hover,.tabsetContainer .tab a:focus{
+    outline: none;
+    text-decoration: none;
+}
+ 
+.tabsetContainer .tab .nav-tabs{
+    border-bottom: none;
+}
+ 
+.tabsetContainer .tab .nav-tabs>li>a{
+    font-size: 13px;
+    font-weight:100;
+    text-decoration: none;
+    color: #fff;
+    background: #848282;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border: 1px solid #fff;
+    margin: 0;
+    padding: 9px 15px;
+    position: relative;  
+    white-space:normal;
+    height:62px;
+    width:200px;
+   
+}
+.tabsetContainer .tab .nav-tabs li a:hover{
+    background: #ddd;
+    color: #333;
+     border: 1px solid #ccc;
+}
+
+.tabsetContainer .tab .nav-tabs li.active a,
+.tabsetContainer .tab .nav-tabs li.active a:focus,
+.tabsetContainer .tab .nav-tabs li.active a:hover{
+    background: #fff;
+    color: #333;
+    border: none;
+    font-weight:bold;
+   
+}
+ 
+.tabsetContainer .tab .tab-content{
+    font-size: 14px;
+    /*color: #7e828a;*/
+    line-height: 24px;
+    background: #fff;
+    display:block;
+    position:relative;
+    padding: 15px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom:1px solid #ddd;
+}
+
+
+.tabsetContainer .tab .tab-content h3{
+    font-size: 24px;
+}
