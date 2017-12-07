@@ -33,7 +33,6 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
 
 (function($){
           $countForms = 0;
-          $pa = new Array();
           $.fn.addForms = function(){
          // alert('addForms');
 			              var myform = "<form id='form"+$countForms+"' name='form"+$countForms+"' method='post' action='' >"+
@@ -58,8 +57,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                 "   <div id='quizsettings"+$countForms+"' class='togglequizsettings"+$countForms+"' style='display:none'>"+
                                        "   <p>What type of quiz is it?</p>"+
                                        "   <select name='quiztype' id='quiztype"+$countForms+"' onchange='val=this.value;quiztypefn("+$countForms+",val);toggle(val+\"options"+$countForms+"\",\"togglequiz"+$countForms+"\")'>"+
-                                       "   <option selected='selected'>Select type of quiz...</option>"+                                
-                                       "   <option value='C6' id='capt6sel'>Captivate 6 or greater</option>"+
+                                       "   <option selected='selected'>Select type of quiz...</option>"+                                                               
                                        "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
@@ -103,7 +101,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                       
                                       
                                      
-                                       
+                                       /*
                                        "   <div id='C6options"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to the Captivate 6 SWF?(<i>captivate/myfile.swf</i>)<br/>"+
                                        "   path:&nbsp;&nbsp; <input name='c6pathtoswf' type='text' value='' size='30' /><br/>"+
@@ -112,7 +110,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   Custom message to show on status page (optional):&nbsp; <input name='c6rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='c6quizid"+$countForms+"' id='c6quizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--end C6options-->"+
-                                       
+                                       */
                                        "   <div id='Hoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to captivateHTML5wrap.htm?(<i>captivate/myCaptivateQuiz</i>)<br/>"+
                                        "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/capHTML5wrap.htm</div>"+
@@ -293,10 +291,10 @@ var int_quizid_input_name;//name of the quizidentifier input for the current int
 function quiztypefn(formnumber,type){
                             
                             quizidentifier=(type.toLowerCase()+'quizid'+formnumber);                     
-                            if (type=="C6"){    
+                           /* if (type=="C6"){    
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
-                            
+                            */
                              if (type=="H"){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
@@ -328,11 +326,11 @@ function quiztypefn(formnumber,type){
 			                   console.log('document.getElementById(quizidentifier).value= '+document.getElementById(quizidentifier).value);
 			                   console.log('document.getElementById(int_quizid_input_name).value= '+document.getElementById(int_quizid_input_name).value);
 			                 }//end if(type=="I")
-			                 
-			                 
-			                 if (type=="U"){ //qualtrics
-			                  
-			                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
+			                 			                 
+			                 if (type=="U"){ //qualtrics  
+			                  var divid=('Uoptions'+formnumber);
+				               document.getElementById(divid).style.display="block";    
+			                  document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
 				              document.getElementById('form'+formnumber).iquizid.value=document.getElementById(quizidentifier).value;
 			                 }
 			                

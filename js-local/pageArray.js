@@ -9,7 +9,7 @@ var PageArray = new Array(
 {buttonTitle:'1 Title goes here', title:' ', url:'page02.2.htm', chapter:2,level:1 },
 {buttonTitle:'2 Chap. 3 Title goes here', title:' ', url:'page04.htm', chapter:3,level:1 },
 {buttonTitle:'3 Quiz', title:'', url:'quizWrap.htm?call=embed&session=1140870896389821&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php', chapter:4, level:1, type:'Q', quiz:'1140870896389821', rm:'', countscore:'1'},
-{buttonTitle:'4 Title goes here', title:' ', url:'page08.htm', chapter:5,level:1 },
+{buttonTitle:'4 Tab example', title:' ', url:'tabExample.htm', chapter:5,level:1 },
 {buttonTitle:'5 Title goes here', title:' ', url:'TOC8.htm', chapter:5,level:1 },
 {buttonTitle:'6 Title goes here', title:' ', url:'page02.1.htm', chapter:1,level:1 },
 {buttonTitle:'7 Score &amp; Status Page', title:'',url:'scorePage.htm',chapter:6,level:1 }

@@ -17,7 +17,6 @@ function createArray(){
 	//for (var f=0; f<document.getElementById('container').forms.length; f++){ 
 	//http://stackoverflow.com/questions/4443202/jquery-get-elements-by-tag-within-a-specific-div/4443207#4443207
 	var qforms = $('#container form'); //using jquery to get all forms within div "container"
-	 
 	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
 	var quizexists = 0;
@@ -36,15 +35,11 @@ function createArray(){
 		 var pagetitle = qforms[f].pagetitle.value;
 		 var type = qforms[f].quiztype.value;
 		     if (testing){  console.log('type= '+type);}
-		
-		 
-		  var quiz;
-		 
 		  var countscore = qforms[f].countscore.value;
 		 	if(testing){ console.log('countscore= '+countscore); }
 		 var passingscore = qforms[f].passingscore.value;	
 		     if(testing){ console.log('passingscore= '+passingscore); }
-		
+		 var quiz;
 		  
 		
 		 //note had to change this to rmsg because rm was reading as radio buttons and thus returning '' for value - never really figured out why
@@ -67,7 +62,7 @@ function createArray(){
 				  break;
 				  //got rid of old captivate on 3-1-17
 		          
-		          case("C6"):
+		        /*  case("C6"):
 		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
 		          quiz = qforms[f]['hquizid'+f].value;
 		          var width = qforms[f].c6width.value;
@@ -76,10 +71,10 @@ function createArray(){
 				  var rmsg= qforms[f].c6rmsg.value?qforms[f].c6rmsg.value:"";
 				  url="captivate6Wrap.htm?swf="+pathtoswf+"&w="+width+"&h="+height;			 
 				  break;
-				  
+				 */ 
 				  case("H"):
 		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-		          quiz = qforms[f]['c6quizid'+f].value;
+		          quiz = qforms[f]['hquizid'+f].value;
 		          var pathtoHTML5wrap = qforms[f].pathtoHTML5wrap.value;
 		          var rmsg= qforms[f].hrmsg.value?qforms[f].hrmsg.value:"";
 				  url=pathtoHTML5wrap+"/capHTML5wrap.htm";			 
@@ -126,12 +121,12 @@ function createArray(){
 			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			               // alert('countscore='+countscore);
 			                break;
-			        case("C"):
+			      /*  case("C"):
 			                o+=", type:'"+type+"', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			        case("C6"):
 			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
-			                break;
+			                break;*/
 			        case("H"):
 			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
@@ -208,7 +203,7 @@ function createArray(){
 	             if (testing){ console.log(' ireq='+ ireq);}
 	            var imsg=iforms[g].imsg.value;
 	             if (testing){ console.log(' imsg='+ imsg);}
-	            var iquiz=iforms[g].iquiz.value;
+	            var iquiz=iforms[g]["belongsToQuiz"+g].value;
 	             if (testing){ console.log(' iquiz='+ iquiz);}
 	            var iquizformnumber=iforms[g].iquizformnumber.value;
 	             if (testing){ console.log(' iquizformnumber='+ iquizformnumber);}
