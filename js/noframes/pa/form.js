@@ -86,12 +86,24 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   (Quiz is required to be passed to complete module: use for critical quizzes)</li>"+
                                        "   </ul>"+
                                        "   </div><!--end key-->"+
+                                       "   <label for='hidetryagainmsg'>Do you want to show the Try Again Message for this quiz?</label>"+
+  									   "   <select name='hidetryagainmsg' id='hidetryagainmsg'>"+
+                                       "   <option value='1'  id='hidetryagainmsgtrue' selected>No, do not show Try Again message.</option>"+
+                                       "   <option value='0'  id='hidetryagainmsgfalse'>Yes, show the Try Again message (default).</option>"+
+                                       "   </select>"+
                                        "   </div><!--end countscoreblock-->"+
   									   
   									   "   <div id='passingscoreOptions"+$countForms+"' class='togglepassingscore"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
   									   "   <label for='passingscore'>What is the passing % score for this quiz?</label><input name='passingscore' type='text' value=''/>"+
                                        "   </div><!--end passingscoreOptions-->"+
   									   
+                                      // "   <div id='hidetryagainmsgBlock"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+  									  // "   <label for='hidetryagainmsg'>Do you want to show the Try Again Message for this quiz?</label>"+
+  									  // "   <select name='hidetryagainmsg' id='hidetryagainmsg'>"+
+                                      // "   <option value='1'  id='hidetryagainmsgtrue' selected>No, do not show Try Again message.</option>"+
+                                       //"   <option value='0'  id='hidetryagainmsgfalse'>Yes, show the Try Again message (default).</option>"+
+                                       //"   </select>"+
+                                      // "   </div><!--end hidetryagainmsgBlock-->"
                                        
                                        "   <div id='Qoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Custom message to show on status page (optional):&nbsp; <input name='qrmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+

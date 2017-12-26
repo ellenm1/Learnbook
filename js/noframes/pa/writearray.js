@@ -35,10 +35,12 @@ function createArray(){
 		 var pagetitle = qforms[f].pagetitle.value;
 		 var type = qforms[f].quiztype.value;
 		     if (testing){  console.log('type= '+type);}
-		  var countscore = qforms[f].countscore.value;
+		 var countscore = qforms[f].countscore.value;
 		 	if(testing){ console.log('countscore= '+countscore); }
 		 var passingscore = qforms[f].passingscore.value;	
 		     if(testing){ console.log('passingscore= '+passingscore); }
+		 var hidetryagainmsg = qforms[f].hidetryagainmsg.value;
+		     if(testing){console.log('hidetryagainmsg= '+hidetryagainmsg);}
 		 var quiz;
 		  
 		
@@ -60,18 +62,7 @@ function createArray(){
 				  var rmsg= qforms[f].qrmsg.value?qforms[f].qrmsg.value:"";
 				  url="quizWrap.htm?call=embed&session="+quiz+"&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php";
 				  break;
-				  //got rid of old captivate on 3-1-17
-		          
-		        /*  case("C6"):
-		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
-		          quiz = qforms[f]['hquizid'+f].value;
-		          var width = qforms[f].c6width.value;
-				  var height=qforms[f].c6height.value;
-				  var pathtoswf=qforms[f].c6pathtoswf.value;
-				  var rmsg= qforms[f].c6rmsg.value?qforms[f].c6rmsg.value:"";
-				  url="captivate6Wrap.htm?swf="+pathtoswf+"&w="+width+"&h="+height;			 
-				  break;
-				 */ 
+				  
 				  case("H"):
 		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
 		          quiz = qforms[f]['hquizid'+f].value;
@@ -141,7 +132,11 @@ function createArray(){
 			              // startInteractionsArrayForm(f,quiz);
 			               break;
 			       }//end switch
+			       if(hidetryagainmsg==1){
+			       o+=", hidetryagainmsg:'1'";
+			       }
 			   }//end if(isQuiz==1)
+			 
 			if((countscore=="3")&&(typeof passingscore!=="undefined")){
 								o+=", passingscore:'"+passingscore+"'";
 					}//end  if

@@ -1,1 +1,17 @@
- 
+/*Uncomment to show which quizzes have been completed with gray background and checkmark*/
+/*
+#sidebar-left a.navlevel1.quiz.completed {
+	background-color:#CCC;
+	color:#000;
+}
+
+#sidebar-left a.navlevel1.quiz.completed::before {
+  	content: '';
+  	position: absolute;
+  	right:3px;
+  	width: 22px;
+  	height: 20px;
+  	background-position : 188px 0;
+  	background-image: url("/content/ct/common/images/img/glyphicons_halflings-white.png"); 
+} 
+*/

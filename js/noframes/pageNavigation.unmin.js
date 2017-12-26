@@ -121,6 +121,10 @@ function printNavBar(){
 		var level =   		p.level;
 		if(level > 1){showExpander ='block'}
 		var isquiz = 	   (p.quiz)?'quiz':'notquiz';
+		var objectiveID		=   p.type+p.quiz;
+		var completedObjective = (SCOGetObjectiveData(objectiveID, "score.raw")!="")?true:false;
+		var completedQuiz = (p.qScore||completedObjective)?true:false;
+		var completed = completedQuiz ? "completed":'';
 		var isScorePage='';
 		var chapter = 		p.chapter;
 		var isParent= 		p.isParent!="undefined"?p.isParent:'';
@@ -141,7 +145,7 @@ function printNavBar(){
 		else {expand='closed';}
 		//if(testing){console.log('<a href="#" id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' + isScorePage+'">' + buttonTitle + '</a>');  }			
 		str1+=('<li>');
-		str1+=('<a id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' + isScorePage+'" title="'+ url +'">');
+		str1+=('<a id="itm'+i+'" class="navlevel' + level +' ' +current + '  chapter' + chapter + ' ' + expand  +' ' + isParent  + ' '+isquiz+' ' +completed+' '+ isScorePage+'" title="'+ url +'">');
 		str1+=('<span class="hidden-tablet">');
 		str1+= buttonTitle; 
 		str1+=('</span></a></li>');	
@@ -389,6 +393,8 @@ function getContent(params){
 	var itmcountscore 	=	pi.countscore;
 	var objectiveID		=   itmtype+itmquiz;
 	var itmserver		= 	pi.svr;
+	var hidetryagainmsg =   (typeof pi.hidetryagainmsg!="undefined")?pi.hidetryagainmsg:null;
+	//console.info('ZSIS hidetryagainmsg for '+itmurl+ 'is'+ hidetryagainmsg);
 	
 			//if(testing){console.log("in getContent:BAA typeof itmquiz=="+typeof itmquiz+' '+itmquiz+ ' itmtype='+itmtype+', itmquiz= '+itmquiz)}
 			customFunction01();
@@ -415,7 +421,7 @@ function getContent(params){
 								type: (typeof itmtype=="undefined"? "Q": itmtype),
 								qindex:itm
 								}//end params={
-						if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined") {
+						if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined" || hidetryagainmsg == "1") {
 							quizStart(params); 
 							}//end if (sScore == null ||sScore 
 						else showTryAgainMsg(params);
@@ -430,7 +436,7 @@ function getContent(params){
 								qindex:itm
 								}//end params=
 								 
-							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined") {
+							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined"  || hidetryagainmsg == "1") {
 					
 							quizStart(params); 	
 						}//end if (sScore == nul
@@ -464,7 +470,7 @@ function getContent(params){
 								type: itmtype,
 								qindex:itm
 								}//end params	
-							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined") {
+							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined"  || hidetryagainmsg == "1") {
 								quizStart(params); 
 								znNextPage = parseFloat(znThisPage)+1;
 								znPrevPage = parseFloat(znThisPage)-1;	
@@ -489,17 +495,11 @@ function getContent(params){
 								type: itmtype,
 								qindex:itm
 								}//end params	
-							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined") {
+							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined"  || hidetryagainmsg == "1") {
 								quizStart(params); 
 								znNextPage = parseFloat(znThisPage)+1;
 								znPrevPage = parseFloat(znThisPage)-1;	
-								//wipePageNo();
-								//wipeNavBar();
-								//printNavBar();
-								//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
-								//scormDivToggle();
-								//checkDataAttr();
-								//writeFlash();	
+							
 							}//end if (sScore == nul
 							else showTryAgainMsg(params);
 					}	
@@ -513,18 +513,11 @@ function getContent(params){
 								type: itmtype,
 								qindex:itm
 								}//end params	
-							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined") {
+							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined" || hidetryagainmsg == "1") {
 								quizStart(params); 
 								znNextPage = parseFloat(znThisPage)+1;
 								znPrevPage = parseFloat(znThisPage)-1;	
-								//wipePageNo();
-								//wipeNavBar();
-								//printNavBar();
-								//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
-								//scormDivToggle();
-								//checkDataAttr();
-								//writeFlash();
-								//writeKalturaPlayer()	
+								
 							}//end if (sScore == nul
 							else showTryAgainMsg(params);
 					}							
