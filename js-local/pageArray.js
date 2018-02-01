@@ -20,10 +20,11 @@ var moduletype=2;
 
 var docTitle=('MLearning SCORM-compatible HTML template');
 var headerTitle=('MLearning SCORM-compatible HTML template');
-var contentExpert=new Array( {email:"isturis@med.umich.edu",name:"Ilza Hallman"}, {email:"winniewo@med.umich.edu",name:"Winnie Wood"}, {email:"marybov@med.umich.edu",name:"Mary Berry Bovia"} );
+//var contentExpert=new Array( {email:"isturis@med.umich.edu",name:"Ilza Hallman"}, {email:"winniewo@med.umich.edu",name:"Winnie Wood"}, {email:"marybov@med.umich.edu",name:"Mary Berry Bovia"} );
 //var contentExpertEmail =("example@med.umich.edu");
 //var contentExpertName  =("Jane Smith");
-
+var contentExpertName =('Test Name');
+var contentExpertEmail =('test@test.com');
 var recommendedMsg = 'Recommended';
 var requiredMsg = 'Must be completed to finish module';
 var completedMsg   = 'Completed';
