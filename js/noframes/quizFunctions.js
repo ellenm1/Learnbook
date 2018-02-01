@@ -208,9 +208,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				            unfinQz +=('</tr>');
 			            }//end  else if(((typeof objScore!="undefined")&&(objStatus!="n			     			    
 			     	break;
-
-			     	//Captivate HTML5
-			     	 case "H":
+			     	 	case "H": 
                         //If never attempted: show 'not completed' message, green btn + go there now . If quiz is required, set module status to 'incomplete'
 			            if( (objStatus=="not attempted")||(q.qStatus=="not attempted")||(typeof objStatus=="undefined") ){
 			                unfinQz += ('<tr>');
@@ -242,41 +240,6 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				            unfinQz +=('</tr>');
 			            }//end  else if(((typeof objScore!="undefined")&&(objStatus!="n			     			    
 			     	break;
-
-			     	//Storyline HTML5
-			     	case "S":
-                        //If never attempted: show 'not completed' message, green btn + go there now . If quiz is required, set module status to 'incomplete'
-			            if( (objStatus=="not attempted")||(q.qStatus=="not attempted")||(typeof objStatus=="undefined") ){
-			                unfinQz += ('<tr>');
-                            unfinQz += ('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');
-                            unfinQz += (messageLine1);
-				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--D--><br/></td>');
-			                unfinQz += ('</tr>');
-				           	if(countscore==1){ moduleStatus = 'incomplete'}//if any one page is required but not attempted, set overall module status to incomplete.
-				  	      }//end if
-
-						//Required captivate quiz that has been looked at or not, but not yet attempted. Show not completed message, green button. NO score.
-						else if (countscore==1 && isNaN(objMax) ){
-			                moduleStatus = 'incomplete';
-			                unfinQz += ('<tr>');
-                            unfinQz += ('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');
-							unfinQz += (messageLine1);
-				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--E--><br></td>');
-			                unfinQz += ('</tr>');
-			                }
-
-						//if there is any raw score for this quiz stored in MLearning or it is completed
-				  		else if(  ( (typeof objScore!="undefined")&&(objStatus!="not attempted") )||(objStatus=="completed")){
-			                unfinQz +=('<tr>');
-			                if(!isNaN(objMax)){  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+'.' ); }
-				            //Captivate will cause NaN if you have just looked at the page, but not taken it yet
-				            else if ( isNaN(objMax) ){  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');  }
-				            unfinQz +=(messageLine1);
-				            unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--F--></td>');
-				            unfinQz +=('</tr>');
-			            }//end  else if(((typeof objScore!="undefined")&&(objStatus!="n
-			     	break;
-
                    	//interactions
                    	case "I":				 
                         if( (objStatus=="")||(typeof objStatus=="undefined")||(typeof objStatus==undefined) ){ 
@@ -284,7 +247,8 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
                             unfinQz += (messageLine1); 
 				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--M--><br/></td></tr>');    
 				            if(countscore==1){ moduleStatus = 'incomplete'}//if any one page is required but not attempted, set overall module status to incomplete.
-				  	  	}//end if( (objStatus==""
+				  	  	}//end if( (objStatus==""   
+		      
 							 
 						//if recommended and attempted but incomplete, interactions quizzes are considered done  -blue try again button
 						if(countscore==0 && q.qStatus=="incomplete"){ 
@@ -316,11 +280,10 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				            unfinQz +=('</tr>'); 
 			            } //end else if(  (objStatus=="completed"||q.qStatus==
                     break;
-
                   	//qualtrics
 				   	case "U":
 				 		if ( (objMax!="")&&( typeof objMax!="undefined" )&&!isNaN(objMax)&&(parseInt(objMax,10)>0) ){  q.qMax=parseInt(objMax,10); }
-		             	qMax=q.qMax; //qualtrics qmax has to be manually entered since there's no way to figure it out from the data
+		             	qMax=q.qMax;
 				     	if (testing){	console.log('moduleStatus='+moduleStatus+' objStatus= |'+objStatus+'|, objScore= |'+objScore+'|, q.qStatus= |'+q.qStatus+'|') }
                      	//no objective status in mlearning: quiz probably has not been taken yet
                      	if( (objStatus=="")||(typeof objStatus=="undefined") ){
@@ -328,7 +291,10 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
                             unfinQz += (messageLine1); 
 				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--A--><br/></td></tr>');    
 				            if(countscore==1){ moduleStatus = 'incomplete'}//if any one page is required but not attempted, set overall module status to incomplete.
-				  	  	}//end if( (objStatus=="not attempted")||(q.qStatus=="not attempted"...
+				  	  	}//end if( (objStatus=="not attempted")||(q.qStatus=="not attempted"...    
+		              
+		              
+		              
                       //if there is any raw score for this quiz stored in MLearning or it is completed, it is considered complete
 		             	if(((typeof objScore!="undefined")&&(objStatus!="not attempted")&&(objStatus!="") )||(objStatus=="completed")){ 
 							unfinQz +=('<tr>');
@@ -338,9 +304,10 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 							unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--L--><br/></span></td>');				
 							unfinQz +=('</tr>');
 			            }//end if (((typeof objScore...
+			     
 			        break;
 			    	}//end switch		       
-             	}//end else (statuses show it has been attempted)
+             	}//end else
 		   
 		     //if there IS NO countscore, or if it is 1 consider the quiz required/counted, and add quiz score to the total module score
 		     //if it is 2 or 0, it does not count.
