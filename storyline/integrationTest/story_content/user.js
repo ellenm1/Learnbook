@@ -38,7 +38,7 @@ var mailto_link='mailto:'+ emailaddress+'?subject='+subject+'&body='+encodeURICo
 win=window.open(mailto_link,'emailWin');
 }
 
-function Script2()
+/*function Script2()
 {
 	var player = GetPlayer();
  	var scorePoints = player.GetVar('scorePoints');
@@ -47,6 +47,24 @@ function Script2()
 	var passPoints = player.GetVar('passPoints');
 	//var maxPoints = Math.round((scorePoints/scorePercent)*100);
     var maxPoints = (scorePercent>0)?Math.round((scorePoints/scorePercent)*100):0;
-  getMyData(maxPoints,passPoints,scorePoints,scorePercent, passPercent);
+  getMyData(maxPoints,passPoints,scorePoints,scorePercent, passPercent, -1);
+}*/
+function Script2()
+{
+	var player = GetPlayer();
+	var gScorePoints = player.GetVar('scorePoints');
+	var gScorePercent = player.GetVar('scorePercent');
+	var gPassPercent = player.GetVar('passPercent');
+	var gPassPoints = player.GetVar('passPoints');
+	var gMaxPoints = (gScorePercent>0)?Math.round((gScorePoints/gScorePercent)*100):0; 
+	var params = {
+		maxPoints:gMaxPoints,
+		passPoints:gPassPoints,
+		scorePoints:gScorePoints,
+		scorePercent:gScorePercent,
+		passPercent:gPassPercent 
+	}
+	getMyData(params);
 }
 
+//getMyData(maxPoints,passPoints,scorePoints,scorePercent, passPercent,bailout,setLandingPage)
