@@ -83,7 +83,8 @@ function getMyData(params){
 	jq(document).ready(	
 	    function($){
 	     if(bailout){
-     		exitWithoutRecording(cItem);
+	     	var ns = $.initNamespaceStorage(lsPath);
+     		exitWithoutRecording(cItem, ns);
     	}
     	else { //continue to mark objective done and go to next page
 			var ns = $.initNamespaceStorage(lsPath);
@@ -115,8 +116,8 @@ var initCalled = false ;
 
  //this is the bailout function
  
-function exitWithoutRecording(landingPageIndex ){
-			var znextPage = parseFloat(cItem)+1; 
+function exitWithoutRecording(landingPageIndex,ns ){
+			var znextPage = parseFloat(landingPageIndex)+1; 
 			ns.localStorage.set('znThisPage', znextPage);
 			document.location = '../../index.htm?itm='+znextPage+'&ls=1';   //redirect back to module	
 }
