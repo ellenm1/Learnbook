@@ -1174,7 +1174,18 @@ function quizStart(p3){
 					encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
 					var pr = currentloc +'&itm='+qindex;//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
 					var encpr = encodeURIComponent(pr);
-					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;				
+					
+					var underscore = sName.lastIndexOf("_"); //test for scorm engine style student name
+					var participantID;
+					if(underscore != -1){ //if underscore, remove everything to left and including underscore.
+						participantID= sName.slice(underscore+1);
+						//if(testing){console.log("underscore="+underscore+" sName="+sName+" participantID= "+participantID);}
+						}
+					else{participantID=sName;}
+					
+					
+					
+					qualtricsURL += '&id=' + participantID + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;				
 					document.location = qualtricsURL;	
 			 		}
 			 		
