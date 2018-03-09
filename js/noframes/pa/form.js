@@ -34,7 +34,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
 (function($){
           $countForms = 0;
           $.fn.addForms = function(){
-         // alert('addForms');
+        
 			              var myform = "<form id='form"+$countForms+"' name='form"+$countForms+"' method='post' action='' >"+
                                        "   <table style='border-top:1px solid #999;width:1200px'><tr valign='top' class='ab'><td><div id='btntitle' class='item' ><b>Button Title</b><br/>"+
                                        "   <input type='text' name='buttontitle' id='buttontitle' onclick='/*alert(this.parentNode.parentNode.id)*/'/>"+
@@ -59,6 +59,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   <select name='quiztype' id='quiztype"+$countForms+"' onchange='val=this.value;quiztypefn("+$countForms+",val);toggle(val+\"options"+$countForms+"\",\"togglequiz"+$countForms+"\")'>"+
                                        "   <option selected='selected'>Select type of quiz...</option>"+                                                               
                                        "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
+                                       "   <option value='H2' id='captH2sel'>Captivate 9 HTML5 or greater</option>"+
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
                                        "   <option value='Q'  id='qmarksel'>Questionmark</option>"+   
@@ -129,6 +130,13 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   Custom message to show on status page (optional):&nbsp; <input name='hrmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='hquizid"+$countForms+"' id='hquizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endHoptions-->"+
+                                       
+                                       "   <div id='H2options"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+                                       "   Relative path to captivate9HTML5wrap.htm?(<i>captivate/myCaptivateQuiz</i>)<br/>"+
+                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoC9HTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/cap9HTML5wrap.htm</div>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='h2rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='h2quizid"+$countForms+"' id='h2quizid"+$countForms+"' readonly='readonly' value=' ' />"+
+                                       "   </div><!--endH2options-->"+
                                        
                                        "   <div id='Soptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to storylineHTML5wrap.htm?(<i>storyline/myStorylineQuiz</i>)<br/>"+
@@ -310,6 +318,10 @@ function quiztypefn(formnumber,type){
                              if (type=="H"){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
+                             if (type=="H2"){
+                                document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
+                            }
+                            
 				             if (type=="S"){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }

@@ -70,6 +70,14 @@ function createArray(){
 		          var rmsg= qforms[f].hrmsg.value?qforms[f].hrmsg.value:"";
 				  url=pathtoHTML5wrap+"/capHTML5wrap.htm";			 
 				  break;
+				
+				case("H2"):
+		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          quiz = qforms[f]['h2quizid'+f].value;
+		          var pathtoHTML5wrap = qforms[f].pathtoC9HTML5wrap.value;
+		          var rmsg= qforms[f].h2rmsg.value?qforms[f].h2rmsg.value:"";
+				  url=pathtoHTML5wrap+"/cap9HTML5wrap.htm";			 
+				  break;
 				  
 				  case("S"):
 		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
@@ -120,6 +128,9 @@ function createArray(){
 			                break;*/
 			        case("H"):
 			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
+			                break;
+			        case("H2"):
+			                o+=", type:'H2', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
 			         case("S"):
 			                o+=", type:'S', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
