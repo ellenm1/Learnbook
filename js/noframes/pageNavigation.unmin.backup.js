@@ -166,7 +166,7 @@ function printNavBar(){
 	} //end of for(var i=0 loop	
 	 
 	//str1+=printExpander("B");
-	str1+='<li><a href=\"#\"  id=\"expander1\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
+	str1+='<li><a href=\"#\"  id=\"expander2\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
 	str1+=printScormButtons();
 	str1+=printContentExpert();
 	str1+=printFeedbackLink()
