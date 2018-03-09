@@ -110,8 +110,10 @@ function printNavBar(){
 	znPages = ps.length;
 	str1= ('<div class="nav-collapse sidebar-nav">\n<ul class="nav nav-tabs nav-stacked main-menu">');	
 	getCurrentPage();	//this returns znThisPage integer and currentPage object	
- 	str1+=printNavToggle();
- 	str1+=printExpander(1);
+ 	//str1+=printNavToggle();
+ 	
+ 	//str1+=printExpander(1);//was printing as undefined in many cases
+ 	str1+='<li><a href=\"#\"  id=\"expander1\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
 	determineParents(); // processes parent child relationships for use with navbar
 
 	 for(var i=0; i< ps.length; i++) {		 
@@ -163,7 +165,8 @@ function printNavBar(){
 		//console.log('i='+i+' ps.length= '+ps.length);
 	} //end of for(var i=0 loop	
 	 
-	str1+=printExpander(2);
+	//str1+=printExpander("B");
+	str1+='<li><a href=\"#\"  id=\"expander2\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
 	str1+=printScormButtons();
 	str1+=printContentExpert();
 	str1+=printFeedbackLink()
@@ -486,7 +489,7 @@ function getContent(params){
 							else showTryAgainMsg(params);
 					}//C or c6	
 					
-					else if (itmtype=="H"){ //html5 captivate quiz
+					else if ((itmtype=="H")||(itmtype=="H2")){ //html5 captivate quiz
 					params={
 								//sMax:itmmax,
 								sScore:parseFloat(sScore),
@@ -810,8 +813,10 @@ function printHelpBtn(){
     }
 
 function printExpander(n){
-  var exp=('<li><a href=\"#\"  id=\"expander'+n+'\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>');
-  return exp;
+//  var exp=('<li><a href=\"#\"  id=\"expander'+n+'\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>');
+ 
+console.log('st='+st + ' typeof st ='+ typeof st);
+  return st;
    // document.getElementById('sidebar-left').innerHTML+=('<a href=\"#\" onmousedown=\"toggleByChapter();\" id=\"expander'+n+'\" class=\"expander\">expand all<\/a>');	
     }
 
@@ -1254,6 +1259,13 @@ function quizStart(p3){
 			  break;
 			  
 			  case "H":
+			  
+			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
+		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
+	 
+			  break;
+			  
+			   case "H2":
 			  
 			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
 		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
