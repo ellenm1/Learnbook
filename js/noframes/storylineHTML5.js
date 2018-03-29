@@ -59,6 +59,7 @@ function getMyData(params){
 	if(testing){console.log('qsParm["itm"]'+ qsParm['itm']);}
 	var cItem =  qsParm['itm']? qsParm['itm'] : -1;
  	var lsPath = qsParm['h']; //localstoragePath
+ 	var decodedModulePath = decodeURIComponent(lsPath);
  	
     
     if((setLandingPage)&&(setLandingPage!="undefined")){  
@@ -82,14 +83,12 @@ function getMyData(params){
 	
 	jq(document).ready(	
 	    function($){
-	     if(bailout){
-	     	var ns = $.initNamespaceStorage(lsPath);
-     		exitWithoutRecording(cItem, ns);
+	    var ns = $.initNamespaceStorage(lsPath);
+	     if(bailout){	     	
+     		exitWithoutRecording(cItem, ns, decodedModulePath);
     	}
     	else { //continue to mark objective done and go to next page
-			var ns = $.initNamespaceStorage(lsPath);
-			ps=ns.localStorage.get('pageArray');
-	 
+			ps=ns.localStorage.get('pageArray');	 
 			ps[cItem].qScore = cScore;
 			ps[cItem].qMax = cMax;
 			var qCountscore = ps[cItem].countscore;
@@ -100,14 +99,15 @@ function getMyData(params){
 
 			ns.localStorage.set('pageArray', ps); //store "ps" data into local storage.
 	
-			MarkObjectiveDone(cScore,cMax,objectiveID, qCountscore);//these quizzes are considered done once you take them, no matter the score.
+			MarkObjectiveDone(cScore,cMax,objectiveID, qCountscore, qPassingscore);//these quizzes are considered done once you take them, no matter the score.
  			
 			var znextPage = parseFloat(cItem)+1; 
 			ns.localStorage.set('znThisPage', znextPage);
 			console.log('XPC cItem= '+cItem +', znextPage= '+znextPage);
 			console.log('XPD ps[cItem].buttonTitle= '+ps[cItem].buttonTitle);
-			//debugger;
-			document.location = '../../index.htm?itm='+znextPage+'&ls=1';   //redirect back to module	
+			console.log('current document location= '+document.location+', module path lsPath= '+lsPath);
+			document.location = '//' + window.location.hostname +'/'+ decodedModulePath+'/index.htm?itm='+znextPage+'&ls=1';   //redirect back to module	
+			 
 			} 
 	});
 }
@@ -116,13 +116,13 @@ var initCalled = false ;
 
  //this is the bailout function
  
-function exitWithoutRecording(landingPageIndex,ns ){
+function exitWithoutRecording(landingPageIndex,ns, pathToIndex ){
 			var znextPage = parseFloat(landingPageIndex)+1; 
 			ns.localStorage.set('znThisPage', znextPage);
-			document.location = '../../index.htm?itm='+znextPage+'&ls=1';   //redirect back to module	
+			document.location = '//' + window.location.hostname +'/'+ pathToIndex+'/index.htm?itm='+znextPage+'&ls=1';   //redirect back to module	
 }
 
-function MarkObjectiveDone(cScore,cMax,objectiveID,countscore){//send storyline quiz score data to the LMS
+function MarkObjectiveDone(cScore,cMax,objectiveID,countscore,cPassingScore){//send storyline quiz score data to the LMS
 	if(testing){console.log('XPJT in MarkObjectiveDone: objectiveID+= '+objectiveID+', cScore'+cScore+', cMax='+cMax)}
 	
 	if(cScore!="undefined"){
@@ -130,8 +130,8 @@ function MarkObjectiveDone(cScore,cMax,objectiveID,countscore){//send storyline 
 		var checkdata = SCOGetObjectiveData(objectiveID, "status");
 		if(testing){console.log('GGGT in MarkObjectiveDone: checkdata = '+ checkdata+ ', cmi.objectives._count='+ct);}
 		if(countscore==3){
-			var gbPercentScore = pMax!=0?Math.round((pScore/pMax)*100):0;
-			var gbStatus = (gbPercentScore >= passingscore ? "passed":"failed");
+			var gbPercentScore = cMax!=0?Math.round((cScore/cMax)*100):0;
+			var gbStatus = (gbPercentScore >= cPassingScore ? "passed":"failed");
 			SCOSetObjectiveData(objectiveID, "status", gbStatus);
 		}
 		else {
