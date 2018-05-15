@@ -18,9 +18,20 @@
 	var dl = 		qsParm['dl']? qsParm['dl'] : null;
 	var pScore, pMax; 
 	var isScorm = true;
+ 
+	
+	//sName and sDetails are initialized in trackingFunctions.js
 	var sName  =((SCOGetValue("cmi.core.student_id"))+'');
+	 
+	var underscore = sName.lastIndexOf("_"); //test for scorm engine style student name eg "trainingportal.med.umich.edu_EMEISELM"
+	//console.log('sName='+sName + 'underscore= '+ sName.lastIndexof("_"));
+	if(underscore != -1){ //if underscore, remove everything to left and including underscore.
+		sName= sName.slice(underscore+1);
+	}
+			 
 	var sDetails = ((SCOGetValue("cmi.core.student_name"))+'');
 	//if(testing){console.log('sName='+sName +'sDetails='+sDetails);}
+	 
 	var quizStats = qsParm['zg'] ?qsParm['zg'] : null;
 		if(quizStats) { 
 			var g_objAPI = FindAPI(window.parent);
@@ -34,7 +45,7 @@
 		//znThisPage is a number, the index of a page in the Array
 		//pageNo is the actual number that shows up as the page number - this should be znThisPage+1
 		//currentPage is the page object containing all the data from the page array
-	var pageNo,currentPage,znThisPage,znNextPage,znPrevPage,znPages;
+	var pageNo,currentPage,znThisPage,znNextPage,znPrevPage,znPages,znPrintExpanderBtn;
 	var thispage = (document.location.href); 
 	var justpath = window.location.pathname;
 	var lastslash = (window.location.pathname.lastIndexOf("/")+1);	
@@ -68,10 +79,12 @@
 	znCompletedMsg   =  	(typeof completedMsg!= "undefined")	 		? completedMsg	: 'Completed';	 
 	znDocTitle 		 = 	 	(typeof docTitle!= "undefined")	 	 		? docTitle		: '';
 	znHeaderTitle 	 = 	 	(typeof headerTitle!= "undefined")	 		? headerTitle	: '';
-	znContentExpert =		(typeof contentExpert!="undefined")			? contentExpert : '';
+	znContentExpert  =		(typeof contentExpert!="undefined")			? contentExpert : '';
 	znContentExpertEmail =  (typeof contentExpertEmail!="undefined")	? contentExpertEmail: '';
-	znContentExpertName =  (typeof contentExpertName!="undefined")		? contentExpertName: '';
+	znContentExpertName  =  (typeof contentExpertName!="undefined")		? contentExpertName: '';
 	znVersion		 = 		(typeof zVrsn!="undefined")					? zVrsn:'1';
+	znDedup          =      (typeof dedup!="undefined")                 ? dedup:'false';
+	znPrintExpanderBtn   =  (typeof printExpanderBtn!="undefined")      ? printExpanderBtn:'true';
  
 	//if pageArray is in local storage, retrieve it, otherwise set pagearray into localstorage and retrieve
  	if(ns.localStorage.isSet('pageArray') ){ ps = ns.localStorage.get('pageArray');}
@@ -96,6 +109,8 @@
 							contentExpert:znContentExpert,
 							contentExpertEmail:znContentExpertEmail,
 							contentExpertName:znContentExpertName,
+							printExpanderBtn:znPrintExpanderBtn,
+							dedup:znDedup,
 							version:znVersion 
 							};
 		ns.localStorage.set('moduleVars',modulevars);
@@ -109,11 +124,13 @@ function printNavBar(){
 	ps = ns.localStorage.get('pageArray');//pulls current state of page array from local storage
 	znPages = ps.length;
 	str1= ('<div class="nav-collapse sidebar-nav">\n<ul class="nav nav-tabs nav-stacked main-menu">');	
-	getCurrentPage();	//this returns znThisPage integer and currentPage object	
- 	//str1+=printNavToggle();
- 	
- 	//str1+=printExpander(1);//was printing as undefined in many cases
- 	str1+='<li><a href=\"#\"  id=\"expander1\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
+	getCurrentPage();	//this returns znThisPage integer and currentPage object
+	printExpanderBtn = ms.printExpanderBtn;
+		
+ 	 
+ 	if((znPages>16)&&(printExpanderBtn!=false)){
+ 	    str1+='<li><a href=\"#\"  id=\"expander1\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
+	}else{};
 	determineParents(); // processes parent child relationships for use with navbar
 
 	 for(var i=0; i< ps.length; i++) {		 
@@ -135,6 +152,7 @@ function printNavBar(){
 		var url =     		p.url+'&itm='+i;
 		var buttonTitle = 	p.buttonTitle;
 		var pageTitle =    	p.pageTitle;
+		var printExpanderBtn = ms.printExpanderBtn;
 		var expand = 'closed';
 		var current = '';  
 		if(urlclean=="scorePage.htm"){ isScorePage = 'isScorePage';buttonTitle='Submit Score & Complete'; }
@@ -161,12 +179,13 @@ function printNavBar(){
 		}//end if printable quizzes
 		 
 		
-		//console.log('printList= '+printList);
-		//console.log('i='+i+' ps.length= '+ps.length);
+		
 	} //end of for(var i=0 loop	
 	 
-	//str1+=printExpander("B");
+	
+	 if((znPages>16)&&(printExpanderBtn!=false)){
 	str1+='<li><a href=\"#\"  id=\"expander2\" class=\"expander btn-navbar\" style="display:none">expand all<\/a></li>';
+	}else{};
 	str1+=printScormButtons();
 	str1+=printContentExpert();
 	str1+=printFeedbackLink()
@@ -300,7 +319,7 @@ function getContent(params){
 							}//end if(responseText
 							$("#sidebar-left li a[id^='itm']").css("background-color","");
 							$("#sidebar-left li a#itm"+itm).css("background-color","orange");
-							//znThisPage = parseFloat(itm);//defined above
+							
 							znNextPage = parseFloat(itm)+1;
 							znPrevPage = parseFloat(itm)-1;	
 							wipePageNo();					  							 
@@ -323,7 +342,7 @@ function getContent(params){
 									wipeNavBar();
 									printNavBar();
 									quizStart(p4);
-									//changeLinks(setUpInteractions);//setUpInteractions is the callback function after changeLinks is finished
+								
 									scormDivToggle();
 									checkDataAttr();
 									writeFlash();
@@ -397,9 +416,9 @@ function getContent(params){
 	var objectiveID		=   itmtype+itmquiz;
 	var itmserver		= 	pi.svr;
 	var hidetryagainmsg =   (typeof pi.hidetryagainmsg!="undefined")?pi.hidetryagainmsg:null;
-	//console.info('ZSIS hidetryagainmsg for '+itmurl+ 'is'+ hidetryagainmsg);
+	 
 	
-			//if(testing){console.log("in getContent:BAA typeof itmquiz=="+typeof itmquiz+' '+itmquiz+ ' itmtype='+itmtype+', itmquiz= '+itmquiz)}
+			 
 			customFunction01();
 			//determine "is it a quiz" then is it a remote quiz or not and what to do with it. 
 				if(typeof itmquiz!="undefined"){ 		  	
@@ -460,7 +479,7 @@ function getContent(params){
 							scormDivToggle();
 							checkDataAttr();
 							writeFlash();
-							//writeKalturaPlayer();
+							 
 						});  //end anon function
 					}//end else if(itmtype=="I")
 					else if(itmtype=="C"){
@@ -484,7 +503,7 @@ function getContent(params){
 								scormDivToggle();
 								checkDataAttr();
 								writeFlash();
-								//writeKalturaPlayer()	
+								 
 							}//end if (sScore == nul
 							else showTryAgainMsg(params);
 					}//C or c6	
@@ -604,7 +623,7 @@ function showTryAgainMsg(params1){
  		 	}); 
  		 	$("#gtryagainbtn").click(function(){
  		 		var itmno = params1.qindex;  
- 		 		console.log('ps[params1.qindex].url='+ps[params1.qindex].url+', ps[params1.qindex].quiz='+ps[params1.qindex].quiz+', ps[params1.qindex].type='+ps[params1.qindex].type+', params1.qindex'+params1.qindex+'.');
+ 		 		//console.log('ps[params1.qindex].url='+ps[params1.qindex].url+', ps[params1.qindex].quiz='+ps[params1.qindex].quiz+', ps[params1.qindex].type='+ps[params1.qindex].type+', params1.qindex'+params1.qindex+'.');
  		 		var p2={	
 							sScore:0,
 							qurl:ps[itmno].url,
@@ -613,7 +632,7 @@ function showTryAgainMsg(params1){
 							qindex:itmno
 						}//end params
 				znThisPage = p2.qindex;
-				console.log('AHZ znThisPage1='+znThisPage);
+				//console.log('AHZ znThisPage1='+znThisPage);
 				znNextPage = parseFloat(p2.qindex)+1;
 				znPrevPage = parseFloat(p2.qindex)-1;	
 				wipePageNo();
@@ -834,7 +853,7 @@ function nextPage(pageIndex){
 		
 		return;  }
 	//note - we are going to hide the unneeded button in the top nav, but in case someone uses these functions elsewhere, the message is still needed.
-	if(testing){console.log('GFF  itm= newPage='+newPage)}
+	//if(testing){console.log('GFF  itm= newPage='+newPage)}
 	var params ={ itm:newPage  }
  	 ga('send', {
 		  hitType: 'event',
@@ -853,7 +872,7 @@ function nextPage(pageIndex){
 function prevPage(pageIndex){	
 	var newPage = (parseFloat(pageIndex) -1);
 	if(newPage<0){ alert('You are on the first page!');return;  }
-	if(testing){console.log('GDD pageIndex='+newPage+', znThisPage='+znThisPage)}
+	//if(testing){console.log('GDD pageIndex='+newPage+', znThisPage='+znThisPage)}
 	var params ={ itm:newPage  }
 	ga('send', {
 		  hitType: 'event',
@@ -872,7 +891,7 @@ function prevPage(pageIndex){
 function findPageArray(){                           
 	if(typeof PageArray!='undefined'){ 
 		thePageArray=PageArray;
-        if(testing){console.log('CCF thePageArray='+thePageArray+', thePageArray.length='+ thePageArray.length)}
+        //if(testing){console.log('CCF thePageArray='+thePageArray+', thePageArray.length='+ thePageArray.length)}
         return thePageArray;   	 
 	}
                                                                  
@@ -1002,7 +1021,7 @@ function printScormButtons(){
 
 function bookmarkAlert() {
 	//if this is the first page, and there is a stored bookmark show alert if module is long
- if(testing){console.log('XDEin bookmarkAlert') }
+ //if(testing){console.log('XDEin bookmarkAlert') }
 		if ((typeof thePageArray[0].askedbookmark=="undefined")&&(znPages>15)){ 	
 			if( ((znThisPage) == 1 ) && (SCOGetValue('cmi.core.lesson_location')!='')){
 				thePageArray[0].askedbookmark = true;
@@ -1133,7 +1152,7 @@ function quizStart(p3){
 								break;
 							default:
 								qmarkServer = 'https://mlearningquiz5.med.umich.edu';
-									console.log('ff');
+								console.log('ff');
 							}	//switch(window.location.hostname)
 					 } //else
 					
@@ -1141,19 +1160,13 @@ function quizStart(p3){
 					var n = currentloc.lastIndexOf("/");
 					currentloc = currentloc.slice(0,n);
 					currentloc = currentloc+"/perceptionQuizWrap.htm";
-					var underscore = sName.lastIndexOf("_"); //test for scorm engine style student name
-					var participantID;
-					if(underscore != -1){ //if underscore, remove everything to left and including underscore.
-						participantID= sName.slice(underscore+1);
-						if(testing){console.log("underscore="+underscore+" sName="+sName+" participantID= "+participantID);}
-						}
-					else{participantID=sName;}
+					 
 					
 					if(testing){
-						console.log('GPE currentloc= '+currentloc+ 'p3.qurl'+p3.qurl);
-						console.log("GPF documentlocation= "+  qmarkServer+"/perception5/session.php?session="+quiz+"&call=onepagewrap&name="+participantID+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex);
+						console.log('GPE currentloc= '+currentloc+ 'p3.qurl'+p3.qurl+' sName='+sName);
+						console.log("GPF documentlocation= "+  qmarkServer+"/perception5/session.php?session="+quiz+"&call=onepagewrap&name="+sName+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex);
 					}
-				 document.location = qmarkServer+"/perception5/session.php?session="+quiz+"&call=onepagewrap&name="+participantID+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex;		
+				 document.location = qmarkServer+"/perception5/session.php?session="+quiz+"&call=onepagewrap&name="+sName+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex;		
 			 		}
 			 		
 			 		else {
@@ -1162,8 +1175,8 @@ function quizStart(p3){
 			 			}
 			 break;
 			case "U":
-			 	if(testing){console.log('ggg quiztype='+quiztype+' quiz='+quiz+' qindex='+ qindex+', document.location.href='+document.location.href)}
-				if(testing){console.log('ggg qurl='+qurl);}
+			 	//if(testing){console.log('ggg quiztype='+quiztype+' quiz='+quiz+' qindex='+ qindex+', document.location.href='+document.location.href)}
+				//if(testing){console.log('ggg qurl='+qurl);}
 				//currentloc = document.location.href.slice(0,-1); //this slices off the /# from the end of the url
 				if( trackingmode=="scorm" && APIOK() ){
 					currentloc = document.location.href;
@@ -1176,30 +1189,19 @@ function quizStart(p3){
 					var currentloc1 = currentloc.slice(0,n);
 					currentloc = currentloc1+"/qualtricsQuizWrap.htm"
 					var redir = currentloc1+"/includes/qualtricsRedirector.htm";
-					encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
+					var encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
 					var pr = currentloc +'&itm='+qindex;//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
 					var encpr = encodeURIComponent(pr);
 					
-					var underscore = sName.lastIndexOf("_"); //test for scorm engine style student name
-					var participantID;
-					if(underscore != -1){ //if underscore, remove everything to left and including underscore.
-						participantID= sName.slice(underscore+1);
-						//if(testing){console.log("underscore="+underscore+" sName="+sName+" participantID= "+participantID);}
-						}
-					else{participantID=sName;}
-					
-					
-					
-					qualtricsURL += '&id=' + participantID + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;				
+					qualtricsURL += '&id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&redir='+ encredir;				
 					document.location = qualtricsURL;	
 			 		}
 			 		
 			 		else {
-			 			 //var aznthispage = parseInt(qindex,10)
 			 			alert('You need to launch the module from your Learning Plan in order to complete the quiz. Redirecting to the next page');
 			 			nextPage(qindex);
 			 			}
-			  break;
+			break;
 			case "I":
 			var p6 = { itm:qindex}			
 			 getContent(p6);
@@ -1261,20 +1263,20 @@ function quizStart(p3){
 			  case "H":
 			  
 			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
-		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
+		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
 	 
 			  break;
 			  
 			   case "H2":
 			  
 			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
-		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
+		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
 	 
 			  break;
 			    case "S":
 			  
 			  //document.location = 'storyline/test/storylineHTML5wrap.htm?p='+qurl+'&itm='+qindex+'&obj='+quiz;
-		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath;
+		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
 	 
 			  break;
 			default:
@@ -1295,7 +1297,7 @@ function getMyData(){
     bScore = cp.cpEIGetValue('m_VarHandle.cpQuizInfoPointsscored');
     aPercentScore = bMax!=0?bScore/bMax:1;//if max points are zero, then user got 100 no matter what.
 	bPercentScore = aPercentScore*100;
-    if(testing){console.log('bMax='+bMax+', bScore'+bScore+', bPercentScore= '+ bPercentScore );}
+   // if(testing){console.log('bMax='+bMax+', bScore'+bScore+', bPercentScore= '+ bPercentScore );}
     //use for printing out all values from the captivate quiz
     // $.each(cp.cpEIGetValue('m_VarHandle'), function(name, value){
     // 	if(testing){console.log(name + ": " + value);} //logs value of every single property of the current captivate object (long!)

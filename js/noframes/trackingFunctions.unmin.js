@@ -13,7 +13,7 @@
 	var gNoScoreQuizMsg = ((typeof recommendedMsg=='undefined')?'recommended':recommendedMsg);
 	var gRequiredMsg = ((typeof requiredMsg=='undefined')?'required':requiredMsg);
 	var interactionsQuizzes;
- 	var sName,sDetails;	
+ 	var sName,sDetails,underscore;	
 
 function initTracking(){ //this is called on onepage.js. never called by perceptionQuizWrap.
 	 if(trackingmode == "scorm"){
@@ -37,6 +37,12 @@ function initTracking(){ //this is called on onepage.js. never called by percept
 				lmsStatus = SCOGetValue("cmi.core.lesson_status");
 				lmsScore =  SCOGetValue("cmi.core.score.raw");
 				sName  =((SCOGetValue("cmi.core.student_id"))+'');
+				 
+				underscore = sName.lastIndexOf("_"); //test for scorm engine style student name eg "trainingportal.med.umich.edu_EMEISELM"
+				sName = (underscore != -1)?sName.slice(underscore+1):sName; //if underscore, remove everything to left and including underscore.
+				
+			
+				//console.log('sName='+sName + 'underscore= '+ sName.lastIndexOf("_"));
 				sDetails = ((SCOGetValue("cmi.core.student_name"))+'');	
 				if(testing){console.log('sName='+sName +'sDetails='+sDetails+', iMasteryScore = '+iMasteryScore)}
 				//there should only ever be one objective labeled "version".
