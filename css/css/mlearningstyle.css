@@ -965,8 +965,8 @@ a.tryagainLink, a:visited.tryagainLink{
      border:1px solid #DEA118;
      left:400px;
      top:0px;
-     width:240px important!;
-	 width:240px;
+     width:320px !important;
+	 
      padding:6px;
      text-align:center;
 	}  

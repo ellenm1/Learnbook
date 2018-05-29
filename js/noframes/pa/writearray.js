@@ -19,6 +19,7 @@ function createArray(){
 	var qforms = $('#container form'); //using jquery to get all forms within div "container"
 	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
+	var printExpanderBtn = moduletypeform.printExpanderBtn.checked?false:true;//either true or false. True means hide buttons even if there are more than 16 pages.
 	var quizexists = 0;
 	for (var f=0; f< qforms.length; f++){ 
 	          if (testing){ console.log( 'qforms.length='+qforms.length);}
@@ -168,6 +169,9 @@ function createArray(){
      
         o+="var moduletype=";
         o+=moduletype;
+        o+=";\n";
+        o+="var printExpanderBtn=";
+        o+=printExpanderBtn;
         o+=";\n";
         o+="var contentExpertName =('";
         o+= contentExpName.value;
