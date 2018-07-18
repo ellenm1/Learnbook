@@ -58,7 +58,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   <p>What type of quiz is it?</p>"+
                                        "   <select name='quiztype' id='quiztype"+$countForms+"' onchange='val=this.value;quiztypefn("+$countForms+",val);toggle(val+\"options"+$countForms+"\",\"togglequiz"+$countForms+"\")'>"+
                                        "   <option selected='selected'>Select type of quiz...</option>"+                                                               
-                                       "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
+                                      // "   <option value='H' id='captHsel'>Captivate 8 HTML5 or greater</option>"+
                                        "   <option value='H2' id='captH2sel'>Captivate 9 HTML5 or greater</option>"+
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
