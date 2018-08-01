@@ -77,7 +77,7 @@ function createArray(){
 		          quiz = qforms[f]['h2quizid'+f].value;
 		          var pathtoHTML5wrap = qforms[f].pathtoC9HTML5wrap.value;
 		          var rmsg= qforms[f].h2rmsg.value?qforms[f].h2rmsg.value:"";
-				  url=pathtoHTML5wrap+"/cap9HTML5wrap.htm";			 
+				  url=pathtoHTML5wrap+"/index.html";			 
 				  break;
 				  
 				  case("S"):
@@ -126,10 +126,10 @@ function createArray(){
 			                break;
 			        case("C6"):
 			                o+=", type:'C', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
-			                break;*/
+			                break;
 			        case("H"):
 			                o+=", type:'H', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
-			                break;
+			                break;*/
 			        case("H2"):
 			                o+=", type:'H2', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
 			                break;
