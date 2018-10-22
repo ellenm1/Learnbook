@@ -343,7 +343,7 @@ a img { border:none;}
 
 a:link {color:#2450C1;text-decoration:underline;}
 a:hover {color:#093189;}
-a:visited { color:##646464; }
+a:visited { color:#646464; }
 
 #hdrLogo{
 	display:inline-block;
@@ -510,7 +510,7 @@ padding-top:2px;
    	visibility:hidden;
 	}
 
-
+.navContact a:visited {color: #C7DAEB;} 
 
 #sidebar-left a:link#nextLesson, #sidebar-left  a#nextLesson, #sidebar-left a:link#nextLesson, #sidebar-left a#nextLesson, #sidebar-left a:link#suspendLesson  {
 	background-color:#5CAA3C;
@@ -1073,7 +1073,7 @@ a.tryagainLink, a:visited.tryagainLink{
 }
 
 .nav-tabs.nav-stacked > li:first-child > a{
-margin-right:2px;
+/*margin-right:2px;*/
 }
 
 .nav-stacked >li+li{
