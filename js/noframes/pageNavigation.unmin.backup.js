@@ -787,7 +787,7 @@ function printNavToggle(){
 	 return nt;
 }
 //feedback link in the left nav and on the bottom of page01.
-var feedbackLink = 'http://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL='+encodeURI(window.location.href)+'&TITLE='+encodeURI(ms['headerTitle'])+'&EMAIL='+encodeURI(ms["contentAuthEmail"]);
+var feedbackLink = 'https://umichumhs.qualtrics.com/SE?SID=SV_1KUWIOAlDJwhgGw&SVID=Prod&URL='+encodeURI(window.location.href)+'&TITLE='+encodeURI(ms['headerTitle'])+'&EMAIL='+encodeURI(ms["contentAuthEmail"]);
 
 function printFeedbackLink(){ 
 	var fl=("<li><a href='"+feedbackLink+"' target='_blank' class='feedbackBtn'>Submit Comments or Questions</a></li>");
@@ -795,6 +795,7 @@ function printFeedbackLink(){
 }//end printFeedbackLink 
 
 function printEndmatterFeedbackLink(){
+	$("#copyrightStatement").html('Copyright &#169;'+ (new Date().getFullYear()) +' Regents of the University of Michigan<br />All rights reserved.');
 	$("#feedbackinfo").length>0 ? $("#feedbackinfo").html("<a href= '"+feedbackLink+"' target='_blank'>Submit Comments or Questions</a>"):"";
 }
 
@@ -821,7 +822,7 @@ function printContentExpert(){
 
 function printContactInfo(){
    // document.getElementById('sidebar-left').innerHTML+=("<div class=\"navContact\" title=\"mlearning@umich.edu 734-615-5146\"><b>Contact Us</b><br>mlearninginfo@umich.edu<br>734-615-5146<br>Fax: 734-615-6021<br>North Campus Research Complex<br>2800 Plymouth Road, Building 200<br>Ann Arbor, MI 48109-2800</div>");
-	var ci=("<li><div class=\"navContact\" title=\"mlearning@umich.edu 734-615-5146\"><b>Contact Us</b><br>mlearninginfo@umich.edu<br>734-615-5146<br>Fax: 734-615-6021<br>North Campus Research Complex<br>2800 Plymouth Road, Building 200<br>Ann Arbor, MI 48109-2800</div></li>");
+	var ci=("<li><div class=\"navContact\" title=\"Contact Us 734-936-8000\"><b>Contact us</b><br/><b>Phone:</b> 734-936-8000<br>Get Help: <a href=\"https://michmed.service-now.com/sp\" target=\"_blank\">Service Now</a></div></li>");
 	return ci;
 }
 
