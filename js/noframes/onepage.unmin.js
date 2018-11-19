@@ -4,9 +4,9 @@ function IE(v) {//use like this: if(IE()){}
 }
  
 $(document).ready(function() {
-	var pageHasBeenSet;
+	var gPageHasBeenSet;
 	//this is already handled in pagearray.js CHECK AND FIX
-	zVrsn = 	qsParm['vrsn'] ? qsParm['vrsn'] : null;//is there a vrsn param set in the query string? zVrsn defined in trackingFunctions.js
+	qsVrsn = 	qsParm['vrsn'] ? qsParm['vrsn'] : null;//is there a vrsn param set in the query string? zVrsn defined in trackingFunctions.js
 	$('div.nav-no-collapse.header-nav .breadcrumb').empty();
 	initTracking(); //doesn't require document.ready
 	$('body').append('<div id="dialog-modal" style="display:none; z-index: 1000;"></div>');
@@ -27,7 +27,7 @@ $(document).ready(function() {
  	 	
 	/*module version stuff - this opens a "loading" dialog if there is a version param set either in lms or query string*/
 //if(testing){console.log('ERTY znThisPage='+znThisPage+' window.znThisPage='+window.znThisPage)}
-	checkForStoredVersion(lmsVrsn, znThisPage, dl, zVrsn);
+	checkForStoredVersion(lmsVrsn, znThisPage, dl, qsVrsn);
 	
 	
 	//assign getcontent to onclick of all the nav links
@@ -125,8 +125,8 @@ function checkSubmit(e){
 	
 }
 
-
-function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){	
+//pass any version stored in the LMS (lmsVrsn), znThisPage, any deepLink (dl) and any cookie-stored version. 
+function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, qsVrsn){	
 
 		//this runs once when index loads and when coming back from questionmark quiz/qualtrics quiz. not every time content loads
 		// var znThisPage = (typeof znThisPage!="undefined")?znThisPage:0;
@@ -159,7 +159,12 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){
        	 			var selecteditems = suspendDataFromLMS.substring(start+9,end);
        	 			var selecteditemsArray  =( selecteditems.split(','));
        	 			var newpagelist = getNewPageList(selecteditemsArray);
-					startUpCustomVersion(newpagelist, selecteditems);	//and start that version up.  
+       	 			if(dedup){
+					startUpCustomVersion(newpagelist, selecteditems,0,true,true);	//and start that version up. 
+					}
+					else {
+						startUpCustomVersion(newpagelist, selecteditems);
+					} 
        	 		}
        	 		 else{ alert('custom version selections were not successfully stored in suspendDataFromLMS, so will have to be re-selected') }	
        	 	
@@ -173,7 +178,7 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){
     	  	writePage(indexOfThisPage,dl);
     	}//if(lmsVrsn)
     	
-    	else if((zVrsn!=null)&&!isNaN(zVrsn)) { //check to see if a version was requested in the query string
+    	else if((qsVrsn!=null)&&!isNaN(qsVrsn)) { //check to see if a version was requested in the query string
     		$( "#dialog-modal" ).dialog({
     			close:true,
             	height: 140,
@@ -181,7 +186,7 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, zVrsn){
            		modal: true
        	 	}); 
        	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");      	 	     	 	
-       	 	setVrsn(zVrsn,0);//set the version of the pageArray to the version requested in the query string 
+       	 	setVrsn(qsVrsn,0);//set the version of the pageArray to the version requested in the query string 
     		closeModalDialog("dialog-captivate");
     		writePage(indexOfThisPage,dl);	
     	}//else
@@ -226,8 +231,21 @@ function getNewPageList(selitms){ //creates a user-selected version from a set o
   		return thelist;
 	}//end getNewPageList
 	
-	 
-function startUpCustomVersion(znewpagelist,selecteditems, landingPage) {
+	 //znewpagelist is the full listing of the new pageArray (figured out by the calling function
+	 //selected items is the full listing of the Name of each selected mini pagearray that the user selected: "pb", "tn", etc.
+	 //landingpage is the itm number of the new pageArray to start up with. this could be problematic to figure out when using deduplication  
+	 //dedup: remove duplicates or no?. //may remove this if it should always be done
+	 //fixChapters: rewrite chapters to clean up mess from deduping
+function startUpCustomVersion(znewpagelist,selecteditems, landingPage, dedup, fixChapters) {
+		 
+			 console.log('AAA newpagelist before anything changes = '+znewpagelist) 
+			//if requested remove duplicate pages
+			znewpagelist=dedup?removeDuplicatePages( znewpagelist ):znewpagelist;
+			 console.log('BBB newpagelist after remove duplicates = '+znewpagelist) 
+ 	       //if requested rewrite the chapters and levels 
+ 		   znewpagelist = fixChapters?rewriteChapters(znewpagelist):znewpagelist;
+			 console.log('CCC newpagelist after fix chapters   = '+znewpagelist) 
+ 			
  			ns.localStorage.set('pageArray',znewpagelist);	 //store new page array in local storage
 			ps=ns.localStorage.get('pageArray');
 			SCOSetObjectiveData("version","score.raw",'99');
@@ -262,6 +280,17 @@ function startUpCustomVersion(znewpagelist,selecteditems, landingPage) {
 			writePage(0,null);	
 
 }//end startUpCustomVersion
+
+
+function rewriteChapters(obj){
+	var chaptercounter = 0;
+	$.each( obj, function( key, value ) {
+       console.log( key + ": url= " + value["url"] + "chapter= "+ value["chapter"]);
+      value["chapter"]=chaptercounter;
+    chaptercounter++;
+  });
+  return obj;
+}
 	
 	 
 function setupQuizzes(){
@@ -308,57 +337,68 @@ function setupQuizzes(){
       } //end for (var...
     if(interactionsQuizzes){loadInteractions();}
     
-   ms["quizSetupDone"] = true
+    ms.quizSetupDone = true
    	ns.localStorage.set("moduleVars",ms);
  } //end setupQuizzes function
  
  
-function setVrsn(n,p){
-//n is desired version number, it should match the pageArray number desired.
+function setVrsn(desiredVersion,p){
+//desiredVersion is desired version number, it should match the pageArray number desired.
 //p is index of desired landing page of new version
-	if(testing){console.log('ETE n='+n+', p='+p)}	
+	//if(testing){console.log('ETE n='+desiredVersion+', p='+p)}	
 //need to check value of lmsVrsn again in case it changed since module was initialized.
+//does it exist, and is it a number? if so, then set zLmsVrsn to that number. 
 	zLmsVrsn = 	(lmsVrsn && !isNaN(lmsVrsn) ) ? lmsVrsn : null;
 	//zCookieVrsn = ReadCookie('cVrsn');
 	var lp = p?p:0;//landing page error catch
 	//if n is a valid number, use it to set the version
-	if(!isNaN(n) ){
-		zVrsn=n; 
-		if(ms.version!=zVrsn){ 
-			//if the version we are setting now with this function is different than what is already in storage, change it.
+	 //refresh ms here 5-16-18
+	//ms = ns.localStorage.get('moduleVars');
+	 
+	if(!isNaN(desiredVersion) ){ //if a valid version number was passed in to this function
+		//zVrsn=n; //set zVrsn
+		
+			//if the version we are requesting now with this function is different than what is already in storage, change it.
 			 //need to figure out how to keep track of quizzes across versions maybe? If a person takes a quiz in one version and then another in another, it will be tracked in the lms, but not in local storage yet.
-			ms.version = zVrsn;
-			var versionSelectedPageArray=window['PageArray'+zVrsn];
- 			ns.localStorage.set('pageArray',versionSelectedPageArray);
+			ms.version = desiredVersion; 
+			var chosenPageArray; //active pageArray chosen by some process other than the default initial load of the PageArray.
+			if(desiredVersion==1||desiredVersion==0){  chosenPageArray=window['PageArray']; }
+			else {chosenPageArray=window['PageArray'+desiredVersion];}
+ 			ns.localStorage.set('pageArray',chosenPageArray);
  			ps = ns.localStorage.get('pageArray');	
  			ns.localStorage.set('moduleVars', ms);
 			//if n is set this means we are explicitly requesting a version change via a click or other interaction.  
-			SetCookie('cVrsn',n,1);
+			SetCookie('cVrsn',desiredVersion,1);
 			zCookieVrsn = ReadCookie('cVrsn');
-			SCOSetObjectiveData("version","score.raw",zVrsn);
-			lmsVrsn = n, zLmsVrsn = n;			
-			setTimeout('detArrayVrsn('+n+','+lp+')',1000);
-			}
+			SCOSetObjectiveData("version","score.raw",desiredVersion);
+			lmsVrsn = desiredVersion, zLmsVrsn = desiredVersion;			
+			setTimeout('setArrayVrsn('+desiredVersion+','+lp+')',1000);
+			
 	}
-	else{setVrsn(0,lp);}//if no valid 'n' argument was provided in the function call start over with version "0"
-	if(testing){console.log('EEE zVrsn='+zVrsn+' zLmsVrsn='+zLmsVrsn+ ' zCookieVrsn='+zCookieVrsn)}		 
+	else{
+	console.log("EFGG ms.version "+ms.version +"!=desiredVersion "+ desiredVersion);
+	setVrsn(0,lp);
+	}//if no valid 'n' argument was provided in the function call start over with version "0"
+	// if(testing){console.log('EEE zVrsn='+desiredVersion+' zLmsVrsn='+zLmsVrsn+ ' zCookieVrsn='+zCookieVrsn)}		 
  	
 }//end function setVrsn() 
 
-function detArrayVrsn(vrsn,landingpage){ 
-	//landing page is the page to open once version has changed.
+function setArrayVrsn(vrsn,landingpage){   
+    //vrsn is the desired version 
+	//landingpage is the page to open once version has changed.
 	//it is the number of the item in the array, eg 0, 1, 2, 3, etc.
-	//if a version number IS explicitly set. Set pagearray to that version, and set the cookie and save new pageArray to local storage.
+	//if a version number IS explicitly set. Set pagearray variable to that version, and set the cookie and save new pageArray to local storage.
 
 	if(typeof vrsn!="undefined" ){  			
  		
  		//if version  is 1 or 0 then default page array.
  		if(vrsn==1||vrsn==0){           
- 			var versionSelectedPageArray=window['PageArray']; 
- 			ns.localStorage.set('pageArray',versionSelectedPageArray);	
- 			ps = ns.localStorage.get('pageArray');
- 			ms.version = vrsn;
- 			ns.localStorage.set('version', vrsn);
+ 			ns.localStorage.set('pageArray',window['PageArray']);	//set local storage PageArray to the default PageArray that was first loaded.
+ 			ps = ns.localStorage.get("pageArray"); //refresh ps with the new page array
+ 			
+ 			ms = ns.localStorage.get('moduleVars');//refresh just in case this changed recently
+ 			ms.version = vrsn; //add in the new version to the clean moduleVars
+ 			ns.localStorage.set('moduleVars', ms); //save it back to localStorage
  			justOpened=false;
  			vrsnDone=true;	
  			setupQuizzes();	 	 	
@@ -366,11 +406,12 @@ function detArrayVrsn(vrsn,landingpage){
   		
   		//else version NOT 1 or 0: it is NOT same as original pagearray 			
  		else{                    
- 			var versionSelectedPageArray=window['PageArray'+vrsn];
- 			ns.localStorage.set('pageArray',versionSelectedPageArray);
- 			ps = ns.localStorage.get('pageArray');	
- 			ms.version = vrsn;
- 			ns.localStorage.set('version', vrsn);
+ 			var chosenPageArray=window['PageArray'+vrsn];
+ 			ns.localStorage.set('pageArray',chosenPageArray);
+ 			ps = ns.localStorage.get('pageArray');	//refresh ps with the new page array
+ 			ms = ns.localStorage.get('moduleVars');//refresh ms just in case this changed recently
+ 			ms.version = vrsn; //add in the new version to the clean moduleVars
+ 			ns.localStorage.set('moduleVars', ms); //save it back to localStorage
  			justOpened=false; 
  			vrsnDone=true; 
  			setupQuizzes();			 
@@ -383,7 +424,7 @@ else {lp = 0;}
 	var params = { itm:lp }	
 	getContent(params);  
 	
-}//end function detArrayVrsn
+}//end function setArrayVrsn
  	
 function redirectToFirstPageOfNewVersion(){
  	if ((pageHasBeenSet!=1)&&(document.location.href!=PageArray[0].url)){  
@@ -393,7 +434,46 @@ function redirectToFirstPageOfNewVersion(){
  			}//end if (document.location.href!=PageArray[0].url)
  	
  	} 	
- 	
+ 
+ // https://ilikekillnerds.com/2016/05/removing-duplicate-objects-array-property-name-javascript/
+function removeDuplicatePages(myArr) { 
+//return myArr.filter((obj, pos, arr) => { return arr.map(mapObj => mapObj["url"]).indexOf(obj["url"]) === pos; });  //es6 version not compatible with IE 11
+console.log('myArr before dedup='+ myArr);
+//https://stackoverflow.com/a/16747855
+//this works great but ES6 is Not compatible with IE11.
+/* var tmp = [];
+    for(var i = 0; i < myArr.length; i++){
+    console.log('tmp='+tmp);
+        if(tmp.indexOf(myArr[i]) == -1){
+        	tmp.push(myArr[i]);
+        }
+    }
+    return tmp; */
+/*https://gist.github.com/telekosmos/3b62a31a5c43f40849bb    
+    var uniqueArray = function(myArr) {
+  return myArr.filter(function(elem, pos,arr) {
+    return arr.indexOf(elem) == pos;
+  });
+};*/
+/*https://gomakethings.com/removing-duplicates-from-an-array-with-vanilla-javascript/ */
+//this will not work for arrays of objects
+/*var arrayUnique = function (myArr) {
+	return myArr.filter(function(item, index){
+		return myArr.indexOf(item) >= index;
+	});
+};*/
+var tmp = [];
+$.each(myArr, function (i, e) {
+    var matchingItems = $.grep(tmp, function (item) {
+       return item.buttonTitle === e.buttonTitle && item.url === e.url;
+    });
+    if (matchingItems.length === 0){
+        tmp.push(e);
+    }
+});
+ return tmp;
+}
+	
 //********* end version setting functions *****//
 //add search result display functions from headcontent CHANGE
 //if localstorage has been cleared, nav buttons should work, using either retrieved data from lms or original pagearray as fallback.

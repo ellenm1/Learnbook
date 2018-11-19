@@ -6,7 +6,11 @@
 	var justOpened = true;	
 	var quizSetupDone = false;
 	var vrsnDone = false;
-	var iMasteryScore,lmsScore,lmsStatus,lmsVrsn,zVrsn, cookieVrsn,zCookieVrsn,isScoredModule,moduleScore;	
+	var iMasteryScore,lmsScore,lmsStatus,lmsVrsn,qsVrsn,cookieVrsn,zCookieVrsn,isScoredModule,moduleScore;	
+	//lmsVrsn is the version number that is stored in the lms
+	//qsVrsn is a version number that has been passed in the query string (?vrsn=2&...)
+	//cookieVrsn
+	//zCookieVrsn
 	var quizCount=0;//how many quizzes total?
 	var quiz, qScore, qMax, qType, btnImg, countscore;  
 	var unfinQz='';
@@ -48,7 +52,7 @@ function initTracking(){ //this is called on onepage.js. never called by percept
 				//there should only ever be one objective labeled "version".
 				//this is where we are storing the version number in the LMS, when there is one.
 				lmsVrsn =  (typeof SCOGetObjectiveData("version", "score.raw")!= "undefined"  &&  !isNaN( SCOGetObjectiveData("version", "score.raw") )  ) ?parseInt(SCOGetObjectiveData( "version", "score.raw"),10):null;
-				if(testing){console.log('EEK lmsVrsn = '+lmsVrsn+' typeof lmsVrsn ='+ typeof lmsVrsn +', lmsStatus= '+lmsStatus);}
+				//if(testing){console.log('EEK lmsVrsn = '+lmsVrsn+' typeof lmsVrsn ='+ typeof lmsVrsn +', lmsStatus= '+lmsStatus);}
 				
 				SCOSetStatus();//this should put a 0 score into LMS if it is scored module
 				//bookmarkAlert();
