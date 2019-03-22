@@ -3,30 +3,19 @@
 //http://www.sitepoint.com/forums/showthread.php?t=575320
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
 var testing = true;
-$(function(){
-   $("#ismodule").click(function(){
-        $("#modulelaunchlink").show();
-        $("#quizlaunchlink").hide(); 
-	}); 
-	$("#isquiz").click(function(){
-     	$("#quizlaunchlink").show();
-      	$("#modulelaunchlink").hide();
-	}); 
 
-}); 
 function createArray(){
-   var courseid, coursetitle, lessontype, masteryscore;
+   var courseid, coursetitle, lessontype, masteryscore, isquiz;
 courseid = $('#courseid').val();
 coursetitle=$('#coursetitle').val();
 coursetitle=coursetitle.replace("'","\\'");//escape apostrophes
 lessontype=$('#lessontype').val();
 lessontype=lessontype.replace("'","\\'");//escape apostrophes
 masteryscore=$('#masteryscore').val();
+isquiz = $('#yesquiz').attr("checked","checked")?true:false;
 launchurl=$('#launchurl').val();
-sessionid=$('#sessionid').val();
-//alert('sessionid='+sessionid);
-if(sessionid !=""){
-	launchurl = "https://mlearningcontent2.med.umich.edu/content/ct/quizwrap2013/index.htm?q%3D"+sessionid+"%26svr%3Dpr%26cs%3D1";
+if(isquiz){
+	launchurl="https://mlearningcontent2.med.umich.edu/content/ct/quizwrap2013/index.htm?q%3D"+launchurl+"%26svrq%3Dpr%26cs%3D1";
 }
 var arr = document.getElementById('arr');
 if(testing){console.log("courseid= "+courseid+", coursetitle= "+coursetitle)}

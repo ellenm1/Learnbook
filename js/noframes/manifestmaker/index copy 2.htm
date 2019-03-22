@@ -9,37 +9,23 @@
      
 </head>
 <body>
-
-     <div id="container">
  <form name="courseform">
  <fieldset>
   <p><label for="courseid">Course ID (e.g. MLRN-10002):</label><input type="text" name="courseid" id="courseid" value=""  size="40" maxlength="60"></p>
   	<p><label for="coursetitle">Course Title  (e.g. Principles of Adult Learning)</label>&nbsp; <input type="text" name="coursetitle" id="coursetitle" value=""  size="40" maxlength="300"></p>
-  	<p><label for="lessontype">Lesson Format Description (e.g. Learning Module, Learning Module and Quiz, Video, etc.)</label>&nbsp; <input type="text" name="lessontype" id="lessontype" value="Learning Module and Quiz"  size="40" maxlength="60"></p>
+  	<p><label for="lessontype">Lesson type  (e.g. Learning Module, Learning Module and Quiz, Video, etc.)</label>&nbsp; <input type="text" name="lessontype" id="lessontype" value="Learning Module and Quiz"  size="40" maxlength="60"></p>
   	<p><label for="masteryscore">Mastery Score (e.g. 80)</label>&nbsp; <input type="text" name="masteryscore" id="masteryscore" value="80"  size="10" maxlength="3">%</p>
-  	<div id="activitytype" style="overflow: auto;">
-        <label for="whattype">Is this a Learning Module or a Standalone Quiz?<br/></label>
-		<div style="float:left">
-		<p><input id="ismodule" type="radio" name="type" value="module"> Learning Module</p>
-		<p><input id="isquiz" type="radio" name="type" value="quiz"> Standalone Quiz</p>
-		</div>
-  	</div>
-  	<div id="modulelaunchlink">
-  	<p><label for="launchurl">Launch URL (Absolute URL for most, but just "index.htm" for Saba-hosted Michart courses):</label>&nbsp; <input type="text" name="launchurl" id="launchurl" placeholder="https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm"  size="80" maxlength="200"></p> 
-   </div>
-   	<div id="quizlaunchlink" style="display:none;">
-     <p><label for="sessionid">Quiz ID (Assessment Identifier, eg. 102333981 :</label>&nbsp; <input type="number" name="sessionid" id="sessionid"  size="14" maxlength="200"></p> 
-  </div
+  	<p><label for="lauchurl">Launch URL (Absolute URL for most, but just "index.htm" for Saba-hosted Michart courses):</label>&nbsp; <input type="text" name="launchurl" id="launchurl" value="https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm"  size="80" maxlength="200"></p> 
   </fieldset>
   </form><!--end moduletypeform-->
  
-<div id="buttons" class="ab" style="width:100%">
-         <input name="lastitm" type="hidden" value="0" />
-         <input name="submit" type="button" value="Submit" onclick="createArray();" style="float:right"/>
-    </div><!--buttons--></div>
+     <div id="container"></div>
      
   
-    
+    <div id="buttons" class="ab" style="width:100%">
+         <input name="lastitm" type="hidden" value="0" />
+         <input name="submit" type="submit" value="submit" onclick="createArray();"/>
+    </div><!--buttons-->
   
     <div id="output">
     <div class="label">Manifest will show up here. Copy and paste into a new text file called "imsmanifest.xml"</div>
