@@ -171,7 +171,9 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, qsVrsn){
        	 	}
 //there WAS a specific version stored in the LMS, and it is not a custom version (99) so no need to check anything else, just restore it:       	 	
        	 	else{  	     	 	
-       	 		setVrsn(lmsVrsn,0);//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
+       	 		//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
+       	 		//this fixed december 4 issue where current page was always set to 0 after coming back from captivate html5 quiz.
+       	 		setVrsn(lmsVrsn,indexOfThisPage);//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
        	 	}
     	  	
     	  	closeModalDialog("#dialog-modal");	

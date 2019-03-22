@@ -53,7 +53,7 @@ function getMyData(params){
 	var scorePoints = (typeof params.scorePoints!="undefined")? params.scorePoints:null;
 	var scorePercent = (typeof params.scorePercent!="undefined")? params.scorePercent:null;
 	var passPercent = (typeof params.passPercent!="undefined")? params.passPercent:null;
-	var passPercent = (typeof params.passPercent!="undefined")? params.passPercent:null;
+	//var passPercent = (typeof params.passPercent!="undefined")? params.passPercent:null;
 	var bailout = (typeof params.bailout!="undefined")? params.bailout:false;
 	var setLandingPage = (typeof params.landingIndex!="undefined")? params.landingIndex:null;
 	if(testing){console.log('qsParm["itm"]'+ qsParm['itm']);}
