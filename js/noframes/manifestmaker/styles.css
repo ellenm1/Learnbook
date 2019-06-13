@@ -45,3 +45,9 @@ label {
  #container {
   width:60%;
  }
+ 
+ #otherlmsinstructions {
+ display:block;
+ border: 1px solid #b39c3f;
+ background-color:#f6e8ac;
+ }

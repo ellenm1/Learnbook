@@ -3,6 +3,8 @@
 //http://www.sitepoint.com/forums/showthread.php?t=575320
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
 var testing = true;
+var ismlearninglms="mlearning";
+
 $(function(){
    $("#ismodule").click(function(){
         $("#modulelaunchlink").show();
@@ -12,20 +14,34 @@ $(function(){
      	$("#quizlaunchlink").show();
       	$("#modulelaunchlink").hide();
 	}); 
+	
+	$("#ismlearning").click(function(){
+     	ismlearninglms=mlearning;
+     	$("#launchurl").attr("placeholder","https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm");
+     	$("#otherlmsinstructions").hide();
+	}); 
+	$("#isanotherlms").click(function(){
+     	ismlearninglms="other"; 
+     	$("#otherlmsinstructions").show();
+     	$("#launchurl").attr("placeholder","index.htm");
+     	$("#launchurl").val = "index.htm";
+	});
+    
 
 }); 
 function createArray(){
-   var courseid, coursetitle, lessontype, masteryscore;
-courseid = $('#courseid').val();
-coursetitle=$('#coursetitle').val();
-coursetitle=coursetitle.replace("'","\\'");//escape apostrophes
-lessontype=$('#lessontype').val();
-lessontype=lessontype.replace("'","\\'");//escape apostrophes
-masteryscore=$('#masteryscore').val();
-launchurl=$('#launchurl').val();
-sessionid=$('#sessionid').val();
-//alert('sessionid='+sessionid);
+    var courseid, coursetitle, lessontype, masteryscore;
+	courseid = $('#courseid').val();
+	coursetitle=$('#coursetitle').val();
+	coursetitle=coursetitle.replace("'","\\'");//escape apostrophes
+	lessontype=$('#lessontype').val();
+	lessontype=lessontype.replace("'","\\'");//escape apostrophes
+	masteryscore=$('#masteryscore').val();
+	launchurl=$('#launchurl').val();
+	sessionid=$('#sessionid').val();
+	//alert('sessionid='+sessionid);
 if(sessionid !=""){
+    
 	launchurl = "https://mlearningcontent2.med.umich.edu/content/ct/quizwrap2013/index.htm?q%3D"+sessionid+"%26svr%3Dpr%26cs%3D1";
 }
 var arr = document.getElementById('arr');
