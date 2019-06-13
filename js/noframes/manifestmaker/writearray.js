@@ -16,9 +16,10 @@ $(function(){
 	}); 
 	
 	$("#ismlearning").click(function(){
-     	ismlearninglms=mlearning;
-     	$("#launchurl").attr("placeholder","https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm");
+     	ismlearninglms="mlearning";
      	$("#otherlmsinstructions").hide();
+     	$("#launchurl").attr("placeholder","https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm");
+     	
 	}); 
 	$("#isanotherlms").click(function(){
      	ismlearninglms="other"; 
