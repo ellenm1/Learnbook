@@ -21,3 +21,7 @@ Creator/Quiz name in Qualtrics (if applicable):
 Version of Captivate (if applicable):
 
 Change History: 
+
+Course Code(s) where content is repurposed (if applicable):
+ 
+Storyline/Captivate File contains a slide explaining advanced interactions (if applicable): Y/N
