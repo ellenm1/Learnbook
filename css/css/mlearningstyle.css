@@ -1285,10 +1285,11 @@ ul.breadcrumb{
  
 .tabsetContainer .tab .nav-tabs>li>a{
     font-size: 13px;
-    font-weight:100;
+    font-weight:400;
     text-decoration: none;
     color: #fff;
-    background: #848282;
+    /* background: #848282; */
+    background: #575757;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     border: 1px solid #fff;
