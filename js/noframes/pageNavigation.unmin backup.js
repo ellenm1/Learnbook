@@ -1118,20 +1118,16 @@ function quizStart(p3){
 					if (qserver!=null){ 
 						switch (qserver) {
 						case 'pr': 
-						qmarkServer = 'https://mlearningquiz5.med.umich.edu';
+						qmarkServer = 'https://mlearningquiz6.med.umich.edu/reposprod6/session';
 						console.log('case pr');
 						break;
 						
-						case 'au': //author
-						qmarkServer = 'http://uhqmkappsts1.umhs.med.umich.edu';
-						break;
-						 
-						case 'dv': //dev
-						qmarkServer = 'http://uhqmkappsdv1.umhs.med.umich.edu';
+						case 'ts': //author
+						qmarkServer = 'https://mlearningquiz6test.med.umich.edu/testrepos6b/session';
 						break;
 						 
 						default:
-							qmarkServer = 'https://mlearningquiz5.med.umich.edu';
+							qmarkServer = 'https://mlearningquiz6.med.umich.edu/reposprod6/session';
 						}//end switch(qserver)					
 					}//if (qserver!=null)
 					
@@ -1140,19 +1136,19 @@ function quizStart(p3){
 						
 						switch(window.location.hostname) {
 								case 'mlearningcontent2.med.umich.edu':
-								qmarkServer = 'https://mlearningquiz5.med.umich.edu';
+								qmarkServer = 'https://mlearningquiz6.med.umich.edu/reposprod6/session';
 								console.log('aa');
 								break;
 								case 'mlearningqa.med.umich.edu':
-								qmarkServer = 'https://mlearningquiz5.med.umich.edu';
+								qmarkServer = 'https://mlearningquiz6.med.umich.edu/reposprod6/session';
 								console.log('bb');
 								break;
 								case 'trainingportal.med.umich.edu':
-								qmarkServer = 'https://mlearningquiz5.med.umich.edu';
+								qmarkServer = 'https://mlearningquiz6.med.umich.edu/reposprod6/session';
 								console.log('cc');
 								break;
 							default:
-								qmarkServer = 'https://mlearningquiz5.med.umich.edu';
+								qmarkServer = 'https://mlearningquiz6.med.umich.edu/reposprod6/session';
 								console.log('ff');
 							}	//switch(window.location.hostname)
 					 } //else
@@ -1165,9 +1161,9 @@ function quizStart(p3){
 					
 					if(testing){
 						console.log('GPE currentloc= '+currentloc+ 'p3.qurl'+p3.qurl+' sName='+sName);
-						console.log("GPF documentlocation= "+  qmarkServer+"/perception5/session.php?session="+quiz+"&call=onepagewrap&name="+sName+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex);
+						console.log("GPF documentlocation= "+ qmarkServer+"?session="+quiz+"&call=onepagewrap&name="+sName+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex);
 					}
-				 document.location = qmarkServer+"/perception5/session.php?session="+quiz+"&call=onepagewrap&name="+sName+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex;		
+				 document.location = qmarkServer+"?session="+quiz+"&call=onepagewrap&name="+sName+"&details="+sDetails+"&home="+currentloc+"&itm="+qindex;		
 			 		}
 			 		
 			 		else {
