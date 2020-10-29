@@ -614,6 +614,9 @@ a:hover#suspendLesson, a:hover#endLesson {
 	color:#FFF;
 }
 
+#sidebar-left .expertlist {
+	padding-left:0px;
+}						   
 #otherLinks {
 }
 
