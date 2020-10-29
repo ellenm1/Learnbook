@@ -63,7 +63,8 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
                                        "   <option value='Q'  id='qmarksel'>Questionmark</option>"+   
-                                       "   <option value='S' id='storyHsel'>Storyline HTML5</option>"+                                      
+                                      // "   <option value='S' id='storyHsel'>Storyline HTML5 before 2019</option>"+ 
+                                       "   <option value='S2' id='storyHsel'>Storyline HTML5 2019 or greater</option>"+                                         
                                        "   </select>"+
                                        
                                        "   <div id='countscoreblock'>"+
@@ -138,13 +139,21 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='h2quizid"+$countForms+"' id='h2quizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endH2options-->"+
                                        
+                                      /*
                                        "   <div id='Soptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Relative path to storylineHTML5wrap.htm?(<i>storyline/myStorylineQuiz</i>)<br/>"+
                                        "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoSLHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/storylineHTML5wrap.htm</div>"+
                                        "   Custom message to show on status page (optional):&nbsp; <input name='srmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='squizid"+$countForms+"' id='squizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endSoptions-->"+
-                                       
+                                        */ 
+                                       // storyline after 2019 needs to use story.html that has been altered by my custom publishing template
+                                       "   <div id='S2options"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+                                       "   Relative path to story.html?(<i>storyline/myStorylineQuiz</i>)<br/>"+
+                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoS2LHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/story.html</div>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='s2rmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='s2quizid"+$countForms+"' id='s2quizid"+$countForms+"' readonly='readonly' value=' ' />"+
+                                       "   </div><!--endS2options-->"+
                                        
                                        "   <div id='Uoptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Qualtrics survey ID:&nbsp;&nbsp; <input name='surveyid' type='text' value='' size='30' /><br/>"+                                      
@@ -322,7 +331,7 @@ function quiztypefn(formnumber,type){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
                             
-				             if (type=="S"){
+				             if ((type=="S")||(type=="S2")){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
 				            if (type=="I"){ //if type I is selected add these things to the entry form'

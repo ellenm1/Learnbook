@@ -1270,7 +1270,7 @@ function quizStart(p3){
 		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
 	 
 			  break;
-			    case "S":
+			    case "S": 
 			  
 			  //document.location = 'storyline/test/storylineHTML5wrap.htm?p='+qurl+'&itm='+qindex+'&obj='+quiz;
 		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;

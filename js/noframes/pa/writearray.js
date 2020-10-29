@@ -80,12 +80,20 @@ function createArray(){
 				  url=pathtoHTML5wrap+"/index.html";			 
 				  break;
 				  
-				  case("S"):
+				/*  case("S"):
 		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
 		          quiz=  qforms[f]['squizid'+f].value;
 		          var pathtoSLHTML5wrap = qforms[f].pathtoSLHTML5wrap.value;
 		          var rmsg= qforms[f].srmsg.value?qforms[f].srmsg.value:"";
 				  url=pathtoSLHTML5wrap+"/storylineHTML5wrap.htm";			 
+				  break;
+				 */ 
+				   case("S2"):
+		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          quiz=  qforms[f]['s2quizid'+f].value;
+		          var pathtoS2LHTML5wrap = qforms[f].pathtoS2LHTML5wrap.value;
+		          var rmsg= qforms[f].s2rmsg.value?qforms[f].s2rmsg.value:"";
+				  url=pathtoS2LHTML5wrap+"/story.html";			 
 				  break;
 				 
 				  case ("I"):
@@ -135,6 +143,9 @@ function createArray(){
 			                break;
 			         case("S"):
 			                o+=", type:'S', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 
+			                break;
+			        case("S2"): //S2 outputs type 'S' in the pageArray because once in the module the new storyline will act exactly like the old storylines did. So the code has not changed. Just the url property in the pageArray.
+			                o+=", type:'S', quiz:'"+quiz+"', rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; //type can be "S" because it behaves exactly like "S" quizzes except for the "story.html" in the URL
 			                break;
 			        case("U"):
 			                o+=", type:'"+type+"', quiz:'"+quiz+"', qmax:"+qmax+", rm:'"+rmsg.replace("'","\\'")+"', countscore:'"+countscore+"'"; 

@@ -273,6 +273,77 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				            unfinQz +=('</tr>');
 			            }//end  else if(((typeof objScore!="undefined")&&(objStatus!="n			     			    
 			     	break;
+			     	
+			     		case "S": //storyline up to 2019
+                        //If never attempted: show 'not completed' message, green btn + go there now . If quiz is required, set module status to 'incomplete'
+			            if( (objStatus=="not attempted")||(q.qStatus=="not attempted")||(typeof objStatus=="undefined") ){
+			                unfinQz += ('<tr>');
+                            unfinQz += ('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');
+                            unfinQz += (messageLine1); 
+				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--P--><br/></td>');
+			                unfinQz += ('</tr>');
+				           	if(countscore==1){ moduleStatus = 'incomplete'}//if any one page is required but not attempted, set overall module status to incomplete.
+				  	      }//end if
+							 
+						//Required storyline quiz that has been looked at or not, but not yet attempted. Show not completed message, green button. NO score.  
+						else if (countscore==1 && isNaN(objMax) ){  
+			                moduleStatus = 'incomplete';	
+			                unfinQz += ('<tr>');
+                            unfinQz += ('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');
+							unfinQz += (messageLine1);
+				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--Q--><br></td>');
+			                unfinQz += ('</tr>'); 
+			                }
+							 
+						//if there is any raw score for this quiz stored in MLearning or it is completed	 
+				  		else if(  ( (typeof objScore!="undefined")&&(objStatus!="not attempted") )||(objStatus=="completed")){ 
+			                unfinQz +=('<tr>');
+			                if(!isNaN(objMax)){  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+'.' ); }
+				            //Captivate will cause NaN if you have just looked at the page, but not taken it yet
+				            else if ( isNaN(objMax) ){  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');  }
+				            unfinQz +=(messageLine1); 
+				            unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--R--></td>');				
+				            unfinQz +=('</tr>');
+			            }//end  else if(((typeof objScore!="undefined")&&(objStatus!="n			     			    
+			     	break;
+			     	
+			     		
+			     		
+			     		case "S2": //storyline 2019 or higher
+                        //If never attempted: show 'not completed' message, green btn + go there now . If quiz is required, set module status to 'incomplete'
+			            if( (objStatus=="not attempted")||(q.qStatus=="not attempted")||(typeof objStatus=="undefined") ){
+			                unfinQz += ('<tr>');
+                            unfinQz += ('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');
+                            unfinQz += (messageLine1); 
+				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--S--><br/></td>');
+			                unfinQz += ('</tr>');
+				           	if(countscore==1){ moduleStatus = 'incomplete'}//if any one page is required but not attempted, set overall module status to incomplete.
+				  	      }//end if
+							 
+						//Required storyline quiz that has been looked at or not, but not yet attempted. Show not completed message, green button. NO score.  
+						else if (countscore==1 && isNaN(objMax) ){  
+			                moduleStatus = 'incomplete';	
+			                unfinQz += ('<tr>');
+                            unfinQz += ('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');
+							unfinQz += (messageLine1);
+				            unfinQz += ('<td class="unfinQzRt">You have not completed the quiz on page '+(i+1)+' <a id="quiz'+ i +'" class="gothereLink btn btn-large btn-success">Go there now!</a><!--T-><br></td>');
+			                unfinQz += ('</tr>'); 
+			                }
+							 
+						//if there is any raw score for this quiz stored in MLearning or it is completed	 
+				  		else if(  ( (typeof objScore!="undefined")&&(objStatus!="not attempted") )||(objStatus=="completed")){ 
+			                unfinQz +=('<tr>');
+			                if(!isNaN(objMax)){  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+'.' ); }
+				            //Captivate will cause NaN if you have just looked at the page, but not taken it yet
+				            else if ( isNaN(objMax) ){  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');  }
+				            unfinQz +=(messageLine1); 
+				            unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--U--></td>');				
+				            unfinQz +=('</tr>');
+			            }//end  else if(((typeof objScore!="undefined")&&(objStatus!="n			     			    
+			     	break;
+			     	
+			     	
+			     	
                    	//interactions
                    	case "I":				 
                         if( (objStatus=="")||(typeof objStatus=="undefined")||(typeof objStatus==undefined) ){ 
