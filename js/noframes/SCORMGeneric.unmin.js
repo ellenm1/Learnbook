@@ -82,7 +82,7 @@ function SCOInitialize() { //initializes communication and sets sco status to "i
 	var err = true;
 	//if ( (!g_bInitDone)&&(ReadCookie('g_bInitDone')!="true") ) {
 	if  (!g_bInitDone) {
-		console.log('QWE in SCOInitialize and g_bInitDone is false');
+		if(testing){console.log('QWE in SCOInitialize and g_bInitDone is false');}
 		if ((window.parent) && (window.parent != window)){
 			g_objAPI = FindAPI(window.parent)
 		}
@@ -310,12 +310,13 @@ function SCOUnload(){// this function will be called when this SCO is unloaded
 }//end function SCOUnload
                                                                                                             
 function SCOBookmark(){  
+     if(testing){ console.log("in SCOBookmark")  }
     pArrayItem = ps[znThisPage];
     var isQuiz = (typeof pArrayItem.quiz!="undefined")?true:false;
    	if (!APIOK()){ return false; }
 	//this is not the first page or the last, and is NOT a quiz.
-	if ( (znThisPage > 1)  &&  (znThisPage < ps.length) && (!isQuiz)){
-		//bookmark this location in mlearning
+	if ( (znThisPage > 0)  &&  (znThisPage < ps.length) && (!isQuiz)){
+		//bookmark this location in the LMS
 		SCOSetValue('cmi.core.lesson_location', znThisPage); 
 		SCOCommit();	
     }

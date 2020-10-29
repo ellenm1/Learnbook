@@ -1,7 +1,7 @@
 //v. 1.0 12-13.10 emeiselm
 //this is included in dummypage after the quizFunctions. It gets run on module load
 //http://www.sitepoint.com/forums/showthread.php?t=575320
-if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
+//if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
 //var testing = false; //turn to true to show debugging information for this script
 //Check if there are any interactions, and if the lms is present. If not, bail out.
 

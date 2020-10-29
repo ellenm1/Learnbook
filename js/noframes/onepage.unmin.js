@@ -7,9 +7,11 @@ $(document).ready(function() {
 	var gPageHasBeenSet;
 	//this is already handled in pagearray.js CHECK AND FIX
 	qsVrsn = 	qsParm['vrsn'] ? qsParm['vrsn'] : null;//is there a vrsn param set in the query string? zVrsn defined in trackingFunctions.js
+	 
 	$('div.nav-no-collapse.header-nav .breadcrumb').empty();
 	initTracking(); //doesn't require document.ready
-	$('body').append('<div id="dialog-modal" style="display:none; z-index: 1000;"></div>');
+	appendDialogModalsToBody();
+	
 	$('body').append('<div id="footer"></div>');
    	$('body').unload(function(){SCOUnload()});	   		
   	var footerStr =  '<div class="navbar-inner">'
@@ -26,9 +28,9 @@ $(document).ready(function() {
 	$('#footer').append(footerStr);
  	 	
 	/*module version stuff - this opens a "loading" dialog if there is a version param set either in lms or query string*/
-//if(testing){console.log('ERTY znThisPage='+znThisPage+' window.znThisPage='+window.znThisPage)}
+ if(testing){console.log('ERTY znThisPage='+znThisPage+' window.znThisPage='+window.znThisPage)}
 	checkForStoredVersion(lmsVrsn, znThisPage, dl, qsVrsn);
-	
+	 
 	
 	//assign getcontent to onclick of all the nav links
 	$("#sidebar-left li a[id^='itm']").click(function() {
@@ -39,20 +41,12 @@ $(document).ready(function() {
 		}	
 		getContent(params);
 	});
-	
-//assign functions to previous/next buttons	 
-	$(".prevbtn").click(function(){ 
-		prevPage(znThisPage); 
-		ga('send', 'event', 'button', 'click', 'prevButton', 'on page '+ znThisPage+1);//google analytics tracking
-		});
-	$(".nextbtn").click(function(){ 
-		nextPage(znThisPage); 
-		ga('send', 'event', 'button', 'click', 'nextButton', 'on page'+ znThisPage+1); //google analytics tracking 
-		});
+	//assign functions to previous/next buttons	 
+     assignPrevNextButtonFunctions()
+     
 //assign functions to expander buttons	
-	$(".expander").click(function(){ toggleByChapter(); 
-		 ga('send', 'event', 'button', 'click', 'expander', 'on page'+ znThisPage+1); //google analytics tracking
-		 });
+	assignExpanderButtonFunctions();
+	
 //search button functionality	
 	$('#headerSearch').click(function(e) {
 		//ga('send', 'event', 'button', 'click', 'headerSearch', 'on page'+ znThisPage+1);//google analytics tracking
@@ -65,8 +59,51 @@ $(document).ready(function() {
        		e.preventDefault();
      });//end $('#headerSearch')
  	
- 
- 	if($("#header").css('display')=='block'){	 
+  //set focus on window and assign previous- and next-page functions to arrow keys
+   assignArrowKeyFunctions();
+	
+   maximizeSabaPlayer();	// was written to get around issues with saba players being too small, but left in place when we stopped using that player (module now opens in new window from player) since it expands module when needed
+ // ga('send', 'pageview');//google analytics tracking
+ // var _gaq = _gaq || [];//google analytics tracking
+ });//end $(document).ready
+/* ********************************** */
+
+
+//fix for https://thedesignspace.net/2015/06/13/jquery-dialog-missing-x-from-close-button/#.VZLnje1VhBc
+ var bootstrapButton = $.fn.button.noConflict();
+$.fn.bootstrapBtn = bootstrapButton;
+
+function appendDialogModalsToBody(){
+	$('body').append('<div id="dialog-modal" style="display:none; z-index: 1000;"></div>');
+	$('body').append('<div id="warningModal"></div>');
+}
+
+function writePage(znthisp,deepLink){
+	var params = {
+			itm:znthisp,
+			dl:dl?dl:null
+		}	
+	getContent(params);
+} 
+
+function assignExpanderButtonFunctions(){
+	$(".expander").click(function(){ toggleByChapter(); 
+		 ga('send', 'event', 'button', 'click', 'expander', 'on page'+ znThisPage+1); //google analytics tracking
+		 });
+}
+function assignPrevNextButtonFunctions(){
+		//assign functions to previous/next buttons	 
+	$(".prevbtn").click(function(){ 
+		prevPage(znThisPage); 
+		ga('send', 'event', 'button', 'click', 'prevButton', 'on page '+ znThisPage+1);//google analytics tracking
+		});
+	$(".nextbtn").click(function(){ 
+		nextPage(znThisPage); 
+		ga('send', 'event', 'button', 'click', 'nextButton', 'on page'+ znThisPage+1); //google analytics tracking 
+		});
+}
+function assignArrowKeyFunctions(){ //set focus on window and assign previous- and next-page functions to arrow keys
+	if($("#header").css('display')=='block'){	 
  		$(window).focus();
  		//we don't want this operating if there is any possibility of user input with keys
 		$('input,textarea,button,canvas').focus(function(){busy=true;});
@@ -83,25 +120,7 @@ $(document).ready(function() {
 		});//$(document).keydown
 	}//if($("#header")
 
-	
-  maximizeSabaPlayer();	// was written to get around issues with saba players, but left in place when we stopped using that player since it expands module when needed
- // ga('send', 'pageview');//google analytics tracking
- // var _gaq = _gaq || [];//google analytics tracking
- });//end ready
-
-//fix for https://thedesignspace.net/2015/06/13/jquery-dialog-missing-x-from-close-button/#.VZLnje1VhBc
- var bootstrapButton = $.fn.button.noConflict();
-$.fn.bootstrapBtn = bootstrapButton;
-
-function writePage(znthisp,deepLink){
-	//printNavBar();	this is in getContent where needed
-	var params = {
-			itm:znthisp,
-			dl:dl?dl:null
-		}	
-	getContent(params);
-} 
-
+}
 function maximizeSabaPlayer(){
 	top.window.moveTo(0,0);
 	var  p=screen.availWidth>1280?1280:screen.availWidth;
@@ -126,30 +145,44 @@ function checkSubmit(e){
 }
 
 //pass any version stored in the LMS (lmsVrsn), znThisPage, any deepLink (dl) and any cookie-stored version. 
-function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, qsVrsn){	
+function checkForStoredVersion(lmsVrsn, lp, dl, qsVrsn){	
 
 		//this runs once when index loads and when coming back from questionmark quiz/qualtrics quiz. not every time content loads
 		// var znThisPage = (typeof znThisPage!="undefined")?znThisPage:0;
-		//indexOfThisPage will be used for landing page
+		//lp will be used for landing page
 		
-		if(typeof indexOfThisPage=="undefined"){
-		//if it's too early for znThisPage to have been calculated, indexOfThisPage will be undefined. 
-		//look in local storage for a value or set indexOfThisPage to zero.
-			//if(testing){console.log('GWE indexOfThisPage is undefined');}
-			indexOfThisPage = (ns.localStorage.get('znThisPage')!="undefined") ? ns.localStorage.get('znThisPage'):0;
+		if( (typeof lp ==="undefined") || (isNaN(lp) ) ){
+		//if it's too early for znThisPage to have been calculated, lp will be undefined. 
+		//look in local storage for a value or set lp to zero.
+			//if(testing){console.log('GWE lp is undefined');}
+			//if there is a bookmarked location do we want to use that? Only if not coming back from quiz
+		//	9-17 not sure why but the below statement is no longer working. 
+			//lp = (ns.localStorage.get('znThisPage')!="undefined") ? ns.localStorage.get('znThisPage'):0;
+			var storedZnTP = ns.localStorage.get('znThisPage');
+			
+			if((storedZnTP)==="undefined"){
+			  lp = 0;
+			}
+			else{
+			  lp = storedZnTP;
+			}
+			
 		}
 		 
-		// if(testing){console.log('BBD indexOfThisPage='+indexOfThisPage)}
+	 
 //is there already a version set in the lms?		 
 		 if(   (lmsVrsn!=null)&&!isNaN(lmsVrsn)   ){	
-    		$( "#dialog-modal" ).dialog({//then open a dialog
+    		
+    	/*	$( "#dialog-modal" ).dialog({//then open a dialog
     			close:true,
             	height: 140,
            		//autoOpen:false,
            		modal: true
        	 	});
-       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");  
-//if so, is it a user-selected version?      	 	
+       	 	
+       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>"); */
+       	 	 
+//if so, is it a custom user-selected version?      	 	
        	 	if(lmsVrsn==99){//if the version is a user-selected custom version figure out what the page array should be...
        	 		var suspendDataFromLMS = SCOGetValue("cmi.suspend_data");
        	 		console.log('lmsVrsn==99 and suspendDataFromLMS= '+suspendDataFromLMS);
@@ -168,17 +201,21 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, qsVrsn){
        	 		}
        	 		 else{ alert('custom version selections were not successfully stored in suspendDataFromLMS, so will have to be re-selected') }	
        	 	
-       	 	}
-//there WAS a specific version stored in the LMS, and it is not a custom version (99) so no need to check anything else, just restore it:       	 	
-       	 	else{  	     	 	
+       	 	} //end if it was a custom version
+       	 	else{  	   //else there was a "classic" version stored in the LMS, not a custom version (99) so no need to check anything else, just restore it:       	 	
+   	 	
        	 		//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
        	 		//this fixed december 4 issue where current page was always set to 0 after coming back from captivate html5 quiz.
-       	 		setVrsn(lmsVrsn,indexOfThisPage);//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
-       	 	}
+       	 		if(testing){console.log('AIDUEK about to setVrsn lmsVrsn='+lmsVrsn+' lp'+lp );}
+       	 		setVrsn(lmsVrsn,lp,true);//set the version of the pageArray to the version stored in the SCORM objective with ID of "vrsn"
+       	 	
+       	 	   	writePage(lp,dl); //i moved this inside the else for classic version since startUpCustomVersion already has write page in it.
+       	 	}//end else there WAS a "classic"  version stored in the LMS, not a custom version 
     	  	
-    	  	closeModalDialog("#dialog-modal");	
-    	  	writePage(indexOfThisPage,dl);
-    	}//if(lmsVrsn)
+    	 // 	closeModalDialog("#dialog-modal");	
+    	  //	if(testing){console.log("TYEIEI in checkForStoredVersion about to writePage and lp= "+lp)}
+    	  
+    	} //end is there already a version set in the lms?	
     	
     	else if((qsVrsn!=null)&&!isNaN(qsVrsn)) { //check to see if a version was requested in the query string
     		$( "#dialog-modal" ).dialog({
@@ -187,17 +224,17 @@ function checkForStoredVersion(lmsVrsn, indexOfThisPage, dl, qsVrsn){
            		//autoOpen:false,
            		modal: true
        	 	}); 
-       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");      	 	     	 	
-       	 	setVrsn(qsVrsn,0);//set the version of the pageArray to the version requested in the query string 
+       	 	$("#dialog-modal").html("<div id='modal-header'></div><div id='modal-body'>Setting up page list, one moment!</div>");
+       	 	  if(testing){console.log("XOEIDK in checkForStoredVersion about to setVrsn() qsVrsn="+qsVrsn + ", page 0");}     	 	     	 	
+       	 	setVrsn(qsVrsn,0,true);//set the version of the pageArray to the version requested in the query string 
     		closeModalDialog("dialog-captivate");
-    		writePage(indexOfThisPage,dl);	
+    		writePage(lp,dl);	
     	}//else
    				// }//if(!saveStorage	
      
  		else{ 
- 			//if(testing){console.log('BBX indexOfThisPage='+indexOfThisPage)}
- 			
- 			writePage(indexOfThisPage,dl);
+ 			 if(testing){console.log('BBX have determined version and about to write page lp='+lp)}
+ 			writePage(lp,dl);
  		 
  		}			  
 	 }//end checkForStoredVersion
@@ -283,7 +320,6 @@ function startUpCustomVersion(znewpagelist,selecteditems, landingPage, dedup, fi
 
 }//end startUpCustomVersion
 
-
 function rewriteChapters(obj){
 	var chaptercounter = 0;
 	$.each( obj, function( key, value ) {
@@ -293,11 +329,10 @@ function rewriteChapters(obj){
   });
   return obj;
 }
-	
 	 
 function setupQuizzes(){
 	interactionsQuizzes=false;//set it to false each time this runs. It will be set to true again if there are any in this version.
-   		console.log('in setupQuizzes GPB ps='+ps);
+   		if(testing){console.log('in setupQuizzes GPB ps='+ps);}
    		for(var m=0; m< ps.length; m++){ 
   	 
         	var q =  ps[m];
@@ -343,13 +378,15 @@ function setupQuizzes(){
    	ns.localStorage.set("moduleVars",ms);
  } //end setupQuizzes function
  
- 
-function setVrsn(desiredVersion,p){
+function setVrsn(desiredVersion,p,doNotRewritePage){
 //desiredVersion is desired version number, it should match the pageArray number desired.
 //p is index of desired landing page of new version
 	//if(testing){console.log('ETE n='+desiredVersion+', p='+p)}	
 //need to check value of lmsVrsn again in case it changed since module was initialized.
 //does it exist, and is it a number? if so, then set zLmsVrsn to that number. 
+   // if doNotRewritePage is set as FALSE, it will run getContent() after setting the ArrayVrsn. 
+   //  This is usually desirable when user takes an action to change the version like click a button or pass a quiz. It is not desirable when returning to a bookmarked location and on launch.
+    g_doNotRewritePage = (typeof doNotRewritePage!="undefined")?doNotRewritePage:false;
 	zLmsVrsn = 	(lmsVrsn && !isNaN(lmsVrsn) ) ? lmsVrsn : null;
 	//zCookieVrsn = ReadCookie('cVrsn');
 	var lp = p?p:0;//landing page error catch
@@ -362,6 +399,7 @@ function setVrsn(desiredVersion,p){
 		
 			//if the version we are requesting now with this function is different than what is already in storage, change it.
 			 //need to figure out how to keep track of quizzes across versions maybe? If a person takes a quiz in one version and then another in another, it will be tracked in the lms, but not in local storage yet.
+			
 			ms.version = desiredVersion; 
 			var chosenPageArray; //active pageArray chosen by some process other than the default initial load of the PageArray.
 			if(desiredVersion==1||desiredVersion==0){  chosenPageArray=window['PageArray']; }
@@ -373,31 +411,31 @@ function setVrsn(desiredVersion,p){
 			SetCookie('cVrsn',desiredVersion,1);
 			zCookieVrsn = ReadCookie('cVrsn');
 			SCOSetObjectiveData("version","score.raw",desiredVersion);
-			lmsVrsn = desiredVersion, zLmsVrsn = desiredVersion;			
-			setTimeout('setArrayVrsn('+desiredVersion+','+lp+')',1000);
+			lmsVrsn = desiredVersion, zLmsVrsn = desiredVersion;
+		 		
+			setArrayVrsn(desiredVersion,lp,g_doNotRewritePage);
 			
 	}
 	else{
-	console.log("EFGG ms.version "+ms.version +"!=desiredVersion "+ desiredVersion);
-	setVrsn(0,lp);
-	}//if no valid 'n' argument was provided in the function call start over with version "0"
+	if(testing){console.log("EFGG about to setVrsn ms.version "+ms.version +"!=desiredVersion "+ desiredVersion);}
+	setVrsn(0,lp,true);
+	}//if no valid 'desiredVersion' argument was provided in the function call start over with version "0"
 	// if(testing){console.log('EEE zVrsn='+desiredVersion+' zLmsVrsn='+zLmsVrsn+ ' zCookieVrsn='+zCookieVrsn)}		 
  	
 }//end function setVrsn() 
 
-function setArrayVrsn(vrsn,landingpage){   
+function setArrayVrsn(vrsn,landingpage,b_doNotRewritePage){   
     //vrsn is the desired version 
 	//landingpage is the page to open once version has changed.
 	//it is the number of the item in the array, eg 0, 1, 2, 3, etc.
 	//if a version number IS explicitly set. Set pagearray variable to that version, and set the cookie and save new pageArray to local storage.
-
-	if(typeof vrsn!="undefined" ){  			
+   
+	 if(typeof vrsn!="undefined" ){  			
  		
  		//if version  is 1 or 0 then default page array.
  		if(vrsn==1||vrsn==0){           
  			ns.localStorage.set('pageArray',window['PageArray']);	//set local storage PageArray to the default PageArray that was first loaded.
- 			ps = ns.localStorage.get("pageArray"); //refresh ps with the new page array
- 			
+ 			ps = ns.localStorage.get("pageArray"); //refresh ps with the new page array			
  			ms = ns.localStorage.get('moduleVars');//refresh just in case this changed recently
  			ms.version = vrsn; //add in the new version to the clean moduleVars
  			ns.localStorage.set('moduleVars', ms); //save it back to localStorage
@@ -406,8 +444,8 @@ function setArrayVrsn(vrsn,landingpage){
  			setupQuizzes();	 	 	
  		} //end if(vrsn==1||vrsn==0)  			
   		
-  		//else version NOT 1 or 0: it is NOT same as original pagearray 			
- 		else{                    
+  				
+ 		else{     //else version NOT 1 or 0: it is NOT same as original pagearray 	                
  			var chosenPageArray=window['PageArray'+vrsn];
  			ns.localStorage.set('pageArray',chosenPageArray);
  			ps = ns.localStorage.get('pageArray');	//refresh ps with the new page array
@@ -418,13 +456,39 @@ function setArrayVrsn(vrsn,landingpage){
  			vrsnDone=true; 
  			setupQuizzes();			 
  		}//end else
+ 		
  	}//end if(typeof vrsn!="undefined" )
  	
-if(typeof landingpage!="undefined" && !isNaN(landingpage)){ var lp = landingpage }
-else {lp = 0;}
+ 	//if there is a bookmark to resume to, set landingPage to that. 
+ 	//since this takes a long time to run it often comes in and changes things after we have already written the page
+  if( (typeof resumeAtLocation!="undefined") && (resumeAtLocation!="")){ 
+  		var lp = resumeAtLocation; resumeAtLocation=""; 
+  		//don't redraw page unless it is explicitly requested by user action (b_doNotRewritePage==false)
+  	    if((typeof b_doNotRewritePage!="undefined") && (b_doNotRewritePage==false)){
+  	       var params = { itm:lp };
+  	      getContent(params);
+  	     } 
+  	}	
+  //if a landing page was specified, use that	
+
+else if(typeof landingpage!="undefined" && !isNaN(landingpage)){ 
+	var lp = landingpage;
+	 var params = { itm:lp }
+	 getContent(params);
+	}
+
+  //if none was specified, set it to 0
+else {
+		lp = 0;
+		 var params = { itm:lp }
+	     getContent(params); 
+	 }
  	  
-	var params = { itm:lp }	
-	getContent(params);  
+
+	//	 ms = ns.localStorage.get('moduleVars');
+	//  var params = { itm:lp }
+	//	getContent(params); do we need this?? it runs within checkForStoredVersion > writePage 
+		 
 	
 }//end function setArrayVrsn
  	
@@ -434,15 +498,14 @@ function redirectToFirstPageOfNewVersion(){
  				document.location.href = zurl?zurl:PageArray[0].url;
  				pageHasBeenSet = 1; 			
  			}//end if (document.location.href!=PageArray[0].url)
- 	
  	} 	
  
  // https://ilikekillnerds.com/2016/05/removing-duplicate-objects-array-property-name-javascript/
 function removeDuplicatePages(myArr) { 
 //return myArr.filter((obj, pos, arr) => { return arr.map(mapObj => mapObj["url"]).indexOf(obj["url"]) === pos; });  //es6 version not compatible with IE 11
-console.log('myArr before dedup='+ myArr);
+if(testing){console.log('myArr before dedup='+ myArr);}
 //https://stackoverflow.com/a/16747855
-//this works great but ES6 is Not compatible with IE11.
+//this works great but ES6 is Not compatible with IE11. Which is still in wide use as of 2020.
 /* var tmp = [];
     for(var i = 0; i < myArr.length; i++){
     console.log('tmp='+tmp);
@@ -474,7 +537,7 @@ $.each(myArr, function (i, e) {
     }
 });
  return tmp;
-}
+} //end function removeDuplicatePages
 	
 //********* end version setting functions *****//
 //add search result display functions from headcontent CHANGE

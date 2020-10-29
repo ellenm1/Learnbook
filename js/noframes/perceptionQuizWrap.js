@@ -1,6 +1,6 @@
  
-	if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
-	var testing = true;
+	//if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} };  
+	//var testing = true;
  
 var sSession; //this is just the quiz number without a letter prefix. 
 //objectiveID has the letter prefix.

@@ -756,6 +756,10 @@ a#helpButton{
 font:bold 28px Arial, Helvetica, sans-serif;
 color:#FF0000;
 }
+#quizMessages .alert-info{
+ color:#000 !important;
+}
+
 
 #msgcloser{ 
 background:#FF6600;
@@ -961,14 +965,14 @@ a.tryagainLink, a:visited.tryagainLink{
      padding:3px;
      }
  #unFinOptions {
-	 position:absolute;
+	/* position:absolute;*/
      text-align:center;
      display:block;
      background-color:#FFFF99;
      border:1px solid #DEA118;
      left:400px;
      top:0px;
-     width:320px !important;
+    /* width:320px !important;*/
 	 
      padding:6px;
      text-align:center;
@@ -982,6 +986,18 @@ a.tryagainLink, a:visited.tryagainLink{
       padding:6px;
       text-align:center;
 	  }
+	  
+	  #incompleteAlertMsg{
+	   font: 18px bold Verdana, Arial,Helvetica, sans-serif;
+	   margin: 12px;
+	   display: inline-block;
+       color: red;
+       }
+       
+       #a23 {
+       max-width:75%;
+       }
+	  
 .CertInstructions{/*padding-left:18px;*/}
 
 .moduleStatusMsg{ 
@@ -1336,4 +1352,23 @@ ul.breadcrumb{
 
 .tabsetContainer .tab .tab-content h3{
     font-size: 24px;
+}
+
+/*fix for bootstrap modal that refuses to display:block perhaps b/c of version of bootstrap we are using*/
+.modal-open .modal {
+	display:block;
+	}
+#warningModal h2 {
+	margin: 12px 0 0 0;
+	font-weight:bold;
+	font-size: 1em;
+}    
+
+#warningModal .modal-content{
+	background-color: #2d89ef;
+	color:#fff;	
+} 
+
+#warningModal .btn-primary{
+	border-color: #fff;
 }

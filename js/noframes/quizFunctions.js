@@ -8,13 +8,21 @@
 
 //*********	
 
-testing = true;
+//testing = true;
 	
 function openMessageBlock(){  $("#finishedDiv").show(); }	 
 function turnOnMsg(){  $("myModal").show();  } 
 function turnOffMsg(){$("myModal").hide();  }
-
-
+function deleteLocalStorage(){$('.finalCompleteButton').click(function(){ns.localStorage.removeAll()}); }
+function showWarningBlock(){ 
+   var msg  ='<div class="alert alert-info"">';
+       msg +='<button type="button" class="close" data-dismiss="alert">×<\/button>';						
+       msg +='If you receive an error message after you send your score or your completion does not update in MLearning immediately, ';
+       msg +='please contact the HITS Service Desk (936-8000). Do not attempt to retake the module - your progress has been saved.';
+	   msg +='</div>';
+  $("#msgTD1").append(msg); 
+  // $("#modStatus").append(msg); 
+  }
 //chooses a "finish" button based on if there are any more SCO's - either go to next module or close window
 function chooseBtn(){ 
     btnImg=('nextModule');
@@ -454,8 +462,8 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				 
 				msgWin.innerHTML +=('<div id="modStatus">This module is<br><span class="moduleStatusMsg">'+moduleStatus+'</span>');				 
 				msgWin.innerHTML +=(' <div id="finOptions">');
-				msgWin.innerHTML +=('<table><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr></table></div>');
- 				 
+				//msgWin.innerHTML +=('<table><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();deleteLocalStorage();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr></table></div>');
+ 				msgWin.innerHTML +=('<table id="a23" style="margin-top:6px;"><tr valign="top"><td colspan=2 id="msgTD1"></td></tr><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();deleteLocalStorage();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr></table></div>'); 
 				msgWin.innerHTML +=('<ul><li>You scored <b>' + totalRawScore+' point(s)</b> out of a possible <b>'+ totalmaxRawScore+'</b>.<br><li>Your total score for this module is <h1 style="display:inline">'+totalPercentScore+'%</h1><br> This module requires <b>'+iMasteryScore+ '%</b> to pass. <br/><span style="font-size:10px;font-weight:bold;color:red;">If you wish to improve your score, you may retake any quiz by clicking the button(s) below.</span></li></ul></div>' );
 				 				 
 				msgWin.innerHTML +=('<table id="unfinQzTbl">'+unfinQz+'</table>');				 
@@ -475,18 +483,20 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 					 msgWin.innerHTML +=('<div class="CertInstructions"></div>' ); 
 				}	
 		 			
-				$('.finalCompleteButton').click(function(){ns.localStorage.removeAll()})
+				
 			}//end else there IS a mastery score
 		}//end if moduleStatus is not incomplete
 	   
 	   //moduleStatus IS incomplete: set status to incomplete and alert to missing quizzes		 
 		else if(moduleStatus=='incomplete'){ 
-		    	SCOSetValue( "cmi.core.lesson_status", "incomplete" ); 			     
-				msgWin.innerHTML +=('<div id="modStatus">This module is<br><span class="moduleStatusMsg">'+moduleStatus+'</span>' );				 
-				msgWin.innerHTML +=('<div id="unFinOptions" align="center"><h1 class="red alert alert-error" style="font:18px bold Verdana, Arial,Helvetica, sans-serif;">This module can not be marked <span style="color:#000;">Complete</span> until all required quiz pages are completed.</h1><table style="margin-top:6px;"><tr valign="top"><td class="StatusPageFdbk" ><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr></table></div>');
-				msgWin.innerHTML +=('<table id="unfinQzTbl">'+unfinQz+'</table>');					
+		    	SCOSetValue( "cmi.core.lesson_status", "incomplete" ); 	
+		    	var incompleteAlertMsg	= ('<div id="incompleteAlertMsg">This module can not be marked <span style="color:#000;">Complete<\/span> until all required quiz pages are completed.<\/div>');	 
+		    	var finalSuspendButtonBox =  ('<div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br\/>achieved so far<br\/>and finish later.<\/div>');   
+				msgWin.innerHTML +=('<div id="modStatus">This module is<br><span class="moduleStatusMsg">'+moduleStatus+'</span></div>' ),				 
+				msgWin.innerHTML +=('<table id="a23" style="margin-top:6px;"><tr valign="top"><td colspan=2 id="msgTD1"></td></tr><tr><td class="StatusPageFdbk">'+incompleteAlertMsg+'<\/td><td class="StatusPageFdbk">'+finalSuspendButtonBox+'<\/td><\/tr><\/table>'),
+			   msgWin.innerHTML +=('<table id="unfinQzTbl">'+unfinQz+'</table>');					
 		}//end moduleStatus IS incomplete - set incomplete status in mlearning
-		    
+		showWarningBlock();    
 		SCOCommit();//commit data to db
 		turnOffMsg(); 
 

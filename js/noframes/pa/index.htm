@@ -3,31 +3,42 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>PageArray Generator for HTML Template</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript" src="chapterarray.js"></script>
-
+    <link id="bootstrap-style" href="../../../css/css/bootstrap.min.css" rel="stylesheet">
+    <link id="base-style"      href="../../../css/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" /> 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js" type="text/javascript"></script>   
+    <script language="javascript" type="text/javascript" src="chapterarray.js"></script> 
     <script language="javascript" type="text/javascript" src="form.js"></script>
 </head>
-<!--<body onload="clearForm();">-->
-<body  onload="$('#container').addForms()">
+<body  onload="$('#container').addForms()" style="padding-top:24px;">
+<div class="row-fluid">
+<div class="box yellow md8">
+<div class="box-header"> <h2>General Settings</h2></div>
+<div class="box-content">
  <form name="titleform">
-  <table style='border-top:1px solid #999;width:1200px'>
- <tr>
- <td style="text-align: right;"><b>Document title:</b>&nbsp; <input type="text" name="doctitle" id="doctitle" value=""  size="40" maxlength="60"></td>
- <td><b>Header Title:</b>&nbsp; <input type="text" name="hdtitle" id="hdtitle" value=""  size="40" maxlength="60"></td>
- </tr>
-  <tr>
- <td style="text-align: right;"><b>Content Expert Name <span style="color:red">*</span></b>&nbsp; <input type="text" name="contentExpName" id="contentExpName" value=""  size="40" maxlength="60"></td>
- <td><b>Content Expert Email address<span style="color:red">*</span>:</b>&nbsp; <input type="text" name="contentExpEmail" id="contentExpEmail" value=""  size="40" maxlength="60"></td>
- </tr>
- </table>
+ 
+  <div class="control-group">
+	 <label class="control-label" for="doctitle"  data-toggle="tooltip" title="Shows up in title bar or title tab of window.">Document Title</label>
+	 <input class="input-xlarge" id="doctitle" type="text" value="" data-toggle="tooltip" title="Shows up in title bar or title tab of window.">
+	 <div class="control-group" style="display: inline-block;  margin-left: 24px;">
+	 <label class="control-label" for="hdtitle"  data-toggle="tooltip" title="Shows up in banner on first page of module">Header Title</label>
+	  <input class="input-xlarge" id="hdtitle" type="text" value="" data-toggle="tooltip" title="Shows up in banner on first page of module">
+	  </div> <!-- controls -->
+ </div><!-- control-group -->
+ <div class="control-group">
+	 <label class="control-label" for="contentExpName" data-toggle="tooltip" title="Shows up in left nav">Content Expert Name</label>
+	 <input class="input-xlarge" id="contentExpName" type="text" value="" data-toggle="tooltip" title="Shows up in left nav">
+	 <div class="control-group" style="display: inline-block;  margin-left: 24px;">
+	 <label class="control-label" for="contentExpEmail" data-toggle="tooltip" title="Mailto: address for content expert name">Content Expert Email Address</label>
+	  <input class="input-xlarge" id="contentExpEmail" type="text" value="" data-toggle="tooltip" title="Mailto: address for content expert name">
+	  </div> <!-- controls -->
+ </div><!-- control-group -->
  </form>
  <form name="moduletypeform" style="margin:12px 0 12px 0">
  <table><tr><td>
  <label>
   Select a button set:
-  <select name="moduletype">
+  <select name="moduletype"  title="This determines which SCORM control buttons show up at the bottom of the module">
   <option value="1">1:Finish Later|Mark Complete|</option>
   <option value="2" selected='selected'>2:Finish Later|</option>
   <option value="3">3:Finish Later|Next Section|</option>
@@ -41,15 +52,60 @@
    </label>
    </td>
     <td>
-   <label>
+   <label data-toggle="tooltip" title="Hides Expand All buttons in the left nav">
     Hide Expand All button?  
    <input type="checkbox" name="printExpanderBtn" />
-  <a style="font-size:24px" title="hide Expand All buttons even if more than 16 pages in module">&#9432;</a>
    </label>
   
    
-   </td></tr></table>
+   </td><td><a onclick="$('#advancedcontainer').toggle();return false;" id="advanced">Show Advanced Settings</a></td></tr></table>
  </form><!--end moduletypeform-->
+ </div><!--box-content-->
+ </div><!--box yellow md8"-->
+ </div> <!--row-fluid-->
+
+ 
+ 
+ <div id="advancedcontainer" class="toggleadvanced">
+ <div class="box yellow md8">
+<div class="box-header"> <h2>Advanced Settings</h2></div>
+<div class="box-content">
+  <form name="advancedsettingsform">
+  <div class="control-group"> 
+	<div class="controls">
+	  <label class="checkbox inline"  style="vertical-align:baseline;margin-left:12px;">
+		<div  id="uniform-inlineCheckbox1"><span data-children-count="1"><input type="checkbox" id="hidebookmarkalerts" value="true" data-toggle="tooltip" title="You may want to hide bookmark alerts when most of the content is captivate or storyline, since those formats have their own resume functions."></span></div>Hide bookmark alerts?
+	  </label>
+	  <label class="checkbox inline" style="vertical-align:baseline;">
+		<div id="uniform-inlineCheckbox2"><span data-children-count="1"><input type="checkbox" id="hidestartupwarnings" data-toggle="tooltip" value="true" title="Hide the blue timeout warning messages"></span></div>Hide Startup Warnings?
+	  </label>
+	   <label class="checkbox inline" style="vertical-align:baseline;" title="Show Console messages?">
+		<div   id="uniform-inlineCheckbox3" ><span data-children-count="1"><input type="checkbox" id="showconsolemessages" data-toggle="tooltip" value="true" ></span></div>Show testing messages in the browser Console? (for debugging purposes)
+	  </label>
+	  
+	</div> <!-- controls -->
+  </div><!-- control-group -->
+  <div class="control-group">
+	 <label class="control-label" for="customStartupMsgTitle">Custom Startup Msg Title</label>
+	 <input class="input-xlarge" id="customStartupMsgTitle" type="text" value="" data-toggle="tooltip" title="Add a custom title for the blue startup message (Timeout Warning) here. No punctuation please.">
+	 <div class="control-group">
+	 	 
+	 <label class="control-label" for="customStartupMsg">Custom Startup Message Body </label>
+
+	 <textarea class="cleditor" id="customStartupMsg" rows="4" data-toggle="tooltip" title="All this text needs to be escaped."></textarea>
+	 <a href="https://tools.fromdev.com/javascript-escape-unescape.html" target="_blank">Please use Escape Tool to prepare text!</a>
+	  </div> <!-- controls -->
+ </div><!-- control-group -->
+  </form>
+   </div><!--box-content-->
+ </div><!--box yellow md8"-->
+ </div> <!--row-fluid-->
+ </div><!-- advancedcontainer  -->
+ 
+ <div class="box yellow md8">
+<div class="box-header"> <h2>Page-Specific Settings</h2></div>
+<div class="box-content"> 
+ 
  
      <div id="container"></div>
        <button id="addQuiz">add Another Page</button>
@@ -62,20 +118,31 @@
          <input name="lastitm" type="hidden" value="0" />
          <input name="submit" type="submit" value="submit" onclick="createArray();"/>
     </div><!--buttons-->
-  
+ </div><!--box-content-->
+ </div><!--box yellow md8"-->
+ </div> <!--row-fluid-->  
+<div class="box yellow md8">
+<div class="box-header"> <h2>Result</h2></div>
+<div class="box-content">
     <div id="output">
+    
     <div class="label">Page Array and interactions array will show up here. IMPORTANT!!! SCROLL DOWN if you are creating INTERACTIONS!!!</div>
-        <textarea name="arr" id="arr" cols="150" rows="40" ></textarea> 
+        <textarea name="arr" id="arr" cols="150" rows="40" style = "width:600px;height:200px"></textarea> 
         <div><input name="resetOutput" type="reset" value="reset" onclick="document.getElementById('arr').value='';" /></div>
     </div><!--output-->
  <div id="output2" style="display:none"> <div class="label">HTML for Interactions Links</div>
-        <textarea name="interactionsLinks" id="interactionsLinks" cols="150" rows="25" ></textarea> 
+        <textarea name="interactionsLinks" id="interactionsLinks" cols="150" rows="25" style = "width:600px;height:200px"></textarea> 
         <div> <input name="resetOutput2" type="reset" value="reset" onclick="document.getElementById('interactionsLinks').value='';" /></div>
     </div><!--output2-->
+    </div><!--box-content-->
+ </div><!--box yellow md8"-->
+ </div> <!--row-fluid-->
 <div id="debug">
 
 </div>
     <script language="javascript" type="text/javascript" src="writearray.js"></script>
+   
+   
 </body>
 </html>
 

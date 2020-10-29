@@ -17,7 +17,9 @@
 	var gNoScoreQuizMsg = ((typeof recommendedMsg=='undefined')?'recommended':recommendedMsg);
 	var gRequiredMsg = ((typeof requiredMsg=='undefined')?'required':requiredMsg);
 	var interactionsQuizzes;
- 	var sName,sDetails,underscore;	
+ 	var sName="";//if no API, then this will at least be defined as empty string
+ 	var sDetails="";//if no API, then this will at least be defined as empty string
+ 	var underscore;	
 
 function initTracking(){ //this is called on onepage.js. never called by perceptionQuizWrap.
 	 if(trackingmode == "scorm"){
@@ -55,7 +57,7 @@ function initTracking(){ //this is called on onepage.js. never called by percept
 				//if(testing){console.log('EEK lmsVrsn = '+lmsVrsn+' typeof lmsVrsn ='+ typeof lmsVrsn +', lmsStatus= '+lmsStatus);}
 				
 				SCOSetStatus();//this should put a 0 score into LMS if it is scored module
-				//bookmarkAlert();
+				//bookmarkAlert(); moving this to AFTER version is determined.
 				
 			}//if(APIOK())
 	//	}//end if(  (!ReadCookie('g_bInitDone')

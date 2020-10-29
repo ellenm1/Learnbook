@@ -1,6 +1,6 @@
 //v.1.7 12.05.12 emeiselm
 //http://www.sitepoint.com/forums/showthread.php?t=575320
-if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
+//if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
 //var testing = false; 
 //var outputWindow = document.getElementById("output")?document.getElementById("output"):document.getElementById("content").innerHTML+=("<div id='output'><p>&nbsp;</p></div>") ;
  
