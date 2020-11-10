@@ -758,6 +758,9 @@ color:#FF0000;
 }
 #quizMessages .alert-info{
  color:#000 !important;
+ font-size: larger;
+ line-height: 130%;
+ margin-top: 6px;
 }
 
 
@@ -874,11 +877,15 @@ a.tryagainLink, a:visited.tryagainLink{
 } 
  #quizMessages  td.unfinQzLft { 
    border-bottom:1px solid #CCCCCC; 
-   padding-right:3px;
+   padding-right:12px;
    padding-left:0px;
-   width:200px;
+   width:240px;
  }
-#quizMessages td.unfinQzRt {border-bottom:1px solid #CCCCCC;width:150px; }
+#quizMessages td.unfinQzRt {
+	border-bottom:1px solid #CCCCCC;
+	width:180px; 
+	font-size:12px;
+	}
 
 /*for messages associated with tracking individual interactions */
  .interactionFdbck{color:#FF0000;display:block;margin-top:3px;padding:2px;font-weight:bold;}

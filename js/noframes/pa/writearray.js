@@ -20,12 +20,14 @@ function createArray(){
 	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
 	var printExpanderBtn = moduletypeform.printExpanderBtn.checked?false:true;//either true or false. True means hide buttons even if there are more than 16 pages.
-	var hidebookmarkalerts = advancedsettingsform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
-	var hidestartupwarnings = advancedsettingsform.hidestartupwarnings.checked?true:false;//true means Shut OFF startup warnings
+	var muteBookmarkAlert = advancedsettingsform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
+	var muteStartupMsg = advancedsettingsform.hidestartupwarnings.checked?true:false;//true means Shut OFF startup warnings
 	var quizexists = 0;
 	var customStartupMsgTitle = advancedsettingsform.customStartupMsgTitle.value;
 	var customStartupMsg =      advancedsettingsform.customStartupMsg.value;
-	var showtestingmessage = advancedsettingsform.showtestingmessage.value;
+	var showconsolemessages =   advancedsettingsform.showconsolemessages.checked?true:false; //true means Turn ON console messages. Default is now that they are off.
+	
+	
 	for (var f=0; f< qforms.length; f++){ 
 	          if (testing){ console.log( 'qforms.length='+qforms.length);}
 	          if (testing){ console.log('f.id= '+qforms[f].id);}
@@ -175,6 +177,15 @@ function createArray(){
         o+="var moduletype=";
         o+=moduletype;
         o+=";\n";
+        o+="var testing=";
+        o+=showconsolemessages;
+        o+=";\n";
+        o+="var muteBookmarkAlert =";
+        o+=muteBookmarkAlert;
+        o+=";\n";
+        o+="var muteStartupMsg=";
+        o+=muteStartupMsg;
+        o+=";\n";
         o+="var printExpanderBtn=";
         o+=printExpanderBtn;
         o+=";\n";
@@ -190,6 +201,13 @@ function createArray(){
 	    o+="');\n";
 	    o+="var headerTitle=('";
 	    o+= headertitle;
+	    o+="');\n\n";
+	    
+	    o+="var customStartupMsgTitle=('";
+	    o+=customStartupMsgTitle;
+	    o+="');\n\n";
+	    o+="var customStartupMsg=('";
+	    o+=customStartupMsg;
 	    o+="');\n\n";
 	 //o+=chapterArray;
 	 //now do interactions array if it exists

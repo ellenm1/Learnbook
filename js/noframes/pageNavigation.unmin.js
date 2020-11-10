@@ -651,11 +651,13 @@ function showStartupMessage(){ //warning message about timeout or other warnings
      	var msg = customStartupMsg;
      }
      else {
-     	var msg = "<p>Complete your web based training modules in a timely manner. Leaving a course idle or exceeding 90 minutes to complete a course may cause issues with updating your completion status.</p><p>If you receive an error message after you send your score or your completion does not update in MLearning immediately, please contact the HITS Service Desk. <b>Do not attempt to retake the module - your progress has been saved.</b></p>";
-         	msg + "<p>If you need to take a break from a web based training module, be sure to use the Finish Later option. This will save your progress and allow you to return to the module at a later time.</p>";
+     	var msg = "<p>Your completion status may not be recorded if you leave a course idle or exceed 90 minutes to complete a course. Save your progress by clicking Finish Later.</p>";
+         	msg + "<p>If you receive an error message after you send your score, please contact the HITS Service Desk.</p>";
      }
      
-   
+  
+ 
+
          
  var htmlstring = '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header">';
      htmlstring += '<h2 class="modal-title">'+modalTitle+'</h2>';
@@ -1195,7 +1197,7 @@ function bookmarkAlert(currentPage,numberOfPages) {
 					pageTitle =  $(pageTitle).text() == "" ? pageTitle : $(pageTitle).text();
 					 
 					var pgnum = (parseInt(savedLocation, 10) + parseInt(1, 10));
-					var answer = confirm('You have a saved bookmark: page '+pgnum+':  '+pageTitle+'. Would you like to return to that location now?');                
+					var answer = confirm('Would you like to return where you left off? Page '+pgnum+':  '+pageTitle+'.');                
 					if (answer){ // if they hit OK go to that page
 							ns.localStorage.set('znThisPage', savedLocation);
 							znThisPage = savedLocation;	
