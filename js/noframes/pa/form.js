@@ -47,7 +47,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   Page Title:<br/><input type='text' name='pagetitle' id='pagetitle'  size='10'/>"+
                                        "   </div><!--pgtitle-->"+
                                        "   </div><!--titles--></td>"+
-                                       "   <td width='550' style='text-align:left;'><div id='quizblock'> "+ 
+                                       "   <td width='660' style='text-align:left;'><div id='quizblock'><div id='quizblockmessages'></div> "+ 
                                        "   <label><input type='radio' name='isQuiz' value='0' id='isQuiz_0_"+$countForms+"' checked onclick='toggle(\"nonquizsettings"+$countForms+"\",\"togglequizsettings"+$countForms+"\")'/>"+
                                        "   This is <b><u>not</u></b> a Quiz</label><br />"+
                                        "    <label>"+
@@ -139,8 +139,8 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
                                        "   </div><!--endH2options-->"+
                                        
                                        "   <div id='Soptions"+$countForms+"'  class='togglequiz"+$countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
-                                       "   Relative path to storylineHTML5wrap.htm?(<i>storyline/myStorylineQuiz</i>)<br/>"+
-                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoSLHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/storylineHTML5wrap.htm</div>"+
+                                       "   Relative path to story.html?(<i>storyline/myStorylineQuiz</i>)<br/>"+
+                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoSLHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/story.html</div>"+
                                        "   Custom message to show on status page (optional):&nbsp; <input name='srmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='squizid"+$countForms+"' id='squizid"+$countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endSoptions-->"+
@@ -294,7 +294,7 @@ function zeropad3(number) {return (number < 100) ? ( (number >= 10) ? ("0" + num
 							   $("#interactionsFormContainer").append(theIntform);
 							   $countIntForms++;
 							  // document.getElementById("interactionsFormContainer").append(gintform);
-                               console.log('2 after ++$countIntForms= '+$countIntForms);
+                               //console.log('2 after ++$countIntForms= '+$countIntForms);
                         }
                         
 //http://api.jquery.com/bind/                        
@@ -319,11 +319,20 @@ function quiztypefn(formnumber,type){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
                             }
                              if (type=="H2"){
-                                document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
+                                $(quizidentifier).val(100000000000+parseInt(Math.random()*(899999999999),10));
+                                  if( !$("#hidebookmarkalerts").prop("checked")){
+                                 	$("#hidebookmarkalerts").prop("checked",true);
+                                	$("#quizblockmessages").append("<p>Bookmark Alerts have been turned OFF because a Storyline or Captivate quiz was added.</p>")
+                                }
                             }
                             
 				             if (type=="S"){
                                 document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);
+                                 
+                                 if( !$("#hidebookmarkalerts").prop("checked")){
+                                 		$("#hidebookmarkalerts").prop("checked",true);
+                                	$("#quizblockmessages").append("<p>Bookmark Alerts have been turned OFF because a Storyline or Captivate quiz was added.</p>")
+                                }
                             }
 				            if (type=="I"){ //if type I is selected add these things to the entry form'
 				               document.getElementById(quizidentifier).value= 100000000000+parseInt(Math.random()*(899999999999),10);

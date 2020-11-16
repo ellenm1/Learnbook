@@ -20,7 +20,7 @@ function createArray(){
 	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
 	var printExpanderBtn = moduletypeform.printExpanderBtn.checked?false:true;//either true or false. True means hide buttons even if there are more than 16 pages.
-	var muteBookmarkAlert = advancedsettingsform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
+	var muteBookmarkAlert = moduletypeform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
 	var muteStartupMsg = advancedsettingsform.hidestartupwarnings.checked?true:false;//true means Shut OFF startup warnings
 	var quizexists = 0;
 	var customStartupMsgTitle = advancedsettingsform.customStartupMsgTitle.value;
@@ -92,7 +92,7 @@ function createArray(){
 		          quiz=  qforms[f]['squizid'+f].value;
 		          var pathtoSLHTML5wrap = qforms[f].pathtoSLHTML5wrap.value;
 		          var rmsg= qforms[f].srmsg.value?qforms[f].srmsg.value:"";
-				  url=pathtoSLHTML5wrap+"/storylineHTML5wrap.htm";			 
+				  url=pathtoSLHTML5wrap+"/story.html";			 
 				  break;
 				 
 				  case ("I"):

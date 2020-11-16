@@ -978,6 +978,19 @@ legend + .control-group {
   padding-left: 180px;
 }
 
+#quizblock {
+  position: relative;
+}
+
+#quizblockmessages{
+	position: absolute;
+	right: 24px;
+	width: 200px;
+	color: red;
+	font-weight: bolder;
+	top: 24px;
+}
+
 textarea#arr, textarea#interactionsLinks, textarea#customStartupMsg{
   border-top: 2px solid #bbb !important;
   border-left:2px solid #bbb !important;
