@@ -5,38 +5,80 @@
     <title>PageArray Generator for HTML Template</title>
     <link id="bootstrap-style" href="../../../css/css/bootstrap.min.css" rel="stylesheet">
     <link id="base-style"      href="../../../css/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css" /> 
-    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js" type="text/javascript"></script>  -->
+    <link rel="stylesheet" href="css/styles.css" /> 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
     <script language="javascript" type="text/javascript" src="chapterarray.js"></script> 
     <script language="javascript" type="text/javascript" src="form.js"></script>
 </head>
 <body  onload="$('#container').addForms()" style="padding-top:24px;">
 <div class="row-fluid">
-<div class="box yellow md8">
-<div class="box-header"> <h2>General Settings</h2></div>
-<div class="box-content">
- <form name="titleform">
+
+<!--nav-->
+
+<nav class="navbar navbar-default">
  
-  <div class="control-group">
-	 <label class="control-label" for="doctitle"  data-toggle="tooltip" title="Shows up in title bar or title tab of window.">Document Title</label>
-	 <input class="input-xlarge" id="doctitle" type="text" value="" data-toggle="tooltip" title="Shows up in title bar or title tab of window.">
-	 <div class="control-group" style="display: inline-block;  margin-left: 24px;">
-	 <label class="control-label" for="hdtitle"  data-toggle="tooltip" title="Shows up in banner on first page of module">Header Title</label>
-	  <input class="input-xlarge" id="hdtitle" type="text" value="" data-toggle="tooltip" title="Shows up in banner on first page of module">
-	  </div> <!-- controls -->
- </div><!-- control-group -->
- <div class="control-group">
-	 <label class="control-label" for="contentExpName" data-toggle="tooltip" title="Shows up in left nav">Content Expert Name</label>
-	 <input class="input-xlarge" id="contentExpName" type="text" value="" data-toggle="tooltip" title="Shows up in left nav">
-	 <div class="control-group" style="display: inline-block;  margin-left: 24px;">
-	 <label class="control-label" for="contentExpEmail" data-toggle="tooltip" title="Mailto: address for content expert name">Content Expert Email Address</label>
-	  <input class="input-xlarge" id="contentExpEmail" type="text" value="" data-toggle="tooltip" title="Mailto: address for content expert name">
-	  </div> <!-- controls -->
- </div><!-- control-group -->
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h2>
+      	<i class="halflings-icon th"></i><span class="break"></span>
+      </h2>
+    </div> 
+   <h2 style="font-weight: bold;font-size: x-large;text-shadow:none;"><span class="break"></span>HTML Template Utilities</h2>       
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.htm" style="font-weight: bold;background-color:#eeeeee;">Page Array Generator<span class="sr-only">(current)</span></a></li>
+        <li><a href="../manifestmaker/index.htm" style="color:#000;background-color:#bbb;border-radius:10 10px 0 0px;">Manifest Maker</a></li>
+      </ul>   
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+ 
+ 
+ 
+</nav>
+<!--end nav-->
+<div class="box md8">
+<div class="box-header"> 
+	<h2>General Settings</h2>
+</div>
+<div class="box-content">
+<!--GENERAL SETTINGS-->
+
+ <form name="titleform"> 
+  
+   <div class="control-group"  style="display: inline-block;">
+	 <label class="control-label" for="doctitle"  data-toggle="tooltip" title="Shows up in title bar or title tab of window.">Document Title
+	 	<input class="input-xlarge" id="doctitle" type="text" value="" data-toggle="tooltip" title="Shows up in title bar or title tab of window."/>
+	 </label>
+	 </div>
+	 <div class="control-group" style="display: inline-block;  margin-left: 200px;">
+	 	<label class="control-label" for="hdtitle"  data-toggle="tooltip" title="Shows up in banner on first page of module" style="">Header Title
+	  		<input class="input-xlarge" id="hdtitle" type="text" value="" data-toggle="tooltip" title="Shows up in banner on first page of module"/>
+	  	</label>
+   </div><!-- control-group -->
+  <div style="display:block">
+	   <div class="control-group" style="display: inline-block;">
+		 <label class="control-label" for="contentExpName" data-toggle="tooltip" title="Shows up in left nav">Content Expert Name 
+			<input class="input-xlarge" id="contentExpName" type="text" value="" data-toggle="tooltip" title="Shows up in left nav"/></label>
+		
+		 <div class="control-group" style="display: inline-block;  margin-left: 200px;">
+		 <label class="control-label" for="contentExpEmail" data-toggle="tooltip" title="Mailto: address for content expert name">Content Expert Email Address
+		  <input class="input-xlarge" id="contentExpEmail" type="text" value="" data-toggle="tooltip" title="Mailto: address for content expert name"/></label>
+		  </div> <!-- controls -->
+	   </div><!-- control-group -->
+  </div> 
  </form>
+
+
+ <!--SELECT A BUTTON SET-->
  <form name="moduletypeform" style="margin:12px 0 12px 0">
- <table><tr><td>
+ 		<table><tr><td>
  <label>
   Select a button set:
   <select name="moduletype"  title="This determines which SCORM control buttons show up at the bottom of the module">
@@ -52,63 +94,118 @@
   </select>
    </label>
    </td>
-    <td>
-   <label data-toggle="tooltip" title="Hides Expand All buttons in the left nav">
-    Hide Expand All button?  
-   <input type="checkbox" name="printExpanderBtn" />
-   </label>
-    <label class="checkbox inline"  style="vertical-align:baseline;margin-left:12px;">
-       <div  id="uniform-inlineCheckbox1">
-       <span data-children-count="1">
-       <input type="checkbox" id="hidebookmarkalerts" data-toggle="tooltip" title="You may want to hide bookmark alerts when most of the content is captivate or storyline, since those formats have their own resume functions."></span>
-       </div>
-       Hide bookmark alerts?
-	  </label>
-   
-   </td><td><a onclick="$('#advancedcontainer').toggle();return false;" id="advanced">Show Advanced Settings</a></td></tr></table>
+    <td></td><td></td></tr></table>
  </form><!--end moduletypeform-->
  </div><!--box-content-->
- </div><!--box yellow md8"-->
- </div> <!--row-fluid-->
+ </div><!--box md8"-->
 
+
+ <!--ADVANCED SETTINGS  - startup messages and on-completion email -->
+ <div>
  
  
- <div id="advancedcontainer" class="toggleadvanced">
- <div class="box yellow md8">
-<div class="box-header"> <h2>Advanced Settings</h2></div>
-<div class="box-content">
-  <form name="advancedsettingsform">
-  <div class="control-group"> 
-	<div class="controls">
+ <div class="box  md8">
+   <div class="box-header"> <h2>Advanced Settings <i id="advancedToggleIcon" class="halflings-icon chevron-right th"></i><span class="break"></h2><span class="small"><label id="advanced-settings">What is this?</label></span></div>
+   <div class="box-content" id="advancedcontainer" class="toggleadvanced">
+         <form name="advancedsettingsform">
+         <div class="control-group"> 
+	     <div class="controls">
 	 
-		
-	  <label class="checkbox inline" style="vertical-align:baseline;">
-		<div id="uniform-inlineCheckbox2"><span data-children-count="1"><input type="checkbox" id="hidestartupwarnings" data-toggle="tooltip" value="true" title="Hide the blue timeout warning messages"></span></div>Hide Startup Warnings?
+	     <label data-toggle="tooltip" title="Hides Expand All buttons in the left nav" for="printExpanderBtn" style="width: 250px;">Hide Expand All button?
+	     	<input type="checkbox" data-toggle="tooltip" title="Hides Expand All buttons in the left nav" name="printExpanderBtn" />
+        </label>
+        
+        <label id="hidebookmarkalertslabel" title="" for="hidebookmarkalerts" style="width: 300px;padding-left:12px;">
+     Hide bookmark alerts?
+      <input type="checkbox" id="hidebookmarkalerts"  name="hidebookmarkalerts"/>
 	  </label>
-	   <label class="checkbox inline" style="vertical-align:baseline;" title="Show Console messages?">
-		<div   id="uniform-inlineCheckbox3" ><span data-children-count="1"><input type="checkbox" id="showconsolemessages" data-toggle="tooltip" value="true" ></span></div>Show testing messages in the browser Console? (for debugging purposes)
+	  
+	  </div>
+	  <div class="controls">
+	 
+	  <label data-toggle="tooltip" title="Hide the blue timeout warning messages" for="hidestartupwarnings" style="width: 250px;">
+	  	Hide Startup Warnings?
+	  <input type="checkbox" id="hidestartupwarnings" data-toggle="tooltip" title="Hide the blue timeout warning messages"  name="hidestartupwarnings"/>
+	  </label>
+	   <label data-toggle="tooltip" title="Show Console messages?" for="showconsolemessages" style="width: 300px;padding-left:12px;">
+	Show debugging info in the browser Console?
+	     <input type="checkbox" id="showconsolemessages" data-toggle="tooltip" title="Show Console messages?"  name="showconsolemessages" />
 	  </label>
 	  
 	</div> <!-- controls -->
+	
+<div class="controls">
+ <label data-toggle="tooltip" title="Hide the blue timeout warning messages" for="customstartupwarning" style="width: 250px;">Customize Startup Warnings?
+	<input type="checkbox" id="customstartupwarning" data-toggle="tooltip" value="true" title="Hide the blue timeout warning messages" name="customstartupwarning"/>
+	</label>
+	   <label data-toggle="tooltip"  title="Show Console messages?" for="enablecompletionemail" style="width: 300px;padding-left:12px;">Send email on completion of module?
+	<input type="checkbox" id="enablecompletionemail" data-toggle="tooltip" value="true" name="enablecompletionemail" />
+	  </label>
+	 </div> <!-- controls -->
+<div class="controls">
+ <label data-toggle="tooltip" title="Hide the timeout warning on the score page" for="hidescorepagewarning" style="width: 250px;">Hide Timeout Warning on Score Page?
+	 
+		 <input type="checkbox" id="hidescorepagewarning" data-toggle="tooltip" value="true" title="Hide the blue timeout warning messages" name="hidescorepagewarning"/>
+		 </label>
+		 
+	   
+	 </div> <!-- controls -->
+
+	
+	
   </div><!-- control-group -->
-  <div class="control-group">
+ 
+  <div id="startupWarningContainer" class="control-group" style="float:left;border:1px solid #eee;padding:6px;display:none;">
+	<div><h3><b>Customize the blue startup message</b></h3>
+	Enter text then click Green Escape button.  <button type="button" class="btn btn-success" id="escapeStartupMessage">Escape Startup Message</button>
+	</div>
 	 <label class="control-label" for="customStartupMsgTitle">Custom Startup Msg Title</label>
 	 <input class="input-xlarge" id="customStartupMsgTitle" type="text" value="" data-toggle="tooltip" title="Add a custom title for the blue startup message (Timeout Warning) here. No punctuation please.">
 	 <div class="control-group">
 	 	 
 	 <label class="control-label" for="customStartupMsg">Custom Startup Message Body </label>
 
-	 <textarea class="cleditor" id="customStartupMsg" rows="4" data-toggle="tooltip" title="All this text needs to be escaped."></textarea>
-	 <a href="https://tools.fromdev.com/javascript-escape-unescape.html" target="_blank">Please use Escape Tool to prepare text!</a>
+	 <textarea class="cleditor" id="customStartupMsg" rows="4" data-toggle="tooltip" title="Enter text for startup message"></textarea>
+	 	
+	<!-- <a href="https://tools.fromdev.com/javascript-escape-unescape.html" target="_blank">Please use Escape Tool to prepare text!</a>-->
 	  </div> <!-- controls -->
  </div><!-- control-group -->
+ 
+  <div id="completionEmailContainer" class="control-group" style="float:left;border:1px solid #eee;padding:6px;display:none;">
+ <div> <h3><b>Add a Custom Email to be sent upon completion of Module</b></h3>
+ Enter text then click Green Escape button.  <button type="button" class="btn btn-success" id="escapeEmailBody">Escape Email</button>
+	</div>
+
+ <label class="control-label" for="emailSubject">Email Subject</label>
+	 <input class="input-xlarge" id="emailSubject" type="text" value="" data-toggle="tooltip" title="Enter the Subject for the email here. ex: 'Course Evaluation Link for '">
+
+ <label class="control-label" for="emailCourseTitle">Course Code and Title</label>
+	 <input class="input-xlarge" id="emailCourseTitle" type="text" value="" data-toggle="tooltip" title="Enter here course Title here. It will be appended to the email Subject.">
+
+	
+	 <div class="control-group">
+	 	 
+	 <label class="control-label" for="emailBody">Email Body </label>
+
+	 <textarea class="cleditor" id="emailBody" rows="4" data-toggle="tooltip" title="Enter text then click Escape"></textarea>
+	
+ 
+	  </div> <!-- controls -->
+ </div><!-- control-group -->
+ <div style="clear:both;">&nbsp;</div>
   </form>
    </div><!--box-content-->
  </div><!--box yellow md8"-->
  </div> <!--row-fluid-->
- </div><!-- advancedcontainer  -->
  
- <div class="box yellow md8">
+ 
+ 
+ </div><!-- advancedcontainer  -->
+
+
+
+ <!--enter properties for each page here -->
+ <div class="box  md8">
 <div class="box-header"> <h2>Page-Specific Settings</h2></div>
 <div class="box-content"> 
  
@@ -120,35 +217,37 @@
          <button id="addInteraction">add AnotherInteraction</button>
   </div>
   
-    <div id="buttons" class="ab" style="width:100%">
+    <div id="buttons" class="" style="width:100%">
          <input name="lastitm" type="hidden" value="0" />
-         <input name="submit" type="submit" value="submit" onclick="createArray();"/>
+         <input name="submit" class="btn btn-success" type="submit" value="submit" onclick="createArray();"/>
     </div><!--buttons-->
  </div><!--box-content-->
  </div><!--box yellow md8"-->
- </div> <!--row-fluid-->  
-<div class="box yellow md8">
+
+
+  <!--OUTPUT SHOWS UP HERE -->
+<div class="box md8">
 <div class="box-header"> <h2>Result</h2></div>
 <div class="box-content">
     <div id="output">
     
     <div class="label">Page Array and interactions array will show up here. IMPORTANT!!! SCROLL DOWN if you are creating INTERACTIONS!!!</div>
         <textarea name="arr" id="arr" cols="150" rows="40" style = "width:600px;height:200px"></textarea> 
-        <div><input name="resetOutput" type="reset" value="reset" onclick="document.getElementById('arr').value='';" /></div>
+        <div><input name="resetOutput" type="reset" value="reset" class="btn btn-danger"  onclick="document.getElementById('arr').value='';" /></div>
     </div><!--output-->
  <div id="output2" style="display:none"> <div class="label">HTML for Interactions Links</div>
         <textarea name="interactionsLinks" id="interactionsLinks" cols="150" rows="25" style = "width:600px;height:200px"></textarea> 
-        <div> <input name="resetOutput2" type="reset" value="reset" onclick="document.getElementById('interactionsLinks').value='';" /></div>
+        <div> <input name="resetOutput2" type="reset" class="btn btn-danger" value="reset" onclick="document.getElementById('interactionsLinks').value='';" /></div>
     </div><!--output2-->
     </div><!--box-content-->
  </div><!--box yellow md8"-->
- </div> <!--row-fluid-->
-<div id="debug">
 
-</div>
-    <script language="javascript" type="text/javascript" src="writearray.js"></script>
-   
-   
+
+</div> <!--row-fluid-->
+ 
+<div id="debug"></div>
+<script language="javascript" type="text/javascript" src="../jquery.hovercard.min.js"></script>   
+ <script language="javascript" type="text/javascript" src="writearray.js"></script>   
 </body>
 </html>
 

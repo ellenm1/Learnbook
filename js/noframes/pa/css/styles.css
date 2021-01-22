@@ -6,6 +6,9 @@
  	
  }
  
+ 
+ /* lettering on the tabs #bs-example-navbar-collapse-1 > ul > li.active > a*/
+ 
  h2 {
  font-size:18px;
  font-family:  'Open Sans', sans-serif;
@@ -16,15 +19,16 @@
  .box-header {
  	padding:14px 10px 10px 10px;
  	line-height: 18px;
- 	height:auto;
- 	
-    
+ 	height:auto; 
+ 	box-shadow: 4px 4px 5px #aaa;
  }
  
  .box-header h2 {
    	font-weight:700;
  }
- 
+.box-content {
+	box-shadow: 4px 4px 5px #aaa;
+} 
  div.box.yellow.md8 {
     color:#222 
    
@@ -996,7 +1000,7 @@ textarea#arr, textarea#interactionsLinks, textarea#customStartupMsg{
   border-left:2px solid #bbb !important;
 }
  
- textarea#customStartupMsg{
+ textarea#customStartupMsg, textarea#emailBody{
  width:600px;
  height:200px;
  }
@@ -1034,7 +1038,31 @@ textarea#arr, textarea#interactionsLinks, textarea#customStartupMsg{
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
-background-color:#FFF;
- box-shadow: 2px 2px #eee; 
+ 
 }
+
+.navbar-default {
+background-color: #ccc;
+}
+
+.hc-preview {
+	position:absolute !important;
+	/*z-index:1000 !important;*/
+}
+
+.hc-name{
+	color:red;
+}
+/*.hc-details-open-top{
+	position:absolute;
+	z-index:1000;
+}
+.hc-details { 
+	 z-index:1000;
+	position:absolute !important; 
+	 
+	display:none;
+}
+*/
+
  

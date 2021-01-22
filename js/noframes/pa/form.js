@@ -421,7 +421,86 @@ function toggle(selectedLayer, searchclass){
          }
   
  
-  
+ var escapeIt = function(string) {
+        return ('' + string).replace(/["'\\\n\r\/\u2028\u2029\u000B]/g, function(character) {
+            // Escape all characters not included in SingleStringCharacters and
+            // DoubleStringCharacters on
+            // http://www.ecma-international.org/ecma-262/5.1/#sec-7.8.4
+            switch (character) {
+                case '"':
+                case "'":
+                case '\\':
+                case '\/':
+                    return '\\' + character
+                        // Four possible LineTerminator characters need to be escaped:
+                case '\n':
+                    return '\\n'
+                case '\r':
+                    return '\\r'
+                case '\u2028':
+                    return '\\u2028'
+                case '\u2029':
+                    return '\\u2029'
+                case '\u000B':
+                    return '\\u000B'
+            }
+        })
+    };
+    $(document).ready(function() {
+        $("#escapeEmailBody").click(function() {
+            var inputTextArea1 = $("#emailBody");
+            inputTextArea1.val(escapeIt(inputTextArea1.val()));
+             var inputTextArea2 = $("#emailSubject");
+            inputTextArea2.val(escapeIt(inputTextArea2.val()));
+            var inputTextArea3 = $("#emailCourseTitle");
+             inputTextArea3.val(escapeIt(inputTextArea3.val()));
+        });
+        
+         $("#escapeStartupMessage").click(function() {
+            var inputTextArea3 = $("#customStartupMsgTitle");
+            inputTextArea3.val(escapeIt(inputTextArea3.val()));
+             var inputTextArea4 = $("#customStartupMsg");
+            inputTextArea4.val(escapeIt(inputTextArea4.val()));
+        });
+        
+       $("#advancedToggleIcon").mousedown(function(){
+       	 $('#advancedcontainer').toggle();
+       	 $("#advancedToggleIcon").toggleClass("chevron-down chevron-right");
+       	  });
+       	  
+       $("#customizestartupwarnings").mousedown(function() {
+       			if ($('#startupWarningContainer').is(':visible')){
+       				 $('#startupWarningContainer').hide();        
+   						 } else {
+       				$('#startupWarningContainer').show();   
+    				}
+       });
+       
+       $("#enablecompletionemail").mousedown(function() {
+       		 if ($('#completionEmailContainer').is(':visible')){
+       				 $('#completionEmailContainer').hide();        
+   						 } else {
+       				$('#completionEmailContainer').show();   
+    				}
+        });
+       	
+       	
+       	var whatIsAdvancedSettings = '<p>Advanced settings are items that rarely need to be used, such as changing or shutting off the blue timeout warnings, turning on and customizing auto-emails, etc. <p>';
+        var hidebookmarkalertslabel = '<p>\"Do you want to resume?\" alerts are shown on launch if a module has more than 5 pages. If there are Captivate or Storyline quizzes, this checkbox is automatically checked. This is because you may want to mute these alerts since Captivate and Storyline have their own Resume functions.</p>';
+    $("#advanced-settings").hovercard({
+        detailsHTML: whatIsAdvancedSettings,
+        width: 400,
+        openOnTop:true
+    });  
+    
+     $("#hidebookmarkalertslabel").hovercard({
+        detailsHTML: hidebookmarkalertslabel,
+        width: 400,
+        openOnTop:true
+    });  
+        
+ 
+    });  //end document ready function
  
 
  

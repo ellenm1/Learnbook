@@ -19,14 +19,19 @@ function createArray(){
 	var qforms = $('#container form'); //using jquery to get all forms within div "container"
 	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
-	var printExpanderBtn = moduletypeform.printExpanderBtn.checked?false:true;//either true or false. True means hide buttons even if there are more than 16 pages.
-	var muteBookmarkAlert = moduletypeform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
+	var printExpanderBtn = advancedsettingsform.printExpanderBtn.checked?false:true;//either true or false. True means hide buttons even if there are more than 16 pages.
+	var muteBookmarkAlert = advancedsettingsform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
 	var muteStartupMsg = advancedsettingsform.hidestartupwarnings.checked?true:false;//true means Shut OFF startup warnings
 	var quizexists = 0;
-	var customStartupMsgTitle = advancedsettingsform.customStartupMsgTitle.value;
-	var customStartupMsg =      advancedsettingsform.customStartupMsg.value;
-	var showconsolemessages =   advancedsettingsform.showconsolemessages.checked?true:false; //true means Turn ON console messages. Default is now that they are off.
-	
+	var customstartupwarning = (advancedsettingsform.customstartupwarning.value!="")   ? true:false; //true means enable custom startup messages. false is no customization.
+	var hidescorepagewarning = (advancedsettingsform.hidescorepagewarning.value!="")   ? true:false; //true means enable custom startup messages. false is no customization.
+	var customStartupMsgTitle = (advancedsettingsform.customStartupMsgTitle.value!="") ? escapeIt(advancedsettingsform.customStartupMsgTitle.value) :null;
+	var customStartupMsg =      (advancedsettingsform.customStartupMsg.value!="")      ? escapeIt(advancedsettingsform.customStartupMsg.value)      :null;
+	var showconsolemessages =   (advancedsettingsform.showconsolemessages.checked)     ? true:false; //true means Turn ON console messages. Default is now that they are off.
+	var enablecompletionemail = (advancedsettingsform.enablecompletionemail.checked)   ? true:false;
+	var completionEmailSubject =  (advancedsettingsform.emailSubject.value!="")          ? escapeIt(advancedsettingsform.emailSubject.value)        :null;
+	var completionEmailBody =  (advancedsettingsform.emailBody.value!="")             ? escapeIt(advancedsettingsform.emailBody.value  )          	:null;
+	var completionEmailCourseTitle = (advancedsettingsform.emailCourseTitle.value!="")	  ? escapeIt(advancedsettingsform.emailCourseTitle.value)  	:null;
 	
 	for (var f=0; f< qforms.length; f++){ 
 	          if (testing){ console.log( 'qforms.length='+qforms.length);}
@@ -202,12 +207,27 @@ function createArray(){
 	    o+="var headerTitle=('";
 	    o+= headertitle;
 	    o+="');\n\n";
-	    
-	    o+="var customStartupMsgTitle=('";
-	    o+=customStartupMsgTitle;
-	    o+="');\n\n";
-	    o+="var customStartupMsg=('";
-	    o+=customStartupMsg;
+	    if ((customStartupMsg != null)&&(customStartupMsgTitle!=null)){
+	   			 o+="var customStartupMsgTitle=('";
+	   			 o+=customStartupMsgTitle;
+	    		 o+="');\n\n";
+	   			 o+="var customStartupMsg=('";
+	   			 o+=customStartupMsg;
+	   			 }
+	   			 
+	   			 
+	   			 
+	   	if ((enablecompletionemail)&&(completionEmailBody != null)&&(completionEmailSubject!=null)){
+	   			 o+="var enablecompletionemail=true;\n\n";
+	   			 o+="var completionEmailSubject=('";
+	   			 o+=completionEmailSubject;
+	    		 o+="');\n\n";
+	    		 o+="var completionEmailCourseTitle=('";
+	   			 o+=completionEmailCourseTitle;
+	    		 o+="');\n\n"; 
+	   			 o+="var completionEmailBody =('";
+	   			 o+=completionEmailBody;
+	   			 }
 	    o+="');\n\n";
 	 //o+=chapterArray;
 	 //now do interactions array if it exists

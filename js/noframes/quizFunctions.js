@@ -15,13 +15,15 @@ function turnOnMsg(){  $("myModal").show();  }
 function turnOffMsg(){$("myModal").hide();  }
 function deleteLocalStorage(){$('.finalCompleteButton').click(function(){ns.localStorage.removeAll()}); }
 function showWarningBlock(){ 
-   var msg  ='<div class="alert alert-info">';
-       msg +='<button type="button" class="close" data-dismiss="alert">×<\/button>';						
-       msg +='If you receive an error message after you send your final score or the status does not change to "Successful" in MLearning, ';
-       msg +='please contact the <a href="https://michmed.service-now.com/sp" target="_blank">HITS Service Desk</a> (936-8000).<br>Do not attempt to retake the module - your progress has been saved.';
-	   msg +='</div>';
-  $("#msgTD1").append(msg); 
-  // $("#modStatus").append(msg); 
+		if((typeof hidescorepagewarning=="undefined" )||(!hidescorepagewarning)){
+		   var msg  ='<div class="alert alert-info">';
+			   msg +='<button type="button" class="close" data-dismiss="alert">×<\/button>';						
+			   msg +='If you receive an error message after you send your final score or the status does not change to "Successful" in MLearning, ';
+			   msg +='please contact the <a href="https://michmed.service-now.com/sp" target="_blank">HITS Service Desk</a> (936-8000).<br>Do not attempt to retake the module - your progress has been saved.';
+			   msg +='</div>';
+		  $("#msgTD1").append(msg); 
+		  
+		  }
   }
 //chooses a "finish" button based on if there are any more SCO's - either go to next module or close window
 function chooseBtn(){ 
@@ -30,6 +32,69 @@ function chooseBtn(){
 }//end function chooseBtn
 // ********************************** //
 
+//send a customized email upon completion of module
+function sendCompletionEmail(){
+	 var g_uniqname, g_studentID, g_studentName, g_lastName, g_firstName,  g_coursetitle, g_emailsubject, g_emailbody, g_detailsArray, g_idArray, params;
+ 	 //make your changes to the course title and email text here:
+ 	 
+   	 g_coursetitle =  completionEmailCourseTitle; 
+ 	 g_emailsubject = completionEmailSubject;
+	 g_emailbody =    completionEmailBody;
+     g_studentID =    sName;
+	 g_studentName =  sDetails;
+	 g_detailsArray = g_studentName.split(",");
+     g_lastName =     g_detailsArray[0];
+
+ 
+	 if( g_detailsArray[1].indexOf("%20")!= -1){
+		g_firstName =(g_detailsArray[1]).split("%20")[1];
+		}
+	 else {g_firstName = g_detailsArray[1]}
+	 
+	 if((typeof g_firstName=="undefined")||(g_firstName=="undefined")){
+	 	g_firstName="";
+	 }
+
+	 if (g_studentID.indexOf("_")!= -1){  
+		g_idArray   = g_studentID.split("_");
+		g_uniqname  = g_idArray[1];	
+	}
+	else { g_uniqname = g_studentID; }
+	
+	params = {
+		sb:g_emailsubject,
+		ct:g_coursetitle,
+		bd:g_emailbody,
+		un:g_uniqname,
+		fn:g_firstName,
+		ln:g_lastName
+	}
+	postCompletionEmail(params);
+}
+
+function postCompletionEmail(params){
+	 var b_emailsubject = (typeof params.sb!="undefined")? params.sb:"";	 
+	 var b_coursetitle = (typeof params.ct!="undefined")? params.ct:"";
+	  var b_firstName = (typeof params.fn!="undefined")? params.fn:"";	 
+	 var b_lastName = (typeof params.ln!="undefined")? params.ln:"";
+	 var b_emailbody = (typeof params.bd!="undefined")? params.bd:"";
+	     b_emailbody = "Hello " + b_firstName + ", \n\n"+b_emailbody;
+	 var b_uniqname = (typeof params.un!="undefined")? params.un:null;
+		
+	
+	 
+	$.post("https://mlearningcontent2.med.umich.edu/content/ct/test/emeiselm/storyline/emailSenderPostErrorChecking.asp",
+       {
+       nm: b_firstName+" "+b_lastName,
+       ct: b_coursetitle,
+       bd: encodeURIComponent(b_emailbody),
+       sb: b_emailsubject,
+       id: b_uniqname
+      },
+      function(data, status){alert("Data: " + data + "\nStatus: " + status)});
+ 
+   
+}//end function sendCompletionEmail()
 
 function checkAPI(){ //CHANGE add tincan option
 	if (!APIOK()){
@@ -462,28 +527,22 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				 
 				msgWin.innerHTML +=('<div id="modStatus">This module is<br><span class="moduleStatusMsg">'+moduleStatus+'</span>');				 
 				msgWin.innerHTML +=(' <div id="finOptions">');
-				//msgWin.innerHTML +=('<table><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();deleteLocalStorage();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr></table></div>');
- 				msgWin.innerHTML +=('<table id="a23" style="margin-top:6px;"><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();deleteLocalStorage();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr><tr valign="top"><td colspan=2 id="msgTD1"></td></tr></table></div>'); 
+				msgWin.innerHTML +=('<table id="a23" style="margin-top:6px;"><tr valign="top"><td class="StatusPageFdbk" ><div class="finalCompleteButton btn  btn-large" onMouseDown="SCOCommit();SCOFinish();deleteLocalStorage();">Send my<br/>score!<br/>I\'m done!.</div></td><td class="StatusPageFdbk"><div class="finalSuspendButton btn btn-large btn-danger" onmousedown="suspendActions(this.id);">Save progress<br/>achieved so far<br/>and finish later.</div></div></td></tr><tr><td style="padding-top:12px;"></td></tr><tr valign="top"><td colspan=2 id="msgTD1"></td></tr></table></div>'); 			  
 				msgWin.innerHTML +=('<ul><li>You scored <b>' + totalRawScore+' point(s)</b> out of a possible <b>'+ totalmaxRawScore+'</b>.<br><li>Your total score for this module is <h1 style="display:inline">'+totalPercentScore+'%</h1><br> This module requires <b>'+iMasteryScore+ '%</b> to pass. <br/><span style="font-size:10px;font-weight:bold;color:red;">If you wish to improve your score, you may retake any quiz by clicking the button(s) below.</span></li></ul></div>' );
 				 				 
 				msgWin.innerHTML +=('<table id="unfinQzTbl">'+unfinQz+'</table>');				 
-				if (typeof zEnvironment!='undefined'){
-					switch(zEnvironment){
-						case 'saba':
-						//for now, don't put any image or message related to where to find certificates.
-						break;
-						case 'mlearning':
-						//do something
-						break;
-						default:
-						//'<div id="certHelp"></div>'
-					}
-				}
-				else{  //zEnvironment is undefined
-					 msgWin.innerHTML +=('<div class="CertInstructions"></div>' ); 
-				}	
-		 			
 				
+		 
+				
+				if((typeof enablecompletionemail!="undefined")&&(enablecompletionemail)){ 	 
+					if((typeof completionEmailSubject!="undefined")&&(typeof completionEmailBody !="undefined")){ 
+						if((completionEmailSubject!="")&&(completionEmailBody!="")){
+					 		  $("#content").on('mousedown', '.finalCompleteButton', function(){
+									sendCompletionEmail();
+								});	
+					    } //if((completionEmailSubject!="")&&(
+					}//if((typeof completionEmailSubject!="undefined"
+				}//	if(typeof enablecompletionemail!="undefined"
 			}//end else there IS a mastery score
 		}//end if moduleStatus is not incomplete
 	   
@@ -496,7 +555,8 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				msgWin.innerHTML +=('<table id="a23" style="margin-top:6px;"><tr><td class="StatusPageFdbk">'+incompleteAlertMsg+'<\/td><td class="StatusPageFdbk">'+finalSuspendButtonBox+'<\/td><\/tr><tr valign="top"><td colspan=2 id="msgTD1"></td></tr><\/table>'),
 			   msgWin.innerHTML +=('<table id="unfinQzTbl">'+unfinQz+'</table>');					
 		}//end moduleStatus IS incomplete - set incomplete status in mlearning
-		showWarningBlock();    
+		//Warning Message about timeouts
+		showWarningBlock();  
 		SCOCommit();//commit data to db
 		turnOffMsg(); 
 
@@ -512,6 +572,13 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
  		msgWin.innerHTML+=('LMS not detected, so status cannot be retrieved.');
         msgWin.style.display='block';
         }//end else
+        
+    
 }//end scoreQuizzes function
   
 //http://rusticisoftware.github.io/TinCanJS/doc/api/latest/
+
+
+
+
+
