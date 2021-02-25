@@ -33,10 +33,10 @@ function chooseBtn(){
 // ********************************** //
 
 //send a customized email upon completion of module
-function sendCompletionEmail(){
+function sendCompletionEmail(params){
 	 var g_uniqname, g_studentID, g_studentName, g_lastName, g_firstName,  g_coursetitle, g_emailsubject, g_emailbody, g_detailsArray, g_idArray, params;
  	 //make your changes to the course title and email text here:
- 	 
+ 	 var finalscore = (typeof params.finalscore!="undefined")? params.finalscore:"";	
    	 g_coursetitle =  completionEmailCourseTitle; 
  	 g_emailsubject = completionEmailSubject;
 	 g_emailbody =    completionEmailBody;
@@ -91,7 +91,9 @@ function postCompletionEmail(params){
        sb: b_emailsubject,
        id: b_uniqname
       },
-      function(data, status){alert("Data: " + data + "\nStatus: " + status)});
+      function(data, status){
+     	// console.log("Data: " + data + "\nStatus: " + status)
+      });
  
    
 }//end function sendCompletionEmail()
@@ -493,11 +495,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 	    		typeof q.countscore=="undefined"||  (typeof q.countscore!="undefined" &&(q.countscore==1||q.countscore==3) )
 	    	
 	    	 ){
-				//console.log('quiz: '+objectiveID+'===========');
-				//console.log('totalmaxRawScore= '+totalmaxRawScore+' qMax='+qMax);
 				totalmaxRawScore+=parseInt(qMax,10);
-				//console.log('after adding qmax, totalmaxRawScore= '+totalmaxRawScore);
-				//console.log('totalRawScore= '+totalRawScore+' qScore='+qScore);
 				totalRawScore +=parseInt(qScore,10);
 				//console.log('after adding qScore, totalRawScore= '+totalRawScore);
 			}//end if((typeof q.countscore
@@ -514,7 +512,20 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 			if (isNaN(iMasteryScore)) { 
 				SCOSetValue("cmi.core.score.raw", totalPercentScore+"" ); //send raw score
 				SCOSetValue( "cmi.core.lesson_status", "completed" ); 
-				alert('there is no mastery score set in MLearning. Module has been marked "complete" instead of pass/fail.');
+				SCOCommit(); 
+				//alert('there is no mastery score set in MLearning. Module has been marked "complete" instead of pass/fail.');
+				if(moduleStatus == "completed"){
+					if((typeof enablecompletionemail!="undefined")&&(enablecompletionemail)){ 	 
+					if((typeof completionEmailSubject!="undefined")&&(typeof completionEmailBody !="undefined")){ 
+						if((completionEmailSubject!="")&&(completionEmailBody!="")){
+					 		  $("#content").on('mousedown', '.finalCompleteButton', function(){
+					 		  		var params = { }	
+									sendCompletionEmail(params);
+								});	
+					    } //if((completionEmailSubject!="")&&(
+					}//if((typeof completionEmailSubject!="undefined"
+				}//	if(typeof enablecompletionemail!="undefined"
+				}//end if(moduleStatus =="completed")
 			} 
 			else { //or, if there IS a mastery score : score pass/fail
 				//first determine and then set the percent score in mlearning
@@ -532,17 +543,21 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 				 				 
 				msgWin.innerHTML +=('<table id="unfinQzTbl">'+unfinQz+'</table>');				 
 				
-		 
-				
-				if((typeof enablecompletionemail!="undefined")&&(enablecompletionemail)){ 	 
+		       
+				if(moduleStatus =="passed"){
+					if((typeof enablecompletionemail!="undefined")&&(enablecompletionemail)){ 	 
 					if((typeof completionEmailSubject!="undefined")&&(typeof completionEmailBody !="undefined")){ 
 						if((completionEmailSubject!="")&&(completionEmailBody!="")){
 					 		  $("#content").on('mousedown', '.finalCompleteButton', function(){
-									sendCompletionEmail();
+					 		      var params = {
+										finalscore:totalPercentScore
+										}	
+									sendCompletionEmail(params);
 								});	
 					    } //if((completionEmailSubject!="")&&(
 					}//if((typeof completionEmailSubject!="undefined"
 				}//	if(typeof enablecompletionemail!="undefined"
+				}//end if(moduleStatus =="passed")
 			}//end else there IS a mastery score
 		}//end if moduleStatus is not incomplete
 	   
