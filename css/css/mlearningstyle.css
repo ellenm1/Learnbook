@@ -810,7 +810,7 @@ a.tryagainLink, a:visited.tryagainLink{
    text-decoration:underline;}
 /*usually this line will not show up*/
 /*#noScoreMsgBlock {display:none; }*/
-.countscore1{color:#FF0000;}
+.countscore1, .countscore3 {color:#FF0000;}
 /*however if there is a non-counting quiz (pretest, survey), it will show up.*/
 .countscore0{ display:block;color:#3366CC;margin-bottom:12px; }
 
@@ -1379,3 +1379,36 @@ ul.breadcrumb{
 #warningModal .btn-primary{
 	border-color: #fff;
 }
+
+.numbercircle {  /*styles a div with 1 digit in it into a red circle with a white number centered in it.*/
+       	zoom:2;
+       	width:24px;
+       	height:24px; 
+       	text-align:center;
+       	border-radius:50%;
+       	color:#FFF;
+       	background-color:#f44e03;
+       	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+       	font-size: 14px; 
+       	font-style: normal; font-variant: normal; 
+       	font-weight: 800; 
+       	line-height: 24px;
+       margin-bottom:6px;
+       margin-left:10px;
+       margin-right:12px;
+       }
+       
+.checkmark{ /*used in interactions "completed" messages*/
+       	color:green;
+       	font-size:24px;
+       }
+       
+       
+.btn.btn-success.requiredlink {
+       		color:#FFF;font-weight:bold;width:200px;text-decoration:none;padding:12px;       
+       }
+
+button.btn-success.completed {
+        background-color:#0276aa;
+        border-color:#0276aa;
+       }
