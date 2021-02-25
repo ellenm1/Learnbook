@@ -71,6 +71,7 @@ function loadInteractions()
 				// recommended and complete
 				if ((itm.amax==0)&&(itm.tries>0)){ 
 					itm.msg = typeof completedMsg!="undefined"?completedMsg:'Completed'; 
+					itm.status = "1";//0=incomplete, 1=completed 2= passed for rare, required-to-pass ineteractions
 					if (testing){console.log('AAE.2')}
 				}			
 				//required and incomplete 	//mark required and incomplete					
@@ -81,6 +82,7 @@ function loadInteractions()
 				//required and completed //mark complete	
 				else if((itm.amax>0)&&(itm.tries>=itm.amax)){	
 						itm.msg = typeof completedMsg!="undefined"?completedMsg:'Completed'; 
+						itm.status = 1;//0=incomplete, 1=completed 2= passed for rare, required-to-pass ineteractions
 						if (testing){console.log('AAE.4')}			 
 				}//end else												
 			}//end for (var i=1; i<suspItms.length; i++)
@@ -104,8 +106,11 @@ function loadInteractions()
 					}
 					// recommended and complete
 					else if ((itm.amax==0)&&(itm.tries>0)){ 
+						itm.status = 1;//0=incomplete, 1=completed 2= passed for rare, required-to-pass ineteractions
 						itm.msg = typeof completedMsg!="undefined"?completedMsg:'Completed';
+						setInteractionClass(completed, itm.id)
 						if (testing){console.log('ABA.2')}
+						
 					}
 					
 					//required and incomplete 	//mark required and incomplete					
@@ -114,9 +119,13 @@ function loadInteractions()
 						if (testing){console.log('ABA.3')}
 					}//end if (itm.ascore<itm.amax
 					
+					 
+					
 					//required and completed //mark complete	
 					else if((itm.amax>0)&&(itm.tries>=itm.amax)){	
+							itm.status = 1;//0=incomplete, 1=completed 2= passed for rare, required-to-pass ineteractions
 							itm.msg = typeof completedMsg!="undefined"?completedMsg:'Completed'; 
+							setInteractionClass("completed",itm.id);
 							if (testing){console.log('ABA.4')}				 
 					}//end else	if
 					else{ 				
@@ -150,7 +159,7 @@ function saveInteractions(){ 	//construct a data string from the current list of
   	//move through interaction array (it isn't really an array so can't use length) and build a new suspendData string to push to LMS
    	for (var k in ints){ 
 		var itm = ints[k];
-		theDataString += (','+itm.id+':'+itm.ascore+':'+itm.tries);
+		theDataString += (','+itm.id+':'+itm.ascore+':'+itm.tries+':'+itm.status);
 		
 		if (testing){console.log("<br>in function saveInteractions: itm["+k+"].id:"+itm.id+"<br> msg: "+itm.msg+"<br> amax:"+itm.amax+"<br> tries: "+itm.tries+"<br>ascore"+itm.ascore+"<br>quiz: "+itm.quiz+"<br>"); }	
 		if (testing){console.log("<hr>in function saveInteractions: theDataString= "+theDataString+"<br>");}
@@ -161,7 +170,10 @@ function saveInteractions(){ 	//construct a data string from the current list of
 	suspendData=SCOGetValue("cmi.suspend_data");	
  }    
    
-
+function setInteractionClass(classname,id){ //use classname without the . and the itm.id
+	$("#"+id).addClass(classname);
+	$("#msg_"+id).addClass(classname);
+}; 
  	
 
 function clearSuspendData(){

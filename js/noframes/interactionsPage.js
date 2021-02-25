@@ -68,7 +68,6 @@ if ( (trackingmode == "scorm")&&APIOK() ){
 		iScore=0;//reset total of all points for this objective to 0 - going to recalculate them now.
 		iMax=0;
 		
-		//var ints = ns.localStorage.get('interactionsArray'); //this is already defined! delete
 	 
 			//move through interaction array
 			for (var k in ints){ 
@@ -86,6 +85,11 @@ if ( (trackingmode == "scorm")&&APIOK() ){
 					if (itm.ascore>=itm.amax) { iScore+=parseInt(itm.amax,10);  }	
 					else { iScore+=parseInt(itm.ascore,10); }
 					if(testing){console.log("after adding "+itm.id+":itm.ascore"+itm.ascore+", iScore= " +iScore);}
+					//I put the item.status==2 in for possible use later
+					if ((itm.status==1)||(itm.status==2)){ //0=incomplete, 1=completed, 2= passed  
+						setInteractionClass("completed", itm.id);
+					}
+					
 				}//end if (itm.quiz ==  qQuiz	 
 			 }//end for (var k in ints
 			$('#dialog-modal').dialog('close');	//is this too early?		 
@@ -150,15 +154,17 @@ function recordItem(itemID, dscore){	//record score to interactions array in loc
 			if(testing){console.log('p2') }  
 		}            
 		//if required and attempted
-		else if ((itm.amax > 0) && (itm.tries > 0 )) { 
-			 
+		else if ((itm.amax > 0) && (itm.tries > 0 )) { //maybe come back later and decide if we want to get any more rigorous about judging individual interactions
+			itm.status = 1;
 			setFeedbackMsg(ms.completedMsg, itm.id);
+			setInteractionClass("completed",itm.id);
 			if(testing){console.log('p3') } 
 			}	
 		//if recommended and attempted, it is completed        
 		else if ((itm.amax ==0) && (itm.tries > 0 )){ 
 			itm.status = 1;
 			setFeedbackMsg(ms.completedMsg, itm.id);
+			setInteractionClass("completed",itm.id);
 			if(testing){console.log('p4') } 
 		  }
 		//insert additional score tracking here if needed
