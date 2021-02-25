@@ -4,6 +4,8 @@ Module Go Live Date:
 
 Trello Card#:
 
+ServiceNow Record:
+
 Project/Activity owner: 
 
 SME/content expert: 
@@ -25,3 +27,4 @@ Change History:
 Course Code(s) where content is repurposed (if applicable):
  
 Storyline/Captivate File contains a slide explaining advanced interactions (if applicable): Y/N
+
