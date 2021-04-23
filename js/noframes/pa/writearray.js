@@ -17,7 +17,7 @@ function createArray(){
 	//for (var f=0; f<document.getElementById('container').forms.length; f++){ 
 	//http://stackoverflow.com/questions/4443202/jquery-get-elements-by-tag-within-a-specific-div/4443207#4443207
 	var qforms = $('#container form'); //using jquery to get all forms within div "container"
-	var iforms = $('#interactionsFormContainer form');//all forms within div "interactionsFormContainer"
+	var iforms = $('#interactionQuizzesContainer form');//all forms within div "interactionsFormContainer"
 	var moduletype = moduletypeform.moduletype.value;
 	var printExpanderBtn = advancedsettingsform.printExpanderBtn.checked?false:true;//either true or false. True means hide buttons even if there are more than 16 pages.
 	var muteBookmarkAlert = advancedsettingsform.hidebookmarkalerts.checked?true:false;//true means Shut OFF bookmark alerts
@@ -238,17 +238,19 @@ function createArray(){
 	        	intlinks+="\nChange the href, target and text of each link to correct values.\n";
 	        	intlinks+="Even if you don't want to USE these links, please temporarily paste them next to the real ones so you can compare id number and onclick value.-->\n";
 	        	
-	        o+= "var recommendedMsg = \'Recommended\';\nvar requiredMsg = \'Must be completed to finish module\';\nvar completedMsg   = \'Completed\';\n\nvar IntArray = new Object();\n";
+	        o+= "var recommendedMsg = \'Recommended\';\nvar requiredMsg = \'Must be completed to finish module\';\nvar completedMsg   = \'Completed  <span class=\"checkmark\">&#x2713;<\/span>\';\n\nvar IntArray = new Object();\n";
              //now do interactions array if it exists
          
          if (testing){ console.log('iforms.length'+iforms.length);}
 	        for (var g=0; g < iforms.length; g++){ 
-	      
+	             
 	            if (testing){console.log("in writearray: interactionsForm"+g);}
 	           	if (testing){ console.log('iforms.length'+iforms.length);}
 	           	if (testing){ console.log('iforms[g].itmid.value'+iforms[g].itmid.value);}
 	            var itemno=iforms[g].itmid.value;
 	              if (testing){console.log('itemno'+itemno);}
+	            var thisform = $(iforms[g]);
+	            var iquiz   = $( thisform).attr('data-quizid');
 	            var amax=iforms[g].amax.value;
 	             if (testing){ console.log(' amax='+ amax);}
 	            var ireq=iforms[g].ireq.value;
@@ -256,10 +258,10 @@ function createArray(){
 	             if (testing){ console.log(' ireq='+ ireq);}
 	            var imsg=iforms[g].imsg.value;
 	             if (testing){ console.log(' imsg='+ imsg);}
-	            var iquiz=iforms[g]["belongsToQuiz"+g].value;
-	             if (testing){ console.log(' iquiz='+ iquiz);}
-	            var iquizformnumber=iforms[g].iquizformnumber.value;
-	             if (testing){ console.log(' iquizformnumber='+ iquizformnumber);}
+	            //var iquiz=iforms[g]["belongsToQuiz"+g].value;
+	            // if (testing){ console.log(' iquiz='+ iquiz);}
+	           // var iquizformnumber=iforms[g].iquizformnumber.value;
+	          //   if (testing){ console.log(' iquizformnumber='+ iquizformnumber);}
 	             if (testing){ console.log('g='+g+' iforms.length-1='+iforms.length-1);}
 	            var lastinteractionItm= (g==(iforms.length-1))?1:0;
 	              if (testing){ console.log('g='+g+' iforms.length='+iforms.length+' lastinteractionItm='+lastinteractionItm); }
