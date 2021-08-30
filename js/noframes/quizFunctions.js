@@ -389,13 +389,13 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 								 
 							}// end else if countscore3 
 							
-							  else if (countscore==0){  //unscored quiz
-								unfinQz +=('<tr>');
-								unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>' ); 
-								unfinQz +=(messageLine1);  	
-								unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--C2--><br/></td>');				
-								unfinQz +=('</tr>');		        
-							}//end else if (countscor
+					  	else if (countscore==0){  //unscored quiz
+							unfinQz +=('<tr>');
+							unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>' ); 
+							unfinQz +=(messageLine1);  	
+							unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Take it again?</a><!--C-H2--><br/></td>');				
+							unfinQz +=('</tr>');		        
+						}//end else if (countscore==0
 							
 							 
 						// else if it is a countscore 1 or countscore 2 completed quiz  - if there is any raw score for this quiz stored in MLearning or it is completed	 
@@ -656,18 +656,18 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 							unfinQz +=('<tr>');
 							unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>' ); 
 							unfinQz +=(messageLine1);  	
-							unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--C2--><br/></td>');				
+							unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Take it again?</a><!--C-U--><br/></td>');				
 							unfinQz +=('</tr>');		        
 							}//end else if (countscor		     
 			       
 		              
                       //if there is any raw score for this quiz stored in MLearning or it is completed, it is considered complete
-		             	if(((typeof objScore!="undefined")&&(objStatus!="not attempted")&&(objStatus!="") )||(objStatus=="completed")){ 
+		             	else if(((typeof objScore!="undefined")&&(objStatus!="not attempted")&&(objStatus!="") )||(objStatus=="completed")){ 
 							unfinQz +=('<tr>');
 							if(!isNaN(objMax)){  unfinQz +=('<td class="unfinQzLft" width="360"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>You scored '+qScore +' out of '+ objMax+'.' ); }
 							else {  unfinQz +=('<td class="unfinQzLft"><b>'+q.buttonTitle+'</b> on page '+(i+1)+'.<br/>');  }
 							unfinQz +=(messageLine1); 
-							unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--L--><br/></span></td>');				
+							unfinQz +=('<td class="unfinQzRt"><a id="quiz'+ i +'" class="tryagainLink">Try again?</a><!--L-U--><br/></span></td>');				
 							unfinQz +=('</tr>');
 			            }//end if (((typeof objScore...
 			     
