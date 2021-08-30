@@ -1,0 +1,64 @@
+	#screenmetrics{ display:none;}
+	body.metrics>div#screenmetrics{  
+		position:absolute;
+		width:300px;right:0px;top:0px;
+		display:block;
+		background:#FFF;
+		z-index:1000;
+		color:#c000000;
+		font-size:11px;
+		line-height: 100%;
+	}
+
+/*http://www.webdesignetc.co/css-100-percentheight-demystified*/
+	body, html, #content, #sidebar-left{
+		position: relative;
+		height: 100%;
+	}
+	.container-fluid-full{/*this may need changing*/
+		position: relative;
+		height:100%; 
+		width:100%; 
+	}	
+	
+	
+	#sidebar-left {
+		background: #525252;
+  		height: 100%;
+	}
+
+ 
+	#leftColumn.row-fluid{	 
+		/*height:100%;*/
+		border:1px solid green;
+		/*float:left;*/
+	}
+
+	.row-fluid:before, .row-fluid:after {
+    content: none;
+    display: none;
+    line-height: 0;
+} 
+	
+	.row-fluid .span2 {
+    width: 18.8936%;
+	}
+
+	/*http://robertnyman.com/2007/04/12/how-to-clear-css-floats-without-extra-markup-different-techniques-explained/*/	
+	/*.row-fluid:after {
+		content: "this clears the floats";
+		display: none;
+		line-height: 0;
+	} */
+ 
+ 	#content {
+		filter: none;
+		min-height: 100%;
+		padding:0 20px 10px 20px;/*setting right padding to 10 inst. of 20 keeps content from dropping down between 1186 and 1217 width ellen*/
+		margin-left:10px;
+		width:75%;
+		border:1px solid red;
+		float:right;
+	}
+
+ 
