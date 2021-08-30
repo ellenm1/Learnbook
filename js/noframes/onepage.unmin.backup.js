@@ -299,10 +299,14 @@ function startUpCustomVersion(znewpagelist,selecteditems, landingPage, dedup, fi
 			var newstr;
 			if((selecteditems!=null)&&(typeof selecteditems!="undefined")){
 				var suspendDataFromLMS = SCOGetValue("cmi.suspend_data");
-				if(suspendDataFromLMS.indexOf('CustVrsn_')!=-1){
-					//custom version number was saved previously in suspendData. Replace with new version.
-					 newstr = suspendDataFromLMS.replace(/(CustVrsn_)(.+?)(?= _CustVrsn)/, "$1 "+selecteditems);
-					console.log('KLE newstr='+newstr);
+				 if(suspendDataFromLMS.indexOf('CustVrsn_')!=-1){
+					//if a custom version number was saved previously in suspendData. Replace with new version.
+				var startIndex= suspendDataFromLMS.lastIndexOf("CustVrsn_")+9 ;  
+				var endIndex = suspendDataFromLMS.indexOf("_CustVrsn"); //16
+				var preStr   = suspendDataFromLMS.substring(0, startIndex);
+				var postStr  = suspendDataFromLMS.substring(endIndex);
+				     newstr  = preStr+selecteditems+postStr;
+				//http://jsfiddle.net/7n1tojsv/
 				}
 				
 				else{ newstr=suspendDataFromLMS+";CustVrsn_"+selecteditems+"_CustVrsn"}
