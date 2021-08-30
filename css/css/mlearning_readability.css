@@ -1,0 +1,49 @@
+ /*styles for better readability of long text*/
+body {
+	font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+	font-size: 21px;
+}
+
+#hdrTitle {
+	font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+h1, h2, h3 {
+	font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 500; 
+}
+h2 {font-size: 28px;line-height:110%;}
+h3 {font-size:24px;line-height:110%;}
+
+#courseproperties {
+ 	font-size:18px;line-height:110%;
+}
+
+li{
+	margin-bottom:4px;
+}
+
+#leftColumn {
+	font-family: 'Open Sans', sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 400; 
+}
+
+body div.ui-widget {
+	font-size: 15px;
+}
+/*use for code blocks, calculations, etc.*/
+.mono { 
+	font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+}
+
+.header-nav a.btn, .footer-nav a.btn {
+	font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 500; 
+}
+div#content {
+	max-width:900px;
+}
+#endmatter {
+	font-size:12px;line-height:110%;
+}
+ 
