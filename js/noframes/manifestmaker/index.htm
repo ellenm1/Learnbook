@@ -53,14 +53,14 @@
   	<p><label for="lessontype">Lesson Format Description (e.g. Learning Module, Learning Module and Quiz, Video, etc.)</label>&nbsp; <input type="text" name="lessontype" id="lessontype" value="Learning Module and Quiz"  size="40" maxlength="60"></p>
   	<p><label for="masteryscore">Mastery Score (e.g. 80)</label>&nbsp; <input type="text" name="masteryscore" id="masteryscore" value="80"  size="10" maxlength="3">%</p>
   	<div id="activitytype" style="overflow: auto;">
-        <label for="whattype">Is this a Learning Module or a Standalone Quiz?<br/></label>
+        <p><label for="whattype">Is this a Learning Module or a Standalone Quiz?<br/></label></p>
 		<div style="float:left">
 			<p><input id="ismodule" type="radio" name="type" value="module"> Learning Module</p>
 			<p><input id="isquiz" type="radio" name="type" value="quiz"> Standalone Quiz</p>
 		</div><!--<div style="float:left">-->
   	</div><!--<div id="activitytype"-->
   	
-  	<div id="whereHosted" style="overflow:auto;">
+  	<!--<div id="whereHosted" style="overflow:auto;">
         <label for="whatlms">Is this for MLearning or for another LMS (like ACEMAPP)?<br/></label>
 		<div style="float:left">
 		 	<input id="ismlearning" type="radio" name="whatlms" value="mlearning" checked>MLearning
@@ -68,23 +68,24 @@
 		 <div style="float:left;padding-left:12px;">
 		 	<input id="isanotherlms" type="radio" name="whatlms" value="another">Another LMS
 		 </div>
-  	</div>  
-  	<div id="otherlmsinstructions" style="display:none;">
+  	</div>  -->
+  	<!--<div id="otherlmsinstructions" style="display:none;">
 		If this is for an external LMS, like ACEMAPP:
 		<ol>
 		<li>The launch url and paths to all assets in the manifest must be relative urls ("index.htm"), not root-relative ("/content/ct.."). Using this form should help you do this correctly. </li>
 		<li>Remove the default index.htm file. Rename the file "index-local.htm to "index.htm". "index-local" has relative urls for all assets.</li>
 		<li>Our questionmark quizzes will not work, since they require access. Replace with other types of quizzes.</li>
 		</ol>
-  	</div>
+  	</div>-->
   	<div id="modulelaunchlink">
-  		<p><label for="">&nbsp;</label>&nbsp;<span style="color:#4a4949;font-style:italic;">https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm</span></p>
-  		<p><label for="launchurl">Launch URL (Absolute URL for most, but just "index.htm" for Saba-hosted Michart courses):<br/> </label>&nbsp; 
-  		<input type="text" name="launchurl" id="launchurl" placeholder="https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm"  size="80" maxlength="200"></p> 
+  		 
+  		<p><label for="launchurl">Launch URL:<br/> </label>&nbsp; 
+  		<input type="text" name="launchurl" id="launchurl" placeholder="index_lms.htm"  size="120" maxlength="200"></p> 
+  		<p>(index.htm for HTML Template, index_scorm.html for Captivate, index_lms.html for Storyline)</p>
   
    </div><!-- 	<div id="modulelaunchlink"> -->
    	<div id="quizlaunchlink" style="display:none;">
-     <p><label for="sessionid">Quiz ID (Assessment Identifier, eg. 102333981 :</label>&nbsp; <input type="number" name="sessionid" id="sessionid"  size="14" maxlength="200"></p> 
+     <p><label for="sessionid">Quiz ID (Assessment Identifier, eg. 102333981 :</label>&nbsp; <input name="sessionid" id="sessionid"  size="14" maxlength="200"></p> 
   </div>
   </fieldset>
   </form><!--end moduletypeform-->

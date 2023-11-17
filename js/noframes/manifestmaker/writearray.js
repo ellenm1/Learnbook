@@ -3,19 +3,23 @@
 //http://www.sitepoint.com/forums/showthread.php?t=575320
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() {} }; 
 var testing = true;
-var ismlearninglms="mlearning";
-
+var ismlearninglms="other";
+	
+     	
+     	
 $(function(){
    $("#ismodule").click(function(){
         $("#modulelaunchlink").show();
         $("#quizlaunchlink").hide(); 
+        $("#launchurl").attr("placeholder","e.g. index.htm, index_lms.htm, index_scorm.html");
+     	$("#launchurl").val = "index.htm";
 	}); 
 	$("#isquiz").click(function(){
      	$("#quizlaunchlink").show();
       	$("#modulelaunchlink").hide();
 	}); 
 	
-	$("#ismlearning").click(function(){
+	/*$("#ismlearning").click(function(){
      	ismlearninglms="mlearning";
      	$("#otherlmsinstructions").hide();
      	$("#launchurl").attr("placeholder","https://mlearningcontent2.med.umich.edu/content/ct/safety/firesafety2014/index.htm");
@@ -23,10 +27,10 @@ $(function(){
 	}); 
 	$("#isanotherlms").click(function(){
      	ismlearninglms="other"; 
-     	$("#otherlmsinstructions").show();
-     	$("#launchurl").attr("placeholder","index.htm");
+     	//$("#otherlmsinstructions").show();
+     	$("#launchurl").attr("placeholder","e.g. index.htm, index_lms.htm, index_scorm.html");
      	$("#launchurl").val = "index.htm";
-	});
+	});*/
     
 
 }); 
@@ -43,7 +47,8 @@ function createArray(){
 	//alert('sessionid='+sessionid);
 if(sessionid !=""){
     
-	launchurl = "https://mlearningcontent2.med.umich.edu/content/ct/quizwrap2013/index.htm?q%3D"+sessionid+"%26svr%3Dpr%26cs%3D1";
+	//launchurl = "https://mlearningcontent2.med.umich.edu/content/ct/quizwrap2013/index.htm?q%3D"+sessionid+"%26svr%3Dpr%26cs%3D1";
+	launchurl = "index.htm?q%3D"+sessionid+"%26svr%3Dpr%26cs%3D1";
 }
 var arr = document.getElementById('arr');
 if(testing){console.log("courseid= "+courseid+", coursetitle= "+coursetitle)}
@@ -61,8 +66,9 @@ if(testing){console.log("courseid= "+courseid+", coursetitle= "+coursetitle)}
        o+= '<adlcp:masteryscore>'+masteryscore+'<\/adlcp:masteryscore>\r\n\t\t<\/item>\r\n\t<\/organization>\r\n<\/organizations>\r\n<resources>\r\n';
        o+= '<resource identifier=\"RES-7132393\" type=\"text\/html\" adlcp:scormtype=\"sco\" ';
        o+= 'href=\"'+launchurl+'">';
-       o+= '\r\n\t\t\t<file href=\"'+launchurl+'" \/>\r\n\t\t\t';
-       o+= '<file href=\"page01.htm\" \/>\r\n\t\t<\/resource>\r\n\t<\/resources>\r\n<\/manifest>\r\n';
+      // o+= '\r\n\t\t\t<file href=\"'+launchurl+'" \/>\r\n\t\t\t';
+       o+= '\r\n\t\t\t<file href=\"'+launchurl+'" \/>';
+       o+= '\r\n\t\t<\/resource>\r\n\t<\/resources>\r\n<\/manifest>\r\n';
      
      arr.value=(o);
    
