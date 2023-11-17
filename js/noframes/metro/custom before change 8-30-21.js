@@ -107,10 +107,10 @@ $(document).ready(function(){
 			
 	/* ---------- Acivate Functions ---------- */
 	template_functions();
-	init_masonry();
+	//init_masonry();
 	sparkline_charts();
 	charts();
-	calendars();
+	//calendars();
 	growlLikeNotifications();
 	widthFunctions();
 	
@@ -197,7 +197,7 @@ function chart(){
 
 /* ---------- Masonry Gallery ---------- */
 
-function init_masonry(){
+/*function init_masonry(){
     var $container = $('.masonry-gallery');
 
     var gutter = 6;
@@ -223,7 +223,7 @@ function init_masonry(){
         });
     });
 }
-
+*/
 /* ---------- Numbers Sepparator ---------- */
 
 function numberWithCommas(x) {
@@ -301,7 +301,7 @@ function template_functions(){
 	});
 	
 	/* ---------- Text editor ---------- */
-	$('.cleditor').cleditor();
+	/* $('.cleditor').cleditor(); */
 	
 	/* ---------- Datapicker ---------- */
 	$('.datepicker').datepicker();
@@ -328,12 +328,12 @@ function template_functions(){
 
 	/* ---------- Makes elements soratble, elements that sort need to have id attribute to save the result ---------- */
 	$('.sortable').sortable({
-		revert:true,
-		cancel:'.btn,.box-content,.nav-header',
-		update:function(event,ui){
+		//revert:true,
+		//cancel:'.btn,.box-content,.nav-header',
+		//update:function(event,ui){
 			//line below gives the ids of elements, you can make ajax call here to save it to the database
 			//console.log($(this).sortable('toArray'));
-		}
+		//}
 	});
 
 	/* ---------- Tooltip ---------- */
@@ -343,22 +343,23 @@ function template_functions(){
 	$('[rel="popover"],[data-rel="popover"]').popover();
 
 	/* ---------- File Manager ---------- */
-	var elf = $('.file-manager').elfinder({
-		url : 'misc/elfinder-connector/connector.php'  // connector URL (REQUIRED)
-	}).elfinder('instance');
+/*	var elf = $('.file-manager').elfinder({
+		url : 'misc/elfinder-connector/connector.php' */ // connector URL (REQUIRED)
+/*	}).elfinder('instance');*/
 
 	/* ---------- Star Rating ---------- */
-	$('.raty').raty({
-		score : 4 //default stars
-	});
+/*	$('.raty').raty({
+		score : 4 */ //default stars
+/*	});
+*/
 
 	/* ---------- Uploadify ---------- */
-	$('#file_upload').uploadify({
+/*	$('#file_upload').uploadify({
 		'swf'      : 'misc/uploadify.swf',
 		'uploader' : 'misc/uploadify.php'
-		// Put your options here
-	});
-
+		*/ // Put your options here
+/*	});
+*/
 	/* ---------- Fullscreen ---------- */
 	$('#toggle-fullscreen').button().click(function () {
 		var button = $(this), root = document.documentElement;
@@ -380,7 +381,7 @@ function template_functions(){
 	});
 
 	/* ---------- Datable ---------- */
-	$('.datatable').dataTable({
+/*	$('.datatable').dataTable({
 			"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
 			"sPaginationType": "bootstrap",
 			"oLanguage": {
@@ -403,7 +404,7 @@ function template_functions(){
 		$('#myModal').modal('show');
 	});
 	
-	
+*/	
 	/* ---------- Progress  ---------- */
 
 		$(".simpleProgress").progressbar({
@@ -769,7 +770,7 @@ function circle_progess() {
 
 /* ---------- Calendars ---------- */
 
-function calendars(){
+/* function calendars(){
 	
 
 	$('#external-events div.external-event').each(function() {
@@ -904,9 +905,9 @@ function calendars(){
 			}
 		]
 	});		
-	
+*/	
 			
-	$('#calendar').fullCalendar({
+/*	$('#calendar').fullCalendar({
 		header: {
 			left: 'title',
 			right: 'prev,next today,month,agendaWeek,agendaDay'
@@ -938,7 +939,7 @@ function calendars(){
 		}
 	});
 	
-}
+}*/
 
 /* ---------- Sparkline Charts ---------- */
 
@@ -2101,19 +2102,19 @@ function widthFunctions(e) {
     
 	if (winWidth < 980 && winWidth > 767) {
 		
-		if($("#sidebar-left").hasClass("span2")) {
+	/*	if($("#sidebar-left").hasClass("span2")) {
 			
 			$("#sidebar-left").removeClass("span2");
 			$("#sidebar-left").addClass("span1");
 			
-		}
+		}*/
 		
-		if($("#content").hasClass("span10")) {
+		/*if($("#content").hasClass("span10")) {
 			
 			$("#content").removeClass("span10");
 			$("#content").addClass("span11");
 			
-		}
+		}*/
 		
 		
 		$("a").each(function(){
@@ -2185,7 +2186,7 @@ function widthFunctions(e) {
 							
 	} else {
 		
-		if($("#sidebar-left").hasClass("span1")) {
+		/*if($("#sidebar-left").hasClass("span1")) {
 			
 			$("#sidebar-left").removeClass("span1");
 			$("#sidebar-left").addClass("span2");
@@ -2197,7 +2198,7 @@ function widthFunctions(e) {
 			$("#content").removeClass("span11");
 			$("#content").addClass("span11");
 			
-		}
+		}*/
 		
 		$("a").each(function(){
 			
