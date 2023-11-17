@@ -5,6 +5,7 @@
 
   ga('create', 'UA-65717029-1', 'auto');
   ga('send', 'pageview');
+//2-1-2022 try again buttons on score page would not go to test quiz server. Fixed.
 
 //To shut off ALL bookmark alerts uncomment the line below in the master common files
 //muteBookmarkAlert=true;
@@ -251,7 +252,7 @@ function printNavBar(){
   	}//end if((trackingmode == "scorm") && !APIOK()
 	
 	writeNewPageNo();
-	writePrintForm(printList);  
+	//writePrintForm(printList);  
 	writeHeaderTitle();
 	SCOBookmark(); 
 	writeDocTitle();
@@ -352,11 +353,13 @@ function getContent(params){
 									$(".gothereLink,.tryagainLink, .failedLink").click(function(){	//bind the correctly setup getContent to each of the go there now buttons
 										var itmno = this.id.substring(4); 
 										ns.localStorage.set('znThisPage',itmno)
+										var qsvr = ps[itmno].svr!=undefined?ps[itmno].svr:false;
 										var p4 = {
 											sScore:0,
 											qurl:ps[itmno].url,
 											quiz:ps[itmno].quiz,
 											type: ps[itmno].type,
+											quizserver:qsvr,
 											qindex:itmno
 										}//end var params
 										znThisPage = p4.qindex;
@@ -1066,8 +1069,9 @@ function writeNewPageNo(){
 								'</div>'+
 								'<div id="pageNumHolder">'+
 									'PAGE ' + (parseFloat(znThisPage) +1) + ' of ' + lastPageNo +
-								'</div>'+			
-								'<div id="printBtn" class="test"><div class="icn-print"></div><form id="pdfForm" name="pdfForm" target="_blank" method="post" action="https://mlearningcontent2.med.umich.edu/PDFGenerator/default.aspx"></form></div>'+					
+								'</div>'+	
+								'<div id="printBtn" class="test"><div class=""></div></div>'+			
+								//'<div id="printBtn" class="test"><div class="icn-print"></div><form id="pdfForm" name="pdfForm" target="_blank" method="post" action="https://mlearningcontent2.med.umich.edu/PDFGenerator/default.aspx"></form></div>'+					
 							'</div>'+
 						'</div>'+
 					'<div>';
@@ -1572,4 +1576,8 @@ if ($('#closeTitle').length==0){
 
 function htmlDecode(value) {
   return $("<textarea/>").html(value).text();
+}
+//popup window that doesn't open in a new tab, use especially for same-domain external links
+function popup(url,windowName, windowWidth, windowHeight){  
+   window.open(url, windowName,"toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=100,windowWidth,windowHeight");
 }
