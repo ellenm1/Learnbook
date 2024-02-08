@@ -99,6 +99,14 @@ function createArray(){
 		          var rmsg= qforms[f].srmsg.value?qforms[f].srmsg.value:"";
 				  url=pathtoSLHTML5wrap+"/story.html";			 
 				  break;
+				  
+				   case("SR"):
+		         // quiz= 100000000000+parseInt(Math.random()*(899999999999),10);
+		          quiz=  qforms[f]['squizid'+f].value;
+		          var pathtoSLHTML5wrap = qforms[f].pathtoSLHTML5wrap.value;
+		          var rmsg= qforms[f].sRrmsg.value?qforms[f].sRrmsg.value:"";
+				  url=pathtoSLHTML5wrap+"/story.html";			 
+				  break;
 				 
 				  case ("I"):
 				    quiz=qforms[f]['iquizid'+f].value;

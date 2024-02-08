@@ -29,6 +29,8 @@
 	var dl = 		qsParm['dl']? qsParm['dl'] : null;
 	var pScore, pMax; 
 	var isScorm = true;
+	
+	//debugger;
     
 	//sName and sDetails are initialized in trackingFunctions.js
 	//sName  =((SCOGetValue("cmi.core.student_id"))+'');//if this is not given a value when not under scorm control, does anything bad happen?
@@ -323,11 +325,11 @@ function getIndexOfDeepLink(dl){
 
 function getContent(params){
 	//testing nested function 
+	 
 	var itm = (typeof params.itm!="undefined")? params.itm:null;
 	var dl	= (typeof params.dl!="undefined")?  params.dl:null;	
 	var referredFromBookmark = (typeof params.referredFromBookmark!="undefined") ? params.referredFromBookmark:false; 
-	
-	//debugger;
+ 
 	  if(testing){console.log('In getContent itm='+ itm + 'dl='+dl + 'referredFromBookmark='+referredFromBookmark);}
 	function loadAjaxContent(itm, itmurl, refFromBookmark){ 
 				$('#content div#div6').load(itmurl+'?ts='+ts+' #content > *', function(responseText, textStatus, XMLHttpRequest) { //what follows is the callback after loading content					 				 	
@@ -607,7 +609,21 @@ function getContent(params){
 								
 							}//end if (sScore == nul
 							else showTryAgainMsg(params);
-					}							
+					}
+					else if (itmtype=="SR"){
+							params={
+								sScore:parseFloat(sScore),
+								qurl:itmurl,
+								quiz:itmquiz,
+								type: "SR",
+								qindex:itm
+								}//end params=	 
+							if (sScore == null || isNaN(parseFloat(sScore)) || typeof sScore =="undefined"  || hidetryagainmsg == "1") {
+							    quizStart(params); 	
+						}//end if (sScore == null
+						else showTryAgainMsg(params);
+					}	//end 	else if (itmtype=="U")	
+							
 				}//end if(typeof itmquiz!="undefined" 	
  	
  		   
@@ -886,10 +902,11 @@ function changeLinks(callback){
     		$(nodes[i]).click(function(event){
     			//alert('oldhref='+oldhref);
     			 	event.preventDefault();
+					
     				var params = {
     					itm:null,
     					dl:  $( this ).attr("href")	   	
-    				}//end params    					 
+    				}//end params  					
     				getContent(params) 
     			});//end $(nodes[i
     		 
@@ -1379,11 +1396,8 @@ function quizStart(p3){
 			 			alert('You need to launch the module from your Learning Plan in order to complete the quiz. Redirecting to the next page ');
 			 			nextPage(qindex);
 			 			}
-			 break;
+			break;
 			case "U":
-			 	//if(testing){console.log('ggg quiztype='+quiztype+' quiz='+quiz+' qindex='+ qindex+', document.location.href='+document.location.href)}
-				//if(testing){console.log('ggg qurl='+qurl);}
-				//currentloc = document.location.href.slice(0,-1); //this slices off the /# from the end of the url
 				if( trackingmode=="scorm" && APIOK() ){
 					currentloc = document.location.href;
 					var qualtricsURL;
@@ -1407,7 +1421,7 @@ function quizStart(p3){
 			 			alert('You need to launch the module from your Learning Plan in order to complete the quiz. Redirecting to the next page');
 			 			nextPage(qindex);
 			 			}
-			break;
+			  break;
 			case "I":
 			var p6 = { itm:qindex}			
 			 getContent(p6);
@@ -1416,8 +1430,6 @@ function quizStart(p3){
 			// console.log('C');
 			  break;
 			case "C6":
-				
-			 
 			 	var captivateHTML = '<div id="CaptivateContent" style="height:100%;width:100%;"></div>'+
 					'<div id="messageDiv" style="display:none;padding:24px;width:659px;margin:auto;font:18px Arial, Helvetica, sans-serif;"></div>'+
 	 				'<div id="finishedDiv" style="display:none;padding:24px;width:659px;margin:auto;font:18px Arial, Helvetica, sans-serif;">'+
@@ -1464,29 +1476,49 @@ function quizStart(p3){
 			 		nextPage(qindex);
 			 		}
 			 
-			  break;
-			  
-			  case "H":
-			  
-			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
+			break; 
+			case "H": 
 		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
-	 
-			  break;
-			  
-			   case "H2":
-			  
-			  //document.location = 'captivate/Cap8-1questionQuiz/index.html?p='+qurl+'&itm='+qindex+'&obj='+quiz;
-		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
-	 
-			  break;
-			    case "S":
-			  
-			  //document.location = 'storyline/test/storylineHTML5wrap.htm?p='+qurl+'&itm='+qindex+'&obj='+quiz;
-		  	  document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
-	 
-			  break;
+			break;  
+			case "H2":  
+			   var currentloc = document.location.href;
+					var storylineURL=qurl; 
+					var n = currentloc.lastIndexOf("/");
+					var currentloc1 = currentloc.slice(0,n);
+					currentloc = currentloc1+"/storylineQuizWrap.htm";
+					var redir = currentloc1+"/includes/storylineRedirector.htm";
+					var encredir = encodeURIComponent(redir);//encoded path to redirector page in this module's includes folder
+					var pr = currentloc1//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
+					var encpr = encodeURIComponent(pr);
+					if (sName == ""){
+					  sName="unknownid";
+					}
+					if(sDetails == ""){
+					  sDetails="Learner,Unknown";
+					}
+					//debugger;
+					storylineURL += '?id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&p='+ encredir;				
+					document.location = storylineURL;	
+
+			break;
+			case "S":
+					document.location = qurl+'?p='+qurl+'&itm='+qindex+'&obj='+quiz+'&h='+thispath+'&id='+sName+'&fn='+sDetails;
+			break; 
+			case "SR": 
+			  //Storyline Remote domain
+					var currentloc = document.location.href;  //https://mlearningcontent.med.umich.edu/content/ct/test/ellen/shell-lms-side/index.htm
+					var n = currentloc.lastIndexOf("/");
+					var currentloc1 = currentloc.slice(0,n);
+					var home = currentloc1+"/storylineQuizWrap.htm"
+					var redir = currentloc1+"/includes/storylineRedirector.htm";	 
+					//var pr = currentloc +'&itm='+qindex;//need to add itm to the end of the return URL without having to alter a jillion existing quizzes.
+					 console.log('checking the url to the remote storyline'+qurl+'?p='+redir+'&itm='+qindex+'&obj='+quiz+'&h='+home+'&id=emeiselm&fn=Meiselman,Ellen');
+		  	    
+					document.location = qurl+'?p='+redir+'&itm='+qindex+'&obj='+quiz+'&h='+home+'&id=emeiselm&fn=Meiselman,Ellen';
+			break;
 			default:
 			 // code to be executed if n is different from case 1 and 2
+			break;
 			}//end switch quiztype
 		
 }//end quizStart
