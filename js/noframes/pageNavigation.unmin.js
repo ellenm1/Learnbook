@@ -29,8 +29,6 @@
 	var dl = 		qsParm['dl']? qsParm['dl'] : null;
 	var pScore, pMax; 
 	var isScorm = true;
-	
-	//debugger;
     
 	//sName and sDetails are initialized in trackingFunctions.js
 	//sName  =((SCOGetValue("cmi.core.student_id"))+'');//if this is not given a value when not under scorm control, does anything bad happen?
@@ -392,7 +390,7 @@ function getContent(params){
 								*/
 								if( APIOK()){// if we are in scorm mode  //bookmarking and time warning		
 									if(testing){console.log('EDIPE about to decide whether to show bookmarkalert znThisPage='+znThisPage);}			 
-								//  debugger;
+ 
 									if(znThisPage == 0 ){ //if this is the first page	
 											  // if(testing){ console.log("DPDKDI in getContent() and typeof ms.showedBookmarkAlert="+typeof ms.showedBookmarkAlert);   }
 									
@@ -689,9 +687,7 @@ function showStartupMessage(){ //warning message about timeout or other warnings
      htmlstring += '<div class="modal-body"><p>'+msg+'</div>';
      htmlstring += '<div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal">Close this message</button></div></div></div></div></div></div>';  
   
-  $("#warningModal").html(htmlstring);  
-  //debugger;    
-       
+  $("#warningModal").html(htmlstring);        
   $('#warningModal').modal('show');
       
   		 
@@ -1496,7 +1492,7 @@ function quizStart(p3){
 					if(sDetails == ""){
 					  sDetails="Learner,Unknown";
 					}
-					//debugger;
+ 
 					storylineURL += '?id=' + sName + '&url=' + encpr + '&fn=' + sDetails + '&obj='+ quiz + '&p='+ encredir;				
 					document.location = storylineURL;	
 
