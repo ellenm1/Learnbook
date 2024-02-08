@@ -104,7 +104,8 @@ function quiztypefn(formnumber,quiztype){  //actions that occur when you select 
                                        "   <option value='I'  id='intsel'>Interactions</option>"+
                                        "   <option value='U'  id='qualsel'>Qualtrics</option>"+
                                        "   <option value='Q'  id='qmarksel'>Questionmark</option>"+   
-                                       "   <option value='S' id='storyHsel'>Storyline HTML5</option>"+                                      
+                                       "   <option value='S' id='storyHsel'>Storyline HTML5</option>"+  
+                                       "   <option value='SR' id='storyRsel'>Storyline Remote</option>"+                                     
                                        "   </select>"+
                                        
                                        "   <div id='countscoreblock'>"+
@@ -160,6 +161,12 @@ function quiztypefn(formnumber,quiztype){  //actions that occur when you select 
                                        "   Quiz ID (readonly) <input type='text' size='12'  name='squizid"+countForms+"' id='squizid"+countForms+"' readonly='readonly' value=' ' />"+
                                        "   </div><!--endSoptions-->"+
                                        
+                                        "   <div id='SRoptions"+countForms+"'  class='togglequiz"+countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
+                                       "   Absolute path to story.html?(<i>https://mlearningcontent2.med.umich.edu/content/manifests/external/.../story.html</i>)<br/>"+
+                                       "   <div style='margin-top:4px;margin-bottom:3px;'>Path:&nbsp;&nbsp; <input name='pathtoSLHTML5wrap' type='text' value='' size='20' />&nbsp;&nbsp;\/story.html</div>"+
+                                       "   Custom message to show on status page (optional):&nbsp; <input name='sRrmsg' type='text' value='Required Quiz' size='30' maxlength='50'/><br/>"+
+                                       "   Quiz ID (readonly) <input type='text' size='12'  name='sRquizid"+countForms+"' id='sRquizid"+countForms+"' readonly='readonly' value=' ' />"+
+                                       "   </div><!--endSoptions-->"+
                                        
                                        "   <div id='Uoptions"+countForms+"'  class='togglequiz"+countForms+"' style='display:none;padding:6px 12px 6px 12px;'>"+
                                        "   Qualtrics survey ID:&nbsp;&nbsp; <input name='surveyid' type='text' value='' size='30' /><br/>"+                                      

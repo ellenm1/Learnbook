@@ -411,6 +411,7 @@ function scoreQuizzes(){ //CHANGE NEEDED: insert these into standard message box
 			     	break;
 			     	
 			     		case "S": //storyline up to 2019
+						case "SR": //storyline in a remote domain, similar to qualtrics or questionmark.
                         //If never attempted: show 'not completed' message, green btn + go there now . If quiz is required, set module status to 'incomplete'
 			            if( (objStatus=="not attempted")||(q.qStatus=="not attempted")||(typeof objStatus=="undefined") ){
 			                unfinQz += ('<tr>');
