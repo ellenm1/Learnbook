@@ -1,9 +1,11 @@
 /***IMPORTANT***
 	The page array generator (https://mlearningcontent2.med.umich.edu/quiz/cbtlib/modules/common/js/pa/) should be used to 
 	create your page array. */
-	
+	//SR type is Storyline Remote Domain
 var PageArray = new Array(  
 {buttonTitle:'0 Competency Criteria', title:' ', url:'page01.htm', chapter:1,level:1 },
+//{buttonTitle:'storyline', title:'', url:'https://mlearningcontent2.med.umich.edu/content/ct/test/emeiselm/shell-remote-files/storyline/minimalEmbeddedButton2/story.html', chapter:1, level:1, type:'SR', quiz:'448039260562', rm:'Required Quiz', countscore:'1', hidetryagainmsg:'1'},
+{buttonTitle:'storyline', title:'', url:'https://mlearningcontent2.med.umich.edu/content/manifests/external/Test/shell-remote-files/storyline/minimal3/story.html', chapter:1, level:1, type:'SR', quiz:'448039260562', rm:'Required Quiz', countscore:'1', hidetryagainmsg:'1'},
 {buttonTitle:'1 Learning Objectives', title:' ', url:'page02.htm', chapter:1,level:1 },
 //{buttonTitle:'2 Qualtrics Quiz', title:'', url:'qualtricsWrap.htm?href=https://umichumhs.qualtrics.com/SE/?SID=SV_3f9NbyBQOfTcqxf', chapter:1, level:1, type:'U', quiz:'392025628426', qmax:2, rm:'', countscore:'1'},
 {buttonTitle:'2 Title goes here', title:' ', url:'page02.2.htm', chapter:1,level:1 },
@@ -19,8 +21,8 @@ var PageArray = new Array(
 	
 var moduletype=2;
 
-var docTitle=('MLearning SCORM-compatible HTML template');
-var headerTitle=('MLearning SCORM-compatible HTML template');
+var docTitle=('Testing Cross-domain Storyline (TEST-STORY-74451');
+var headerTitle=('Testing Cross-domain Storyline (TEST-STORY-74451');
 //var contentExpert=new Array( {email:"isturis@med.umich.edu",name:"Ilza Hallman"}, {email:"winniewo@med.umich.edu",name:"Winnie Wood"}, {email:"marybov@med.umich.edu",name:"Mary Berry Bovia"} );
 //var contentExpertEmail =("example@med.umich.edu");
 //var contentExpertName  =("Jane Smith");
