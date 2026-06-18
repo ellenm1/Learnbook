@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>PageArray Generator for HTML Template</title>
+    <link id="bootstrap-style" href="../../../css/css/bootstrap.min.css" rel="stylesheet">
+    <link id="base-style"      href="../../../css/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" /> 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+    <script language="javascript" type="text/javascript" src="chapterarray.js"></script> 
+    <script language="javascript" type="text/javascript" src="jquery.hovercard.js"></script>
+    <script language="javascript" type="text/javascript" src="form.js"></script>
+       
+       <style id="css-hovercard" type="text/css">
+       
+       /* The sidebar menu */
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Stay on top */
+  top: 0;
+ /* left: 0;*/
+ right: 0;
+  background-color: #80a2b2;  
+  background-color:#bfd0d8;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* The sidebar links */
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.sidebar img {
+	max-width: 445px;
+}
+ #helpcontainer {
+	color:#000;
+	margin:0 12px 0 24px;
+	font-size:large;
+	font-family: Helvetica, Arial, Verdana;
+}
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+/* Style fcontent - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-right .5s; /* If you want a transition effect */
+  padding: 20px;
+}
+
+#helpcontainer p {
+	display:block;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+       
+ 
+.trg {font-weight: bold;color:blue;margin-left:6px;}
+        </style>
+</head>
+<body  onload="$('#container').addForms()" style="padding-top:24px;">
+<!--https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
+<div id="main" class="container">
+
+ 
+<div class="row-fluid">
+
+<!--nav-->
+
+<nav class="navbar navbar-default">
+ 
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h2>
+      	<i class="halflings-icon th"></i><span class="break"></span>
+      </h2>
+    </div> 
+   <h2 style="font-weight: bold;font-size: x-large;text-shadow:none;"><span class="break"></span>HTML Template Utilities</h2>       
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.htm" style="font-weight: bold;background-color:#eeeeee;">Page Array Generator<span class="sr-only">(current)</span></a></li>
+        <li><a href="../manifestmaker/index.htm" style="color:#000;background-color:#bbb;border-radius:10 10px 0 0px;">Manifest Maker</a></li>
+        <li><a href="../pa_original/" style="color:#000;background-color:#aaa;border-radius:10 10px 0 0px;">Old Version</a></li>
+      </ul>   
+       <!--<button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+ </nav>
+<!--end top nav panel-->
+
+<div class="box md8">
+<div class="box-header"> 
+	<h2>General Settings</h2>
+</div>
+<div class="box-content">
+<!--GENERAL SETTINGS-->
+
+ <form name="titleform"> 
+  
+
+<div class="parent"><!--this is a css grid-->
+<div class="div1">
+     <label class="control-label" for="doctitle"  title="Shows up in title bar or title tab of window.">Document Title &nbsp;<span class="trg" onclick="openNav(this.id)" title="" id="doctitle_trg">[?]</span> 
+			<input class="input-xxlarge" id="doctitle" type="text" value="" data-toggle="tooltip" title="Shows up in title bar or title tab of window." size="50%"/>
+	</label>
+</div>
+
+<div class="div2">
+	<label class="control-label" for="hdtitle"  data-toggle="tooltip" title="Shows up in banner on first page of module" style="" id="hditle">Header Title  <span  class="trg" onclick="openNav(this.id)" title=""  id="hdtitle_trg">[?]</span><!-- <span style="height:29px;color:blue;" class="glyphicon glyphicon-question-sign" ></span>-->
+	  		<input class="input-xxlarge" id="hdtitle" type="text" value="" data-toggle="tooltip" title="Shows up in banner on first page of module" size="50%"/>
+	</label>
+</div>
+
+<div class="div3">
+	<label class="control-label" for="contentExpName" data-toggle="tooltip" title="Shows up in left nav">Content Expert Name <span class="trg" onclick="openNav(this.id)"  title=""  id="contentExpName_trg">[?]</span>
+			<input class="input-xxlarge" id="contentExpName" type="text" value="" data-toggle="tooltip" title="Shows up in left nav"/>
+	</label>
+</div>
+<div class="div4">
+	<label class="control-label"  style="width:auto;" for="contentExpEmail" data-toggle="tooltip" title="Mailto: address for content expert name">Content Expert Email Address  <span class="trg" onclick="openNav(this.id)"  title=""  id="contentExpEmail_trg">[?]</span>
+		   <input class="input-xxlarge" id="contentExpEmail" type="text" value="" data-toggle="tooltip" title="Mailto: address for content expert name"/>
+	</label>
+</div><!--end parent-->
+
+ </form>
+
+	<!--<div class="help-tip" style="display:inline-block;width:150px;">Document Title <span class="glyphicon glyphicon-question-sign" ></span> 
+	   <p><img src=""/></p>
+	</div>-->
+ <!--SELECT A BUTTON SET-->
+ <div class="div5">
+ <form name="moduletypeform" style="margin:12px 0 12px 0">
+ 		<table><tr><td>
+ <label for="moduletype">
+  Select a button set:   <span class="trg" onclick="openNav(this.id)"  id="moduletype_trg">[?]&nbsp;</span>
+  <select name="moduletype" id="moduletype" title="This determines which SCORM control buttons show up at the bottom of the module">
+  <option value="1">1:Finish Later|Mark Complete|</option>
+  <option value="2" selected='selected'>2:Finish Later|</option>
+  <option value="3">3:Finish Later|Next Section|</option>
+  <option value="4">4:Finish Later|Go to Quiz|</option>
+  <option value="5">5:Finish Later|</option>
+  <option value="6">6:|Mark Section Complete|</option>
+  <option value="7">7:|Mark Complete</option>
+  <option value="8">8:|Finish Later|Next Section|Mark Complete|</option>
+  <option value="9">9:|Next Section|</option>
+  </select>
+   </label>
+   </td>
+    <td></td><td></td></tr></table>
+ </form><!--end moduletypeform-->
+ 
+ 
+ </div><!--.div5-->
+ <div class="div6">
+ &nbsp;
+ </div>
+ </div><!--box-content-->
+ </div><!--box md8"-->
+
+
+ <!--ADVANCED SETTINGS  - startup messages and on-completion email -->
+ <div>
+ 
+ 
+ <div class="box  md8">
+   <div class="box-header"> <h2>Advanced General Settings <i id="advancedToggleIcon" class="halflings-icon chevron-right th"></i><span class="break"></h2><span class="small"><label id="advanced-settings"> 
+   <span class="trg" onclick="openNav(this.id);" id="advanced_trg">[?]</span></label></span>
+   </div>
+   <div class="box-content" id="advancedcontainer" class="toggleadvanced">
+         <form name="advancedsettingsform">
+         <div class="control-group row"> 
+	     <div class="controls col-sm-3">
+	 
+	     <label data-toggle="tooltip" title="Hides Expand All buttons in the left nav" for="printExpanderBtn" style="width: 300px;padding-left:12px;" id="">Hide Expand All button? <span class="trg" id="printExpanderBtn_trg">[?]</span>
+	     	<input type="checkbox" data-toggle="tooltip" title="Hides Expand All buttons in the left nav" name="printExpanderBtn"  style="margin-left:12px;" />
+        </label>
+        
+        <label id="hidebookmarkalertslabel" title="" for="hidebookmarkalerts" style="width: 300px;padding-left:12px;">
+     Hide bookmark alerts? <span id="hidebookmarkalerts_trg" onclick="openNav(this.id);">[?]</span>
+      <input type="checkbox" id="hidebookmarkalerts"  name="hidebookmarkalerts" style="margin-left:12px;"/>
+	  </label>
+	  
+	  </div>
+	  <div class="controls col-sm-3">
+	 
+	  <label data-toggle="tooltip" title="Hide the blue timeout warning messages" for="hidestartupwarnings" style="width: 300px;padding-left:12px;">
+	  	Hide Startup Warnings?  <span class="trg" onclick="openNav(this.id)"  id="hidestartupwarnings_trg">[?]</span>
+	  <input type="checkbox" id="hidestartupwarnings" data-toggle="tooltip" title="Hide the blue timeout warning messages"  name="hidestartupwarnings" style="margin-left:12px;"/>
+	  </label>
+	   <label data-toggle="tooltip" title="Show Console messages?" for="showconsolemessages" style="width: 300px;padding-left:12px;">
+	Show debugging info in the browser Console? <span  class="trg" id="showconsolemessages_trg" onclick="openNav(this.id)" >[?]</span>
+	     <input type="checkbox" id="showconsolemessages" data-toggle="tooltip" title="Show Console messages?"  name="showconsolemessages" style="margin-left:12px;"/>
+	  </label>
+	  
+	</div> <!-- controls -->
+	
+<div class="controls">
+ <label data-toggle="tooltip" title="Change the text of the startup warning" for="customstartupwarning" style="width: 250px;">Customize Startup Warnings? <span class="trg"  onclick="openNav(this.id)" id="customstartupwarning_trg">[?]</span>
+	<input type="checkbox" id="customstartupwarning" data-toggle="tooltip" value="true" title="Change the text of the startup warning" name="customstartupwarning"/>
+	</label>
+	   <label data-toggle="tooltip"  title="Enable Custom Email to be sent on completion?" for="enablecompletionemail" style="width: 300px;padding-left:12px;">Send email on completion of module? <span class="trg" id="enablecompletionemail_trg"  onclick="openNav(this.id)">[?]</span>
+	<input type="checkbox" id="enablecompletionemail" data-toggle="tooltip" value="true" name="enablecompletionemail" />
+	  </label>
+	 </div> <!-- controls -->
+<div class="controls">
+ <label data-toggle="tooltip" title="Hide the timeout warning on the score page" for="hidescorepagewarning" style="width: 250px;">Hide Timeout Warning on Score Page? <span class="trg" onclick="openNav(this.id)" id="hidescorepagewarning_trg">[?]</span>
+	 
+		 <input type="checkbox" id="hidescorepagewarning" data-toggle="tooltip" value="true" title="Hide the blue timeout warning messages" name="hidescorepagewarning"/>
+		 </label>
+		 
+	   
+	 </div> <!-- controls -->
+
+	
+	
+  </div><!-- control-group -->
+ 
+  <div id="startupWarningContainer" class="control-group" style="float:left;border:1px solid #eee;padding:6px;display:none;">
+	<div><h3><b>Customize the blue startup message</b></h3>
+	<!--Enter text then click Green Escape button.  <button type="button" class="btn btn-success" id="escapeStartupMessage">Escape Startup Message</button>-->
+	</div>
+	 <label class="control-label" for="customStartupMsgTitle">Custom Startup Msg Title <span class="trg" onclick="openNav(this.id)" id="customStartupMsgTitle_trg">[?]</span></label>
+	 <input class="input-xlarge" id="customStartupMsgTitle" type="text" value="" data-toggle="tooltip" title="Add a custom title for the blue startup message (Timeout Warning) here. No punctuation please.">
+	 <div class="control-group">
+	 	 
+	 <label class="control-label" for="customStartupMsg">Custom Startup Message Body </label>
+
+	 <textarea class="cleditor" id="customStartupMsg" rows="4" data-toggle="tooltip" title="Enter text for startup message"></textarea>
+	 	
+	<!-- <a href="https://tools.fromdev.com/javascript-escape-unescape.html" target="_blank">Please use Escape Tool to prepare text!</a>-->
+	  </div> <!-- controls -->
+ </div><!-- control-group -->
+ 
+  <div id="completionEmailContainer" class="control-group" style="float:left;border:1px solid #eee;padding:6px;display:none;">
+ <div> <h3><b>Add a Custom Email to be sent upon completion of Module</b> </h3><span class="trg" onclick="openNav(this.id)" id="customEmail_trg">[?]</span>
+<!-- Enter text then click Green Escape button.  <button type="button" class="btn btn-success" id="escapeEmailBody">Escape Email</button>-->
+	</div>
+
+ <label class="control-label" for="emailSubject">Email Subject <span class="trg" onclick="openNav(this.id)" id="emailSubject_trg">[?]</span></label>
+	 <input class="input-xlarge" id="emailSubject" type="text" value="" data-toggle="tooltip" title="Enter the Subject for the email here. ex: 'Course Evaluation Link for '">
+
+ <label class="control-label" for="emailCourseTitle">Course Code and Title <span class="trg" onclick="openNav(this.id)" id="emailCourseTitle_trg">[?]</span></label>
+	 <input class="input-xlarge" id="emailCourseTitle" type="text" value="" data-toggle="tooltip" title="Enter here course Title here. It will be appended to the email Subject.">
+
+	
+	 <div class="control-group">
+	 	 
+	 <label class="control-label" for="emailBody">Email Body <span class="trg" onclick="openNav(this.id)" id="emailBody_trg">[?]</span></label>
+
+	 <textarea class="cleditor" id="emailBody" rows="4" data-toggle="tooltip" title="Enter text then click Escape"></textarea>
+	
+ 
+	  </div> <!-- controls -->
+ </div><!-- control-group -->
+ <div style="clear:both;">&nbsp;</div>
+  </form>
+   </div><!--box-content-->
+ </div><!--box yellow md8"-->
+ </div> <!--row-fluid-->
+ 
+ 
+ 
+ </div><!-- advancedcontainer  -->
+
+
+
+ <!--enter properties for each page here -->
+ <div class="box  md8">
+<div class="box-header"> <h2>Page-Specific Settings</h2> <span class="trg" onclick="openNav(this.id);" id="pageSpecific_trg">[?]</span></div>
+<div class="box-content"> 
+ 
+ 
+     <div id="container"></div>
+       <button id="addQuiz">add Another Page</button>
+     <div id="interactionQuizzesContainer"></div>
+  <div id="interactionsButtons"  style="display:none">
+         <!--<button id="addInteraction">add AnotherInteraction</button>-->
+  </div>
+  
+    <div id="buttons" class="" style="width:100%">
+         <input name="lastitm" type="hidden" value="0" />
+         <input name="submit" class="btn btn-success" type="submit" value="submit" onclick="createArray();"/>
+    </div><!--buttons-->
+ </div><!--box-content-->
+ </div><!--box yellow md8"-->
+
+
+  <!--OUTPUT SHOWS UP HERE -->
+<div class="box md8">
+<div class="box-header"> <h2>Result</h2></div>
+<div class="box-content">
+    <div id="output">
+    
+    <div class="label outputLabel">Page Array and interactions array will show up here. IMPORTANT!!! SCROLL DOWN if you are creating INTERACTIONS!!!</div>
+        <textarea name="arr" id="arr" cols="150" rows="40" style = "width:600px;height:200px"></textarea> 
+        <div><input name="resetOutput" type="reset" value="reset" class="btn btn-danger"  onclick="document.getElementById('arr').value='';" /></div>
+    </div><!--output-->
+ <div id="output2" style="display:none"> <div class="label outputLabel">HTML for Interactions Links</div>
+        <textarea name="interactionsLinks" id="interactionsLinks" cols="150" rows="25" style = "width:600px;height:200px"></textarea> 
+        <div> <input name="resetOutput2" type="reset" class="btn btn-danger" value="reset" onclick="document.getElementById('interactionsLinks').value='';" /></div>
+    </div><!--output2-->
+    </div><!--box-content-->
+ </div><!--box yellow md8"-->
+
+<!--test-->
+</div> <!--row-fluid-->
+ 
+  
+   <div id="result"></div>
+ <!-- label[for="something"]-->
+ <div id="helpSidebar" class="sidebar">
+ <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+ <form name='helpform'><input type="hidden" value="" name="lastID"/></form>
+<div id="helpcontainer"></div>
+
+</div>
+ <script language="javascript" type="text/javascript" src="writearray.js"></script>   
+ <script>
+ //https://designwithpc.com/Plugins/Hovercard#demo
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+function openNav(id) {
+//https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapse_sidebar
+var itm = id.split('_')[0]; //https://stackoverflow.com/questions/9133102/how-to-grab-substring-before-a-specified-character-jquery-or-javascript
+var helpDiv = itm+'_help';
+var lastID = $('helpform.lastID').val();
+	//if help div is open, check hidden id. If id matches the new id passed in with this function call, then close it. If it is different, just load in the new stuff.
+	//if help div is closed Open it.
+if( $('#helpSidebar').css('width')=='0px'){
+	$('#helpcontainer').load( "./pa_help/tips.htm #"+ helpDiv );
+	  document.getElementById("helpSidebar").style.width = "500px";
+	  document.getElementById("main").style.marginRight = "500px";
+	  } else {
+	    	if (lastID==id){
+				closeNav();
+			}//end if (lastID==
+			else{
+				$('#helpcontainer').load( "./pa_help/tips.htm #"+ helpDiv );
+				$('helpform lastID').val(id);
+			} //end else
+	  } //end else  {
+} //end function openNav
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("helpSidebar").style.width = "0";
+  document.getElementById("main").style.marginRight = "0";
+}
+//https://stackoverflow.com/questions/5891840/how-to-use-javascript-variables-in-jquery-selectors
+//https://stackoverflow.com/questions/20458037/passing-a-parameter-to-a-javascript-function-using-data-attributes-in-an-a-tag
+/*
+
+$(document).on('click', '.trigger[data-target]', function() {
+    var $this = $(this),
+        target = $($this.data('target')),
+        method =  $(this.hovercard( {detailsHTML:$this.data('target').html()};
+    
+   // target[method]($this.target);
+});
+*/
+	
+ 
+		
+	
+	
+	 
+	 /*
+                // $('label[for="doctitle"]').hovercard({detailsHTML:$('#doctitle_help').html()});
+               
+              /*  for all spans with class of "_trigger", 
+                $(".trigger[id$='news']" )*/
+                
+              $(document).ready(function () {  
+              	//$('span[id$="trg"]').click(function(){openNav(this.id);})
+               // $('.hc-details').click(function(){ $('.hc-details').hide()     });
+                 }); 
+               //   $("span[id^='btntitle_trg']").hovercard({detailsHTML:$('#btntitle_help').html()});
+                 // setTimeOut("showHovercard('btntitle_trg_0')",1000);
+                /* function showHovercard(id){
+                	//alert('id='+id);
+                	 $("span[id^='btntitle_trg']").hovercard({detailsHTML:$('#btntitle_help').html()});
+                }*/
+                 
+ </script>
+ 
+ </div><!--container-->
+</body>
+</html>
+
+<!--<p>if qualtrics, must add qmax </p>
+<p>filename for this page (URL)</p>
+<p>chapter</p>
+<p>level</p>-->
+
+
+ 

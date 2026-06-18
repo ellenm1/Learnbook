@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ 
+</head>
+<body   style="padding-top:24px;">
+<style>
+div {
+border:1px solid red;
+margin: 12px;
+}
+
+img{
+border: 6px solid #000;
+}
+</style>
+<!--https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp-->
+  <div id="advanced_help" class="helptext card">
+   		Advanced settings are optional settings provided for special cases, like emails-on-completion, silencing or customization of warnings, and more. 
+   	</div>
+ <div id="btntitle_help" class="helptext card">
+   		<p>This will be the title of this page's button in the left navbar.</p><p><img src="pa_help/images/btntitle.png"/></p>
+   	</div>
+   	 <div id="contentExpName_help" class="helptext card">
+   		<p>The content Expert Name shows up in the left navbar.</p>
+   		<p><img src="pa_help/images/contentExpertEmail.jpg"/></p>
+   		<p>If there are multiple content experts,  paste this example code to use as a starter in the page array:</p>
+   		<p><pre>var contentExpert=new Array( {email:"crukstel@med.umich.edu",name:"Christina Rukstel"},/n
+                             {email:"dazy@med.umich.edu",name:"Jennifer Dammeyer"} );</pre></p>
+   </div>
+    <div id="chaptersettings_help" class="helptext card" ><p>Chapters and levels are provided to allow you to organize the navbar to make it clearer how content is structured.</p><p>The simplest structure is to put everything on chapter 1, level 1. (click image to enlarge), or on chapters 1, 2, 3, etc. all on level 1. </p>
+     <p><a href="pa_help/images/allchapter1form.png" target="_blank"><img src="pa_help/images/allchapter1form.png"/></a></p>
+     <p>Pages on level 1 are visible at all times.</p>
+    <p><img src="pa_help/images/allchapter1.png"/></p>
+    <p>However chapters are most useful when you want to organize your module by topics or sections. You may organize the navbar into topics or sections and hide the section pages until the learner has reached that section. This is done by using "chapters". </p>
+    <p>Each chapter can have several levels. Level 1 always shows up. Level 2 only shows up once the learner reaches that chapter. Level 3 will only show up once you reach the level 2 page just before it.</p>
+   
+    <p><img src="pa_help/images/chapters.png"/></p>
+    </div>
+
+   <div id="contentExpEmail_help" class="helptext card"><p>The content Expert Email shows up in the left navbar as a "mailto" link.</p><p><img src="pa_help/images/contentExpertEmail.jpg"/></p>
+   <p>If there are multiple content experts, paste this example code to use as a starter in the page array:</p>
+   		<p><pre>var contentExpert=new Array( {email:"crukstel@med.umich.edu",name:"Christina Rukstel"},/n
+                             {email:"dazy@med.umich.edu",name:"Jennifer Dammeyer"} );</pre></p>
+   
+   </div>
+  
+   	
+   	 <div id="countscore_help" class="helptext card"">
+		   <p class="textblock"><h2>Countscore</h2> These "countscore" settings affect the way quiz scores affect final score, and the way they display on the Submit Score page.</p>
+		   		<h2>Countscore 0:</h2> Quiz score does not display, and is <b>not counted</b> in the total module score. Default message shown on Score page is "Recommended":
+		   			<img src="pa_help/images/defaultmessage_countscore0.png"/></p>
+					<p class="textblock">The message can be changed to something more appropriate, like "Unscored Optional Practice Quiz" or "Unscored Game":
+		  			 <img src="pa_help/images/customRequirementMsg.png"/></p>
+		  			<p class="textblock"> This shows an example of a custom message on the Submit Score page.
+					 <img src="pa_help/images/customizedMessage.png"/> </p>
+			 
+		  	<p class="textblock"><h2>Countscore 1</h2> This is the most frequently used setting.
+					The score shows and counts toward the total score.
+					<img src="pa_help/images/countscore1showingscore.png"/>
+			</p>
+			<p class="textblock">The default message is "Required" but this can be changed by entering a new message in the Custom message box.
+		   		   <img src="pa_help/images/takethisquizmessage.png"/> </p>
+		  <p class="textblock"><h2>Countscore 2:</h2> Score displays but does not count. Default message is "Recommended," but it can be changed.</p>
+		   <p class="textblock"><h2>Countscore 3:</h2> Quiz must be passed (not just attempted) to complete the module. Score counts and displays. Default message is "Recommended," but it can be changed.</p>
+		   <p class="textblock">When this setting is chosen an additional box for mastery score will appear and must be filled in.</p>
+   
+   </div>
+   
+   <div id="doctitle_help" class="helptext card"><p>The document title shows up either in the titlebar of the window or the tab, if the window is in a tab.</p><p><img src="pa_help/images/doctitle.png"/></p></div>
+   <div id="hdtitle" class="helptext card">Header Title
+   		<p>The header title shows up in the banner at the top of the first page. If you put an image in the banner, the title will overlay the image.</p>
+   		<p><img src="pa_help/images/hdTitle.png"/></p>
+   </div>
+  
+    <div id="hidebookmarkalerts_help" class="helptext card">
+   		<p>This prevents asking user if they want to resume where they left off last time</p>
+   		<p><img src="pa_help/images/hidebookmarkalerts.jpg"/></p>
+   	</div>
+  	<div id="hidestartupwarnings_help" class="helptext card" >
+  	<p>This allows you to customize the text of the blue warning dialog that opens on launch.</p>
+  	<p><img src="pa_help/images/hidestartupwarnings.jpg"/></p>
+   </div> 
+      <div id="hidetryagainmsg_help" class="helptext card" ><p>The try again message is shown if you already have a score for a quiz but click back onto that page again. It gives you a chance to bail out before starting the quiz. Sometimes you would rather it not be shown at all. Reasons include - it may be confusing because the "quiz" doesn't look much like a quiz to the user. Or the quiz is so simple it takes more effort to refuse it than to take it again. It's really up to you - if you notice the message gets in the way, then shut it off.</p>  <p><img src="pa_help/images/printExpanderBtn.png"/></p> </div>
+    <div id="levelsettings_help" class="helptext card"  ><p>Each chapter can have several levels. Level 1 always shows up. Level 2 only shows up once the learner reaches that chapter. Level 3 only shows up once the learner reaches the level 2 page just before it. Most of the time, Level 2 is sufficient to organize your pages, and the deepest level that shows up at all is level 3.</p>
+    <p>Level 4 is only for special use cases so it is not made available on the generator form. When set to Level 4 in the page array, the page's content will be presented to the user when they the click "next" button, but the page will not show up in the navbar. </p> </div>
+  
+   <div id="moduletype_help" class="helptext card" >
+	   <p>"module type" controls which SCORM buttons show up in the navbar.</p>
+	   <p>SCORM buttons are buttons that control the SCORM-related functions, like "Mark Complete", "Finish Later", and the Submit Score Page at the end of a module.</p>
+	   <p>The most-used module type is "<b>moduletype2</b>" which creates a "Submit Score & Complete" and a "Finish Later" button. But there are other button sets that make sense in some situations, particularly in un-scored modules. </p>
+	   <p><img src="pa_help/images/moduletype.png"/></p>
+   </div>
+      <div id="pageSpecific_help" class="helptext card"  ><p>This is where you set the properties of each page in the module.</p> </div>  
+     <div id="passingscore_help" class="helptext card"><p>Ordinarily, the module determines Pass/Fail by adding up total points scored across all quizzes, then dividing by the maximum possible total points for all quizzes.</p>
+     <p>Scored points / maximum possible points X 100.</p>
+     <p>For example if the maximum points possible is 11, and the total points scored is 6, then final score is (6/11)*100 = 54%. This is compared with the mastery score. If the final score is greater than the mastery score, the module is marked passed and completed. </p>
+     <p>However in some cases, a specific quiz must be passed, independent of any other quizzes that may be in the module. In this case select "3: Displays, counts, MUST be passed." from the "I want this quiz to" dropdown menu."</p> </div>
+     
+   <div id="printExpanderBtn_help" class="helptext card">
+	   	<p>When there are more than 15 pages, "Expand All" buttons are added to the nav bar to allow the user to open all levels and see all the page titles.</p> 
+	   	<p>Checking this box removes those buttons and prevents expanding the entire navigation bar</p>
+   	    <p><img src="pa_help/images/printExpanderBtn.png"/></p>
+   </div>
+ <div id="quiztype_help" class="helptext card"  ><p>The following types of quizzes can be used: Questionmark, Captivate, Storyline, Javascript-based Interactions, and Qualtrics Surveys/Quizzes.</p> </div>  
+  
+   
+  
+  
+
+ 
+   
+
+     <div id="customstartupwarning_help" class="helptext card"  ><p>XXXX</p> </div>
+     <div id="enablecompletionemail_help" class="helptext card"  ><p>XXXX</p> </div>
+   

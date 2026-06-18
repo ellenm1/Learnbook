@@ -1,5 +1,4 @@
-//9/13/23  THIS IS THE FIXED VERSION that passes normalFinish all the way through.  -ellen
-//line 44 should read "var normalFinish = a_params.normalFinish?a_params.normalFinish:false;"
+//this version is based on the latest 9-2023 version of the universal script but has Remote Storyline capability added.
    
 //--------------------------------------------------------------------------------------------------------------------
  
@@ -17,6 +16,8 @@
  //--------------------------------------------------------------------------------------------------------------------
 //put a comma after each parameter EXCEPT THE LAST ONE!
 var initParams = {
+//-------------IF THIS IS A REMOTE-HOSTED STORYLINE (Not part of the uploaded scorm package) leave set to true--------- 
+   isRemote:true,
 //-------------IF YOU ARE USING EMAIL FUNCTION ON THIS TRIGGER change sendEmail to true----------------
    sendEmail:false,
 //-------------IF YOU ARE USING BAILOUT FUNCTION ON THIS TRIGGER change bailout to true----------------
@@ -36,7 +37,7 @@ init(initParams);
 function init(a_params) {
 	
 	 console.log("in init");
-	 
+	var isRemote = a_params.isRemote?a_params.isRemote:false; 
 	var sendEmail = a_params.sendEmail?a_params.sendEmail:false;
 	var bailout = a_params.bailout?a_params.bailout:false;
 	var coursetitle = a_params.coursetitle?a_params.coursetitle:"";
@@ -47,6 +48,7 @@ function init(a_params) {
         filenm = pathnm.substring(pathnm.lastIndexOf('/') + 1); 
    var moduletype = checkModuletype(filenm);
    var x_params = {
+   		isRemote:isRemote,
    		moduletype:moduletype,
    		normalFinish:normalFinish,
 		sendEmail:sendEmail,
@@ -68,7 +70,8 @@ function init(a_params) {
 } //end init
  
 function doCustomAction(v_params){ 	
-	var moduletype = (typeof v_params.moduletype!="undefined")? v_params.moduletype:"browse";
+	var isRemote    = v_params.isRemote;
+	var moduletype  = (typeof v_params.moduletype!="undefined")? v_params.moduletype:"browse";
  	var sendEmail   =  v_params.sendEmail;
  	var normalFinish = v_params.normalFinish;
 	var bailout     =  v_params.bailout;
@@ -237,6 +240,7 @@ function checkModuletype(filename){
 
 //loads IE script then runs "main" function  
 function loadIEScript(src, b_params) {
+	var isRemote   =   b_params.isRemote;
  	var moduletype  =  b_params.moduletype;
  	var sendEmail   =  b_params.sendEmail;
  	var normalFinish = b_params.normalFinish;
@@ -246,6 +250,7 @@ function loadIEScript(src, b_params) {
  
  
   	var y_params = {
+  	 	isRemote:isRemote;
   	 	sendEmail:sendEmail,
 		normalFinish:normalFinish,
 		bailout:bailout,
@@ -285,6 +290,7 @@ function loadScript(url) {
       
 function main(c_params,err) 
 { 
+    var isRemote    =  c_params.isRemote;
     var moduletype  =  c_params.moduletype;
  	var sendEmail   =  c_params.sendEmail;
  	var normalFinish = c_params.normalFinish;
@@ -293,9 +299,19 @@ function main(c_params,err)
 	var emailbody   =  c_params.emailbody;
  
 
-  // Is this a standalone SCORM storyline or browse? they may need jquery but will not need any of the scorm, cookie or getMyData related scripts. all it needs is jquery, but there could be times you want to import another script, so put that here
-   if((moduletype=="standalone")||(moduletype=="browse")){
-       if (window.jQuery == null){
+  // Is this a standalone SCORM storyline or browse? if so, it might need jquery but will not need any of the scorm, cookie or getMyData related scripts. There could be times you want to import another script, so put that in the script list for this option
+  
+  what module type?
+ //  standalone or browse 
+ //  ---standalone doesn't need any scorm scripts, local storage, etc. but it may need 
+ //  ---jquery to run email or other custom scripts you add to this script list.
+ //
+ //  ---embedded requirements change depending on if it is local or remote storyline
+ //  -----if local load all the scorm and localstorage scripts, and storylineHTML5.js
+ //  -----if remote load querystring, jquery, cookie and storylineRemote.js
+       
+   if(moduletype=="standalone"){
+       if (window.jQuery == null){  //no scripts are loaded yet but since this is standalone all you need is jquery for the email function
    
 				let scripts = [
 							'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' 
@@ -315,6 +331,7 @@ function main(c_params,err)
 					function(){ 
 					
 									var d_params = {
+		                                //this type of module will never be remote so I left off isRemote here
 										moduletype:moduletype,
 										sendEmail:sendEmail,
 										normalFinish:normalFinish,
@@ -331,8 +348,9 @@ function main(c_params,err)
 										);//end then  
                }//      if (window.jQuery == null
                
-        else{ //window.jquery != null       
+        else{ //window.jquery != null   this means it already loaded, so don't do it again, just move on    
         	var d_params = {
+							isRemote:isRemote,
 							moduletype:moduletype,
 							sendEmail:sendEmail,
 							normalFinish:normalFinish,
@@ -347,9 +365,11 @@ function main(c_params,err)
    
    //Or is this an embedded storyline?	
    	 else if (moduletype=="embedded") { 	 
-   	 if (window.jQuery == null){
-   	    console.log('this is an embedded storyline'); //do embedded stuff   	    	
-    	let scripts = [		
+   	      if (window.jQuery == null){
+   	        console.log('this is an embedded storyline'); //do embedded stuff  
+   	    
+   	     if(!isRemote){  //if not a remote Storyline, use storylineHTML5.js. & load scorm scripts since we're in LMS domain 
+    	   let scripts = [		
 					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/querystring.min.js',
 					'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
 					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/cookie.min.js',
@@ -358,15 +378,25 @@ function main(c_params,err)
 					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/SCORMObjectiveLogic.js',
 					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/storylineHTML5.js'
 				];
+			} //end if(!isRemote)
+	else if (isRemote){
+	        let scripts = [		
+					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/querystring.min.js',
+					'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/cookie.min.js',
+					'https://mlearningcontent2.med.umich.edu/content/manifests/external/storyline/js/storylineRemote.js'
+				    ];
+	             }//end else if (isRemote){}
     	let promises = [];// save all Promises as array
 	    //run through the array of scripts and load each one
 	    scripts.forEach(function(url) { promises.push( loadScript(url));  });//scripts.forEach
 
-		Promise.all(promises).then(
+		Promise.all(promises).then( //load the scripts, then move along to the custom actions
 			 function(){  
 			 			  console.log('all scripts loaded. Standalone Promise fulfilled'); 
  
 						  var d_params = {
+						    isRemote:isRemote,
 							moduletype:moduletype,
 							sendEmail:sendEmail,
 							normalFinish:normalFinish,
@@ -412,5 +442,3 @@ function testForJquery(func){
 }
 
  // - end custom code block cut here ---//
-
- 
