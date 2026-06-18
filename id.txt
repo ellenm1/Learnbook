@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ID Name:
 
 Module Go Live Date:
@@ -28,3 +29,28 @@ Course Code(s) where content is repurposed (if applicable):
  
 Storyline/Captivate File contains a slide explaining advanced interactions (if applicable): Y/N
 
+=======
+ID Name:
+
+Module Go Live Date:
+
+Trello Card#:
+
+Project/Activity owner: 
+
+SME/content expert: 
+
+MLearning Activity Code:
+
+QuestionMark
+Question View, path to quiz questions: 
+Assessment View path to quiz:
+
+Maize project folder: \eLearning Team\_Projects\???
+
+Creator/Quiz name in Qualtrics (if applicable):
+
+Version of Captivate (if applicable):
+
+Change History: 
+>>>>>>> dc6222ec23281ddc438ce2e0f615fb3554823573

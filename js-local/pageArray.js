@@ -3,6 +3,7 @@
 	create your page array. */
 	//SR type is Storyline Remote Domain
 var PageArray = new Array(  
+<<<<<<< HEAD
 {buttonTitle:'0 Competency Criteria', title:' ', url:'page01.htm', chapter:1,level:1 },
 //{buttonTitle:'storyline', title:'', url:'https://mlearningcontent2.med.umich.edu/content/ct/test/emeiselm/shell-remote-files/storyline/minimalEmbeddedButton2/story.html', chapter:1, level:1, type:'SR', quiz:'448039260562', rm:'Required Quiz', countscore:'1', hidetryagainmsg:'1'},
 {buttonTitle:'storyline', title:'', url:'https://mlearningcontent2.med.umich.edu/content/manifests/external/Test/shell-remote-files/storyline/minimal3/story.html', chapter:1, level:1, type:'SR', quiz:'448039260562', rm:'Required Quiz', countscore:'1', hidetryagainmsg:'1'},
@@ -16,6 +17,18 @@ var PageArray = new Array(
 {buttonTitle:'6 Quiz', title:'', url:'quizWrap.htm?call=embed&session=1140870896389821&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php', chapter:1, level:1, type:'Q', quiz:'1140870896389821', rm:'', countscore:'1'},
 
 {buttonTitle:'7 Score &amp; Status Page', title:'',url:'scorePage.htm',chapter:1,level:1 }
+=======
+{buttonTitle:'0 Chap. 0 Competency Criteria', title:' ', url:'page01.htm', chapter:0,level:1 },
+{buttonTitle:'1 Chap. 1: Learning Objectives', title:' ', url:'page02.htm', chapter:1,level:1 },
+{buttonTitle:'Qualtrics Quiz', title:'', url:'qualtricsWrap.htm?href=https://umichumhs.qualtrics.com/SE/?SID=SV_3f9NbyBQOfTcqxf', chapter:1, level:1, type:'U', quiz:'392025628426', qmax:2, rm:'', countscore:'1'},
+{buttonTitle:'1 Title goes here', title:' ', url:'page02.2.htm', chapter:2,level:1 },
+{buttonTitle:'2 Chap. 3 Title goes here', title:' ', url:'page04.htm', chapter:3,level:1 },
+{buttonTitle:'3 Quiz', title:'', url:'quizWrap.htm?call=embed&session=1140870896389821&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php', chapter:4, level:1, type:'Q', quiz:'1140870896389821', rm:'', countscore:'1'},
+{buttonTitle:'4 Title goes here', title:' ', url:'page08.htm', chapter:5,level:1 },
+{buttonTitle:'5 Title goes here', title:' ', url:'TOC8.htm', chapter:5,level:1 },
+{buttonTitle:'6 Title goes here', title:' ', url:'page02.1.htm', chapter:1,level:1 },
+{buttonTitle:'7 Score &amp; Status Page', title:'',url:'scorePage.htm',chapter:6,level:1 }
+>>>>>>> dc6222ec23281ddc438ce2e0f615fb3554823573
 //IMPORTANT!!! the last item does NOT get a comma at the end.
 ); 	
 	
